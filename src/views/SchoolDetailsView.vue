@@ -12,7 +12,8 @@ import { mapActions } from "vuex";
 const props= defineProps({
     id: String
 })
-const school = computed(()=> storeDataSchools.getters.school)
+const school = computed(()=> storeDataSchools.getters.school.school)
+const teachers = computed(()=> storeDataSchools.getters.school.teachers)
 
 onMounted(() => {
     mapActions['fetchOneSchool', props.id]
@@ -27,7 +28,7 @@ onMounted(() => {
 <section class="text-gray-600 body-font overflow-hidden bg-white">
   <div class="container px-5 py-24 mx-auto">
     <div class="lg:w-4/5 mx-auto flex flex-wrap">
-      <img alt="school logo" class="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded" src="https://via.placeholder.com/800x600">
+      <img alt="school logo" class="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded" :src="school.school_image">
       <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
         <h2 class="text-sm title-font text-gray-500 tracking-widest uppercase">hi {{ school.school_name }}</h2>
         <h1 class="text-gray-900 text-3xl title-font font-medium mb-4">School Details</h1>
@@ -64,6 +65,60 @@ onMounted(() => {
     </div>
   </div>
 </section>
+
+<!-- Teachers Data -->
+<!-- <div class="flex justify-center flex-wrap">
+    <div  v-for="(teacher, index) in teachers" :key="index" class="max-w-sm w-full mx-4 my-4 bg-white shadow-lg rounded-lg overflow-hidden">
+        <div class="relative">
+            <img class="w-full h-64 object-cover" :src="teacher.image_path" alt="teacher">
+            <div class="absolute bottom-0 bg-black bg-opacity-50 w-full text-white p-4 description opacity-0">
+                <p class="text-lg font-bold mb-2">{{ teacher.first_name + ' ' + teacher.last_name }}</p>
+                <p class="text-sm">{{ teacher.about }}</p>
+            </div>
+        </div>
+        <div class="px-4 py-2">
+            <h2 class="text-gray-800 text-xl font-bold">Teacher {{ index +1 }}: {{ teacher.last_name }}</h2>
+            <p class="text-gray-600 mt-2 mb-4">{{ teacher.email }}</p>
+        </div>
+    </div>
+    
+</div> -->
+<div  class="flex flex-wrap items-center justify-around">
+  <div v-for="(teacher, index) in teachers" :key="index"  class="bg-white shadow-md rounded-lg overflow-hidden w-full max-w-lg">
+    <!-- Teacher's image -->
+    <div class="bg-gray-300 h-64 w-full flex items-center justify-center">
+      <img class="h-56 w-56 object-cover rounded-full" :src="teacher.image_path" alt="Teacher's image">
+    </div>
+
+    <!-- Teacher's full name -->
+    <div class="px-6 py-4">
+      <div class="font-bold text-3xl mb-2">{{ teacher.first_name }}</div>
+
+      <!-- Teacher's email -->
+      <p class="text-gray-700 text-base mb-2">
+        <i class="far fa-envelope mr-2"></i> {{ teacher.email }}
+      </p>
+
+      <!-- Teacher's phone -->
+      <p class="text-gray-700 text-base mb-2">
+        <i class="fas fa-phone mr-2"></i> {{ teacher.phone }}
+      </p>
+
+      <!-- Teacher's about -->
+      <p class="text-gray-700 text-base mb-2">{{ teacher.about }}</p>
+
+      <!-- Teacher's status -->
+      <!-- <div class="text-sm font-bold text-gray-600 mb-2">
+        @if (teacher.status == 'active')
+          <span class="px-2 py-1 bg-green-200 text-green-800 rounded-full">{{ teacher.status }}</span>
+        @elseif (teacher.status == 'inactive')
+          <span class="px-2 py-1 bg-red-200 text-red-800 rounded-full">{{ teacher.status }}</span>
+        @endif
+      </div> -->
+    </div>
+  </div>
+</div>
+
 </div>
 <h1 v-else class="text-center">Loading...</h1>
 </template>

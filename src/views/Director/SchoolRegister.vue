@@ -3,7 +3,10 @@ import {
     computed,
     ref
 } from 'vue'
-import { storeAuthSchools } from '../../store/storeAuthSchools';
+import {
+    storeAuthSchools
+} from '../../store/storeAuthSchools';
+
 const errors = computed(() => storeAuthSchools.getters.errors)
 const form = ref({
     name: '',

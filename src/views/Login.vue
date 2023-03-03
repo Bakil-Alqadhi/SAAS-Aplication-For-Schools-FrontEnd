@@ -2,10 +2,19 @@
 import {
   computed,
   onMounted,
-    ref
+    ref,
+    watch
 } from 'vue'
 import { store } from '../store/store';
 
+const isDirector= ref(null)
+const isTeacher= ref(null)
+const isStudent= ref(null)
+
+watch(isDirector, (newValue)=>{
+
+    console.log(newValue)
+})
 const form = ref({
     email: '',
     password: ''
@@ -22,11 +31,6 @@ onMounted(()=>{
     // console.log(store)
 })
 </script>
-<!--  <div class="mb-8">
-                <input type="radio" name="Student" id="">
-                <input type="radio" name="Teacher" id="">
-                <input type="radio" name="Director" id="">
-            </div> -->
 <template>
 <!-- component -->
 <div class="flex w-full m-auto lg:w-1/2 justify-center items-center p-4 space-y-8">
@@ -40,6 +44,23 @@ onMounted(()=>{
                 {{ authStatus }}
             </div>
             <p class="text-sm font-normal text-gray-600 mb-8">Welcome Back</p>
+             <div class="mb-8 flex justify-between flex-wrap">
+
+                <div class="block border-2 p-2 mb-2 rounded-lg">
+                    <input type="checkbox" v-model="isDirector" class="mr-2 top-1" name="director" id="director">
+                    <label for="director" class="text-sm">Director</label>
+                </div>
+                <div class="block border-2 p-2 mb-2 rounded-lg">
+                    <input type="checkbox" v-model="isTeacher" class="mr-2 top-1" name="Teacher" id="teacher">
+                    <label for="teacher" class="text-sm">Teacher</label>
+                </div>
+
+                <div class="block border-2 p-2 mb-2 rounded-lg">
+                    <input type="checkbox" v-model="isStudent" class="mr-2 top-1" name="Student" id="student">
+                    <label for="student" class="text-sm">Student</label>
+                </div>
+
+            </div>
             <div class="mb-8">
                 <div class="flex items-center border-2  py-2 px-3 rounded-2xl">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">

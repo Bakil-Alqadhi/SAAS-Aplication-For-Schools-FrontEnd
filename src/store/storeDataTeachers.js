@@ -3,25 +3,25 @@ import axios from "axios";
 import router from "../router/index";
 import { ref } from "vue";
 
-export const storeDataSchools = new createStore({
+export const storeDataTeachers = new createStore({
   router,
   state: {
-    schools: [],
-    school: {},
+    teachers: [],
+    teacher: {},
   },
   getters: {
-    schools: (state) => state.schools,
-    school: (state) => state.school,
+    teachers: (state) => state.teachers,
+    teacher: (state) => state.teacher,
   },
   mutations: {
     //set schools data
-    setSchools: (state, data) => {
-      state.schools = data;
+    setTeachers: (state, data) => {
+      state.teachers = data;
     },
 
     //set one school
-    setOneSchool: (state, data) => {
-      state.school = data;
+    setOneTeacher: (state, data) => {
+      state.teacher = data;
     },
   },
   actions: {
@@ -31,21 +31,21 @@ export const storeDataSchools = new createStore({
     },
 
     //fetch all the schools
-    fetchSchools: async (context) => {
+    fetchTeachers: async (context, db) => {
       await axios
-        .get("api/schools")
+        .get("api/schools/" + db + "/teachers")
         .then((response) => {
-          context.commit("setSchools", response.data);
-          // console.log(response.data);
+          context.commit("setTeachers", response.data.data);
+          console.log(response);
         })
         .catch((error) => console.log(error));
     },
-    fetchOneSchool: async (context, id) => {
+    fetchOneTeacher: async (context, payload) => {
       await axios
-        .get("api/schools/" + id)
+        .get("api/schools/" + payload.school + "/teachers/" + payload.teacher)
         .then((response) => {
-          console.log(response.data.school);
-          context.commit("setOneSchool", response.data);
+          console.log(response.data);
+          context.commit("setOneTeacher", response.data);
         })
         .catch((error) => console.log(error));
     },
