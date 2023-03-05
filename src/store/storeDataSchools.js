@@ -8,10 +8,12 @@ export const storeDataSchools = new createStore({
   state: {
     schools: [],
     school: {},
+    errors: {},
   },
   getters: {
     schools: (state) => state.schools,
     school: (state) => state.school,
+    errors: (state) => state.errors,
   },
   mutations: {
     //set schools data
@@ -22,6 +24,11 @@ export const storeDataSchools = new createStore({
     //set one school
     setOneSchool: (state, data) => {
       state.school = data;
+    },
+
+    //setting errors
+    setErrors: (state, errors) => {
+      state.errors = errors;
     },
   },
   actions: {
@@ -48,6 +55,62 @@ export const storeDataSchools = new createStore({
           context.commit("setOneSchool", response.data);
         })
         .catch((error) => console.log(error));
+    },
+
+    //login
+    handleSchoolLogin: async (context, payload) => {
+      await context.dispatch("getToken");
+      await axios
+        .post("/login", {
+          email: payload.email,
+          password: payload.password,
+        })
+        .then(() => {
+          router.push("/");
+        })
+        .catch((error) => {
+          if (error.response.status === 422) {
+            context.commit("setErrors", error.response.data.errors);
+          }
+          console.log(error.response.data.errors);
+        });
+    },
+
+    //register
+    handleRegister: async (context, payload) => {
+      await context.dispatch("getToken");
+      await axios
+        .post(
+          "/register",
+          {
+            name: payload.name,
+            school_name: payload.school_name,
+            about_school: payload.about_school,
+            about_director: payload.about_director,
+            school_image: payload.school_image,
+            director_image: payload.director_image,
+            address: payload.address,
+            phone: payload.phone,
+            email: payload.email,
+            password: payload.password,
+            password_confirmation: payload.password_confirmation,
+          },
+          {
+            headers: {
+              "content-type": "multipart/form-data",
+            },
+          }
+        )
+        .then((response) => {
+          // context.commit("setAuthStatus", response.data.status);
+          router.push("/login");
+        })
+        .catch((error) => {
+          if (error.response.status === 422) {
+            context.commit("setErrors", error.response.data.errors);
+          }
+          console.log(error.response.data.errors);
+        });
     },
 
     //show details school

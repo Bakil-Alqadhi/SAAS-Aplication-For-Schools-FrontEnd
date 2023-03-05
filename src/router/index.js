@@ -9,11 +9,12 @@ const router = createRouter({
       path: "/",
       name: "Home",
       component: () => import("../views/HomeView.vue"),
+      // meta: { requiresGuest: true },
     },
     {
       path: "/login",
       name: "Login",
-      component: () => import("../views/Login.vue"),
+      component: () => import("../views/LoginView.vue"),
       // meta: { requiresGuest: true },
     },
     {
@@ -36,9 +37,9 @@ const router = createRouter({
     },
     {
       path: "/teacher-register",
-      name: "SchoolRegister",
+      name: "TeacherRegister",
       component: () => import("../views/teachers/RegisterView.vue"),
-      meta: { requiresAuth: true },
+      meta: { requiresGuest: true },
     },
     {
       path: "/forgot-password",
@@ -60,6 +61,7 @@ const router = createRouter({
       path: "/schools",
       name: "SchoolsView",
       component: () => import("../views/SchoolsView.vue"),
+      meta: { requiresGuest: true },
     },
     {
       path: "/schools/:id/school-details",
@@ -88,7 +90,7 @@ const router = createRouter({
       path: "/dashboard",
       name: "Dashboard",
       component: () => import("../views/Director/DashboardView.vue"),
-      meta: { requiresAuth: true },
+      // meta: { requiresAuth: true },
     },
   ],
 });
@@ -97,9 +99,9 @@ router.beforeEach((to, from) => {
   const authUser = computed(() => storeAuthUser.getters.user);
   if (to.meta.requiresGuest && authUser) {
     return {
-      name: "Dashboard",
+      name: "Home",
     };
-  } else if (to.meta.requiresAuth && !authenticated) {
+  } else if (to.meta.requiresAuth && !authUser) {
     return {
       name: "Login",
     };

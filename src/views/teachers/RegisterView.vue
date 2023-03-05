@@ -22,7 +22,7 @@ const form = ref({
     last_name: '',
     school_id: '',
     phone: '',
-    student_email: '',
+    email: '',
     image: '',
     password: '',
     password_confirmation: ''
@@ -32,7 +32,7 @@ const grabFile = (e) => {
 }
 
 function submit() {
-
+    
 }
 </script>
 

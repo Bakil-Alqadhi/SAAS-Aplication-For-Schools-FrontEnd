@@ -3,9 +3,7 @@ import {
     computed,
     ref
 } from 'vue'
-import {
-    storeAuthSchools
-} from '../../store/storeAuthSchools';
+import { storeAuthSchools } from '../../store/storeAuthSchools';
 
 const errors = computed(() => storeAuthSchools.getters.errors)
 const form = ref({
@@ -41,7 +39,6 @@ function register() {
 
 <template>
 <!-- component -->
-
 <div class="m-auto p-10 space-y-8">
     <h1 class="font-bold text-lg text-center rounded-lg bg-blue-700 shadow-md text-white p-3">Registration New School</h1>
     <form @submit.prevent="register" class=" rounded-lg w-full bg-blue-700  p-5 grid gap-x-10 mb-6 md:grid-cols-2">

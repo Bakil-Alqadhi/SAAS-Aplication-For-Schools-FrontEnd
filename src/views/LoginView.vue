@@ -1,113 +1,191 @@
+<script setup>
+import {
+  computed,
+  onMounted,
+    ref,
+    watch
+} from 'vue'
+import { mapActions } from 'vuex';
+import { storeDataSchools } from '../store/storeDataSchools'; 
+import { storeDataTeachers } from '../store/storeDataTeachers';
+import { storeDataStudents } from '../store/storeDataStudents';
+import { storeAuthUser } from '../store/storeAuthUser';
+
+
+const form = ref({
+    email: '',
+    password: '',
+    school_id: ''
+}
+)
+const errors1 =computed(()=>storeDataSchools.getters.errors)
+const errors2 =computed(()=>storeDataTeachers.getters.errors)
+const errors3 =computed(()=>storeDataStudents.getters.errors)
+const moreOne =ref(null)
+const showLogin=ref(null)
+const isDirector= ref(false)
+const isTeacher= ref(false)
+const isStudent= ref(false)
+const schoolRequired = ref(false)
+
+const schoolsData = computed(() => storeDataSchools.getters.schools);
+watch(isDirector, (newValue)=>{
+    if(newValue && !isTeacher.value &&  !isStudent.value){
+        console.log(newValue)
+        moreOne.value = false
+        showLogin.value = true
+    } else if ( !newValue && ((isTeacher.value && !isStudent.value) || (!isTeacher.value && isStudent.value))){
+        moreOne.value = false
+        showLogin.value = true
+    } else {
+        moreOne.value = true
+        showLogin.value=  false
+    }
+
+})
+//watch isTeacher
+watch(isTeacher, (newValue)=>{
+    if(newValue && (!isDirector.value && !isStudent.value)){
+        moreOne.value = false
+        showLogin.value = true
+    } else if ( !newValue && ((isDirector.value && !isStudent.value) || (!isDirector.value && isStudent.value))){
+        moreOne.value = false
+        showLogin.value = true
+    } else {
+        moreOne.value = true
+        showLogin.value=  false
+    }
+})
+//watch is Student
+watch(isStudent, (newValue)=>{
+    if(newValue && (!isDirector.value && !isStudent.value)){
+        moreOne.value = false
+        showLogin.value = true
+    } else if ( !newValue && ((isTeacher.value && !isDirector.value) || (!isTeacher.value && isDirector.value))){
+        moreOne.value = false
+        showLogin.value = true
+    } else {
+        moreOne.value = true
+        showLogin.value=  false
+    }
+})
+
+// watch(form.value.school_id, (newValue) => {
+//         schoolRequired.value = false;
+//         console.log(newValue)
+// })
+const handelSubmit = () =>{
+        if(isDirector.value){
+        // mapActions['handleSchoolLogin', form.value]
+            if(storeDataSchools.dispatch('handleSchoolLogin',form.value)){
+                storeAuthUser.dispatch('getUser')
+            }
+        // errors =computed(()=>storeDataSchools.getters.errors)
+        } else if( isTeacher.value){
+            // mapActions['handleTeacherLogin', form.value]
+            if(form.value.school_id){
+                if(storeDataTeachers.dispatch('handleTeacherLogin', form.value)){
+                    storeAuthUser.dispatch('getUser', 'teacher', form.value.school_id)
+                }
+            }else {
+                schoolRequired.value = true;
+            }
+
+        } else if(isStudent.value){
+            if(form.value.school_id){
+                if(storeDataStudents.dispatch('handleStudentLogin', form.value)){
+                    storeAuthUser.dispatch('getUser', 'student', form.value.school_id)
+                }
+            }else {
+                schoolRequired.value = true;
+            }
+        }  
+}
+onMounted(()=>{
+    mapActions['fetchSchools']
+    storeDataSchools.dispatch("fetchSchools");
+    // storeDataSchools.dispatch('resetAuthStatus')
+    // console.log(store)
+})
+</script>
 <template>
 <!-- component -->
-<!-- <div class="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
-	<div class="relative py-3 sm:max-w-xl sm:mx-auto">
-		<div
-			class="absolute inset-0 bg-gradient-to-r from-blue-300 to-blue-600 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl">
-		</div>
-		<div class="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
-			<div class="max-w-md mx-auto">
-				<div>
-					<h1 class="text-2xl font-semibold">Login Form with Floating Labels</h1>
-				</div>
-				<div class="divide-y divide-gray-200">
-					<div class="py-8 text-base mb-5 leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
-						<div class="relative">
-							<input autocomplete="off" id="email" name="email" type="text" class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Email address" />
-							<label for="email" class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Email Address</label>
-						</div>
-            <div class="relative">
-							<select  id="school" name="school"  class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" >
-                <option value="">hiii</option>
-                <option value="">hiii</option>
-                <option value="">hiii</option>
-                <option value="">hiii</option>
-              </select>
-							<label for="school" class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Your School</label>
-						</div>
-						<div class="relative">
-							<input autocomplete="off" id="password" name="password" type="password" class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Password" />
-							<label for="password" class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Password</label>
-						</div>
-						<div class="relative">
-							<button class="bg-blue-500 text-white rounded-md px-2 py-1">Submit</button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div> -->
-  <div class="fixed top-0 mt-10 left-0 w-screen h-screen bg-transparent flex justify-center items-center">
-    <div class="w-full max-w-md">
-      <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <div class="mb-6">
-          <h2 class="text-2xl font-bold mb-2 text-center">Login</h2>
-          <label class="block text-gray-700 font-bold mb-2" for="select-field">
-            Select user type
-          </label>
-          <div class="relative">
-            <select
-              id="select-field"
-              name="user-type"
-              class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
-            >
-              <option value="1">User Type 1</option>
-              <option value="2">User Type 2</option>
-              <option value="3">User Type 3</option>
-            </select>
-            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-              <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M14.95 7.95a1 1 0 01-1.41 0L10 4.91 6.46 7.46a1 1 0 01-1.41-1.41l4-4a1 1 0 011.41 0l4 4a1 1 0 010 1.41z"/></svg>
+<div  class="flex w-full m-auto lg:w-1/2 justify-center items-center p-4 space-y-8">
+    <div class="w-full px-8 md:px-32 lg:px-24">
+        <div v-if="moreOne" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+            <strong class="font-bold">Wrong!</strong>
+            <span class="block sm:inline"> Check Only One Field.</span>
+        </div>
+        <form @submit.prevent="handelSubmit" class="bg-white rounded-lg shadow-2xl p-5">
+            <h1 class="text-gray-800 font-bold text-2xl mb-1">Hello Again!</h1>
+            <!-- <div v-if="authStatus" class="bg-green-100 rounded-lg py-5 px-6 mb-3 text-base text-green-700 inline-flex items-center w-full" role="alert">
+                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="check-circle" class="w-4 h-4 mr-2 fill-current" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                    <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"></path>
+                </svg>
+                {{ authStatus }}
+            </div> -->
+            <p class="text-sm font-normal text-gray-600 mb-8">Welcome Back</p>
+             <div class="mb-8 flex justify-between flex-wrap">
+
+                <div class="block border-2 p-2 mb-2 rounded-lg">
+                    <input type="checkbox" v-model="isDirector" class="mr-2 top-1" name="director" id="director">
+                    <label for="director" class="text-sm">Director</label>
+                </div>
+                <div class="block border-2 p-2 mb-2 rounded-lg">
+                    <input type="checkbox" v-model="isTeacher" class="mr-2 top-1" name="Teacher" id="teacher">
+                    <label for="teacher" class="text-sm">Teacher</label>
+                </div>
+
+                <div class="block border-2 p-2 mb-2 rounded-lg">
+                    <input type="checkbox" v-model="isStudent" class="mr-2 top-1" name="Student" id="student">
+                    <label for="student" class="text-sm">Student</label>
+                </div>
             </div>
-          </div>
-        </div>
-        <div class="mb-6">
-          <label class="block text-gray-700 font-bold mb-2" for="email-field">
-            Email
-          </label>
-          <input
-            id="email-field"
-            type="email"
-            name="email"
-            class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
-            placeholder="Email"
-          />
-        </div>
-        <div class="mb-6">
-          <label class="block text-gray-700 font-bold mb-2" for="password-field">
-            Password
-          </label>
-          <input
-            id="password-field"
-            type="password"
-            name="password"
-            class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
-            placeholder="Password"
-          />
-        </div>
-        <div class="flex items-center justify-between">
-          <button
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            type="button"
-          >
-            Sign In
-          </button>
-          <a
-            class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-            href="#"
-          >
-            Forgot
-          </a>
-        </div>
-      </form>
+           <div v-if="showLogin">
+            <div v-if="isStudent || isTeacher" class="mb-4">
+                <label class="block text-gray-700 font-bold mb-2" for="school">
+                Choose School
+                </label>
+                <select  v-model="form.school_id" name="" id="school"  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" >
+                <option value="">All Schools</option>  
+                <option  v-for="school in schoolsData" :key="school.id" :value="school.id">{{ school.school_name }}</option>
+                </select>
+                <div v-if="schoolRequired"> <span class="text-sm ml-3 text-red-600">Choose Your School</span></div>
+            </div>
+            <div  class="mb-8">
+                <div class="flex items-center border-2  py-2 px-3 rounded-2xl">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
+                </svg>
+                <input id="email" v-model="form.email" class=" pl-2 w-full outline-none border-none" type="email"  placeholder="Email Address" />
+            </div>
+            <div v-if="errors1 || errors2 || errors3">
+                <span v-if="errors1.email" class="text-sm ml-3 text-red-600"> {{ errors1.email[0] }}</span>
+                <span v-else-if="errors2.email" class="text-sm ml-3 text-red-600"> {{ errors2.email[0] }}</span>
+                <span v-else-if="errors3.email" class="text-sm ml-3 text-red-600"> {{ errors3.email[0] }}</span>
+            </div>
+            </div>
+                <div class="mb-8">
+                    <div class="flex items-center border-2 py-2 px-3 rounded-2xl ">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
+                    </svg>
+                    <input v-model="form.password" class="pl-2 w-full outline-none border-none" type="password" name="password" id="password" placeholder="Password" />
+                </div>
+            <div v-if="errors1 || errors2 || errors3">
+                    <span v-if="errors1.password" class="text-sm ml-3 text-red-600"> {{ errors1.password[0] }}</span>
+                    <span v-else-if="errors2.password" class="text-sm ml-3 text-red-600"> {{ errors2.password[0] }}</span>
+                    <span v-else-if="errors3.password" class="text-sm ml-3 text-red-600"> {{ errors3.password[0] }}</span>
+            </div>
+                </div>
+                <button type="submit" class="block w-full bg-indigo-600 mt-5 py-2 rounded-2xl hover:bg-indigo-700 hover:-translate-y-1 transition-all duration-500 text-white font-semibold mb-2">Login</button>
+                <div class="flex justify-between mt-4">
+                <RouterLink to="/forgot-password" class="text-sm ml-2 hover:text-blue-500 cursor-pointer hover:-translate-y-1 duration-500 transition-all">Forgot Password ?</RouterLink>
+
+                <RouterLink :to="{ name: 'Register'}" class="text-sm ml-2 hover:text-blue-500 cursor-pointer hover:-translate-y-1 duration-500 transition-all">Don't have an account yet?</RouterLink>
+            </div>
+           </div>
+        </form>
     </div>
-  </div>
-
-
-
+</div>
 </template>
-<style>
-  .bg-transparent {
-    background-color: transparent;
-  }
-</style>

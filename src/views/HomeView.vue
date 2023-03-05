@@ -1,12 +1,12 @@
 <script setup>
 import axios from "axios";
 import { onMounted, computed, ref } from "vue"
-import { storeAuthUser } from "../store/storeAuthUser";
+// import { storeAuthUser } from "../store/storeAuthUser";
 
-const user = computed(() => storeAuthUser.getters.user)
+// const user = computed(() => storeAuthUser.getters.user)
 const me = ref({})
 onMounted( async()=> {
-  storeAuthUser.dispatch('getUser')
+  // storeAuthUser.dispatch('getUser')
 
   //for testing
   await axios.get('/me')
@@ -21,5 +21,5 @@ onMounted( async()=> {
 <template>
 <!-- <h1 v-if="user">Home hi Page ==> {{ user }}</h1>
 <h1 v-else>There is no user</h1>  -->
-{{ user }}
+{{ me }}
 </template>

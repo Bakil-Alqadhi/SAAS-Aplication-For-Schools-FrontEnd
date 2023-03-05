@@ -8,19 +8,74 @@ export const storeAuthUser = new createStore({
     authUser: null,
     errors: {},
     authStatus: null,
+    school_id: null,
+    guard: null,
   },
   getters: {
     user: (state) => state.authUser,
     errors: (state) => state.errors,
     authStatus: (state) => state.authStatus,
+    school_id: (state) => state.school_id,
+    guard: (state) => state.guard,
   },
   mutations: {
     //getting auth user
-    getUser: async (state) => {
-      await axios
-        .get("/api/user")
-        .then((response) => (state.authUser = response.data))
-        .catch((error) => console.log(error.response));
+    getUser: async (state, guard = "web", school_id = null) => {
+      const axiosInstance = axios.create({
+        withCredentials: true,
+        // ...
+      });
+      await axiosInstance
+        .get("/api/user", {
+          headers: {
+            Authorization: guard,
+            "X-School-Id": school_id,
+          },
+        })
+        .then((response) => {
+          state.authUser = response.data;
+          state.school_id = school_id;
+          state.guard = guard;
+        })
+        .catch((error) => console.log(error));
+      // try {
+      //   const response = null;
+      //   if (!school_id || !guard) {
+      //     response = await axios.get("/api/user");
+      //   } else {
+      //     response = await axios.get("/" + guard + "/user/" + school_id);
+      //   }
+      //   if (response) {
+      //     console.log("Response getting use after login=>" + response);
+      //     state.authUser = response.data;
+      //     state.school_id = school_id;
+      //     state.guard = guard;
+      //   }
+      // } catch (error) {
+      //   console.log(error);
+      // }
+      /////////
+      // if (school_id && guard) {
+      //   await axios
+      //     .get("/" + guard + "/user/" + school_id)
+      //     .then((response) => {
+      //       // state.authUser = response.data;
+      //       // state.school_id = school_id;
+      //       state.authUser = response.data;
+      //     })
+      //     .catch((error) => console.log(error));
+      // } else {
+      //   await axios
+      //     .get("/api/user")
+      //     .then((response) => {
+      //       // state.authUser = response.data;
+      //       // state.school_id = school_id;
+      //       state.authUser = response.data;
+      //       state.school_id = school_id;
+      //       state.guard = guard;
+      //     })
+      //     .catch((error) => console.log(error));
+      // }
     },
 
     //setting errors
@@ -36,11 +91,21 @@ export const storeAuthUser = new createStore({
     setAuthStatus: (state, status) => {
       state.authStatus = status;
     },
+
+    //set school id for auth student or teacher
+    setSchoolId: (state, school_id) => {
+      state.school_id = school_id;
+    },
   },
   actions: {
     //get Token
     getToken: async () => {
       await axios.get("/sanctum/csrf-cookie");
+    },
+
+    //handle School Id
+    handleSchoolId: (context, school_id) => {
+      context.commit("setSchoolId", school_id);
     },
 
     resetAuthStatus: (context) => {
@@ -50,9 +115,9 @@ export const storeAuthUser = new createStore({
     },
 
     //getting user's data
-    getUser: async (context) => {
+    getUser: async (context, guard = "api", school_id = null) => {
       await context.dispatch("getToken");
-      await context.commit("getUser");
+      await context.commit("getUser", guard, school_id);
     },
 
     //login
@@ -97,14 +162,35 @@ export const storeAuthUser = new createStore({
     },
 
     //logout
-    async handleLogout(context, commit) {
-      await axios
-        .post("/logout")
-        .then(() => {
+    handleLogout: async (context, userType, school_id) => {
+      try {
+        const response = "";
+        if (userType == "director") {
+          response = await axios.post("/logout");
+        } else if (userType == "teacher") {
+          response = await axios.post("teacher/logout", {
+            school_id: school_id,
+          });
+        } else if (userType == "student") {
+          response = await axios.post("student/logout", {
+            school_id: school_id,
+          });
+        }
+        if (response) {
           context.commit("resetAuthUser");
+          console.log("loggedOUT");
           router.push("/");
-        })
-        .catch((error) => console.log(error.response));
+        }
+      } catch (error) {
+        console.log(error);
+      }
+      // await axios
+      //   .post("/logout")
+      //   .then(() => {
+      //     context.commit("resetAuthUser");
+      //     router.push("/");
+      //   })
+      //   .catch((error) => console.log(error.response));
     },
 
     //forgot password

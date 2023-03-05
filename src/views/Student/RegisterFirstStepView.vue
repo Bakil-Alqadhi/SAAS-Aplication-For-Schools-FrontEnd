@@ -29,8 +29,10 @@ const form = ref({
   student_address:'',
   sex: '',
   birthday: '',
-  image_path: ''
- 
+  image_path: '',
+  password: '',
+  password_confirmation: ''
+
   
 })
 const student_image = ref('')
@@ -84,7 +86,6 @@ function submitted(){
               <option value="">All Schools</option>  
               <option  v-for="school in schoolsData" :key="school.id" :value="school.id">{{ school.school_name }}</option>
             </select>
-
           </div>
           <div class="mb-4">
             <label class="block text-gray-700 font-bold mb-2" for="image">

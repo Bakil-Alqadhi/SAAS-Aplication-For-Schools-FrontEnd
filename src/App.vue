@@ -2,9 +2,23 @@
 import Nav from './components/Nav.vue'
 import Dashboard from './components/Dashboard.vue';
 import { storeAuthUser } from './store/storeAuthUser';
-import { computed } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
-const authUser = computed(()=>storeAuthUser.getters.user)
+// const authUser = ref('')
+// onMounted(()=>{
+//   authUser.value = computed(()=>storeAuthUser.getters.user)
+// })
+
+const authUser = ref('')
+const school_id = ref('')
+const guard = ref('')
+onMounted(()=>{
+  school_id.value = computed(()=>storeAuthUser.getters.school_id)
+  guard.value = computed(()=>storeAuthUser.getters.guard)
+  storeAuthUser.dispatch('getUser', guard.value,  school_id.value)
+  authUser.value = computed(()=>storeAuthUser.getters.user)
+
+})
 </script>
 
 <template>
@@ -15,10 +29,8 @@ const authUser = computed(()=>storeAuthUser.getters.user)
     </main>
   </div>
   <div v-else>
-    <main class="">
       <Dashboard >
         <RouterView />
       </Dashboard>
-    </main>
   </div>
 </template>
