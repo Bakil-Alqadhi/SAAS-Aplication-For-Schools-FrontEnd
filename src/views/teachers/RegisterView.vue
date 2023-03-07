@@ -11,6 +11,7 @@ import {
 import {
     storeDataSchools
 } from "../../store/storeDataSchools";
+import { storeDataTeachers } from "../../store/storeDataTeachers";
 const schoolsData = computed(() => storeDataSchools.getters.schools);
 onMounted(() => {
     mapActions['fetchSchools']
@@ -32,7 +33,8 @@ const grabFile = (e) => {
 }
 
 function submit() {
-    
+    mapActions['handleTeacherRegister', form.value]
+    storeDataTeachers.dispatch('handleTeacherRegister', form.value)
 }
 </script>
 

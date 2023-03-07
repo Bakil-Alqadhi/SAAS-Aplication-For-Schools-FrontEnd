@@ -2,6 +2,7 @@
 import DirectorSidebarLinks from './director/DirectorSidebarLinks.vue'
 import TeacherSidebarLinks from './teacher/TeacherSidebarLinks.vue'
 import StudentSidebarLinks from './student/StudentSidebarLinks.vue'
+import {storeDataSchools} from '../store/storeDataSchools'
 
 import {
     storeAuthUser
@@ -12,17 +13,23 @@ import {
     ref,
     watch
 } from 'vue';
+
+
 const authUser = computed(() => storeAuthUser.getters.user);
-const school_id = computed(()=>storeAuthUser.getters.school_id);
 
 onMounted(async () => {
     await storeAuthUser.dispatch('getUser')
-    console.log(('auth => '+authUser))
 })
 
-const handleLogout = async( guard)=> {
-    console.log(guard)
-    storeAuthUser.dispatch('handleLogout', guard, school_id)
+watch(authUser, newValue =>{
+    storeDataSchools.dispatch('getWaitingRequests', newValue.school_id)
+})
+// const handleLogout = async( guard)=> {
+//     console.log(guard)
+//     storeAuthUser.dispatch('handleLogout', guard, school_id)
+// }
+const logout = async()=>{
+  storeAuthUser.dispatch('handleLogout');
 }
 </script>
 <template>
@@ -52,7 +59,7 @@ const handleLogout = async( guard)=> {
                         <div class="block w-px h-6 mx-3 bg-gray-400 dark:bg-gray-700"></div>
                     </li>
                     <li>
-                        <a @click="handleLogout(authUser.userType)" class="flex items-center cursor-pointer mr-4 hover:text-blue-100">
+                        <a @click="logout" class="flex items-center cursor-pointer mr-4 hover:text-blue-100">
                             <span class="inline-flex mr-1">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
@@ -80,6 +87,8 @@ const handleLogout = async( guard)=> {
         <!-- ./Sidebar -->
 
         <div class="h-full ml-14 mt-14 mb-10 md:ml-64">
+            <!-- {{ authUser }} -->
+
             <slot></slot>
         </div>
     </div>

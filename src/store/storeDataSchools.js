@@ -9,13 +9,25 @@ export const storeDataSchools = new createStore({
     schools: [],
     school: {},
     errors: {},
+    waitingStudents: [],
+    waitingTeachers: [],
+    countNotifications: 0,
   },
   getters: {
     schools: (state) => state.schools,
     school: (state) => state.school,
     errors: (state) => state.errors,
+    waitingStudents: (state) => state.waitingStudents,
+    waitingTeachers: (state) => state.waitingTeachers,
+    countNotifications: (state) => state.countNotifications,
   },
   mutations: {
+    //set waiting data
+    setWaitingData: (state, data) => {
+      state.waitingStudents = data.students;
+      state.waitingTeachers = data.teachers;
+      state.countNotifications = data.students.length + data.teachers.length;
+    },
     //set schools data
     setSchools: (state, data) => {
       state.schools = data;
@@ -51,7 +63,7 @@ export const storeDataSchools = new createStore({
       await axios
         .get("api/schools/" + id)
         .then((response) => {
-          console.log(response.data.school);
+          // console.log(response.data.school);
           context.commit("setOneSchool", response.data);
         })
         .catch((error) => console.log(error));
@@ -113,6 +125,36 @@ export const storeDataSchools = new createStore({
         });
     },
 
+    //get waiting data
+    getWaitingRequests: async (context, school_id) => {
+      await context.dispatch("getToken");
+      await axios
+        .get("/api/waiting/" + school_id)
+        .then((response) => {
+          context.commit("setWaitingData", response.data);
+          // console.log("students => " + response);
+          // console.log(response.data.students);
+          // console.log(response.data.teachers);
+        })
+        .catch((error) => console.log(error));
+    },
+
+    //accept new member
+    acceptNewMember: async (context, payload) => {
+      await context.dispatch("getToken");
+      await axios
+        .post("/api/acceptNewMember", {
+          school_id: payload.school_id,
+          typeMember: payload.typeMember,
+          member_id: payload.member_id,
+        })
+        .then((response) => {
+          // console.log(response);
+          context.dispatch("getWaitingRequests", payload.school_id);
+          router.push("/dashboard");
+        })
+        .catch((error) => console.log(error));
+    },
     //show details school
     // showSchool: async (context, id) => {
     //   await context.dispatch("getToken");

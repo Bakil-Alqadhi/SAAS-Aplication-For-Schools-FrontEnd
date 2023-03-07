@@ -21,23 +21,23 @@ export const storeAuthUser = new createStore({
   mutations: {
     //getting auth user
     getUser: async (state, guard = "web", school_id = null) => {
-      const axiosInstance = axios.create({
-        withCredentials: true,
-        // ...
-      });
-      await axiosInstance
-        .get("/api/user", {
-          headers: {
-            Authorization: guard,
-            "X-School-Id": school_id,
-          },
-        })
-        .then((response) => {
-          state.authUser = response.data;
-          state.school_id = school_id;
-          state.guard = guard;
-        })
-        .catch((error) => console.log(error));
+      // const axiosInstance = axios.create({
+      //   withCredentials: true,
+      //   // ...
+      // });
+      // await axiosInstance
+      //   .get("/api/user", {
+      //     headers: {
+      //       Authorization: guard,
+      //       "X-School-Id": school_id,
+      //     },
+      //   })
+      //   .then((response) => {
+      //     state.authUser = response.data;
+      //     state.school_id = school_id;
+      //     state.guard = guard;
+      //   })
+      //   .catch((error) => console.log(error));
       // try {
       //   const response = null;
       //   if (!school_id || !guard) {
@@ -65,16 +65,16 @@ export const storeAuthUser = new createStore({
       //     })
       //     .catch((error) => console.log(error));
       // } else {
-      //   await axios
-      //     .get("/api/user")
-      //     .then((response) => {
-      //       // state.authUser = response.data;
-      //       // state.school_id = school_id;
-      //       state.authUser = response.data;
-      //       state.school_id = school_id;
-      //       state.guard = guard;
-      //     })
-      //     .catch((error) => console.log(error));
+      await axios
+        .get("/api/user")
+        .then((response) => {
+          // state.authUser = response.data;
+          // state.school_id = school_id;
+          state.authUser = response.data;
+          state.school_id = school_id;
+          state.guard = guard;
+        })
+        .catch((error) => console.log(error));
       // }
     },
 
@@ -162,35 +162,35 @@ export const storeAuthUser = new createStore({
     },
 
     //logout
-    handleLogout: async (context, userType, school_id) => {
-      try {
-        const response = "";
-        if (userType == "director") {
-          response = await axios.post("/logout");
-        } else if (userType == "teacher") {
-          response = await axios.post("teacher/logout", {
-            school_id: school_id,
-          });
-        } else if (userType == "student") {
-          response = await axios.post("student/logout", {
-            school_id: school_id,
-          });
-        }
-        if (response) {
-          context.commit("resetAuthUser");
-          console.log("loggedOUT");
-          router.push("/");
-        }
-      } catch (error) {
-        console.log(error);
-      }
-      // await axios
-      //   .post("/logout")
-      //   .then(() => {
+    handleLogout: async (context, userTyp = null, school_id = null) => {
+      // try {
+      //   const response = "";
+      //   if (userType == "director") {
+      //     response = await axios.post("/logout");
+      //   } else if (userType == "teacher") {
+      //     response = await axios.post("teacher/logout", {
+      //       school_id: school_id,
+      //     });
+      //   } else if (userType == "student") {
+      //     response = await axios.post("student/logout", {
+      //       school_id: school_id,
+      //     });
+      //   }
+      //   if (response) {
       //     context.commit("resetAuthUser");
+      //     console.log("loggedOUT");
       //     router.push("/");
-      //   })
-      //   .catch((error) => console.log(error.response));
+      //   }
+      // } catch (error) {
+      //   console.log(error);
+      // }
+      await axios
+        .post("/logout")
+        .then(() => {
+          context.commit("resetAuthUser");
+          router.push("/login");
+        })
+        .catch((error) => console.log(error.response));
     },
 
     //forgot password

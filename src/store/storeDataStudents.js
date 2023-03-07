@@ -7,7 +7,7 @@ export const storeDataStudents = new createStore({
   router,
   state: {
     students: [],
-    student: {},
+    student: [],
     errors: {},
   },
   getters: {
@@ -57,23 +57,61 @@ export const storeDataStudents = new createStore({
         });
     },
 
+    //student register
+    handleStudentRegister: async (context, payload) => {
+      await context.dispatch("getToken");
+      await axios
+        .post("/student/register", {
+          school_id: payload.school_id,
+          student_first_name: payload.student_first_name,
+          student_middle_name: payload.student_middle_name,
+          student_last_name: payload.student_last_name,
+          parent_first_name: payload.parent_first_name,
+          parent_last_name: payload.parent_last_name,
+          birthday: payload.birthday,
+          sex: payload.sex,
+          image_path: payload.image_path,
+          student_address: payload.student_address,
+          student_phone: payload.student_phone,
+          parent_phone: payload.parent_phone,
+          student_email: payload.student_email,
+          parent_email: payload.parent_email,
+          password: payload.password,
+          password_confirmation: payload.password_confirmation,
+        })
+        .then((response) => {
+          // context.commit("setAuthStatus", response.data.status);
+          console.log("student registrated");
+          router.push("/");
+        })
+        .catch((error) => {
+          console.log("student is not registrated");
+          if (error.response.status === 422) {
+            context.commit("setErrors", error.response.data.errors);
+          }
+          console.log(error.response.data.errors);
+        });
+    },
+
     //fetch all the schools
     fetchStudents: async (context, db) => {
+      await context.dispatch("getToken");
       await axios
         .get("api/schools/" + db + "/students")
         .then((response) => {
-          context.commit("setStudents", response.data.data);
-          console.log(response);
+          context.commit("setStudents", response.data);
+          // console.log(response);
         })
         .catch((error) => console.log(error));
     },
 
     //fetch one student
     fetchOneStudent: async (context, payload) => {
+      await context.dispatch("getToken");
       await axios
-        .get("api/schools/" + payload.school + "/students/" + payload.teacher)
+        .get("api/schools/" + payload.school + "/students/" + payload.student)
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           context.commit("setOneStudent", response.data);
         })
         .catch((error) => console.log(error));

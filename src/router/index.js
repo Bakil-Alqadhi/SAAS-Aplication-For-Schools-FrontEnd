@@ -21,13 +21,13 @@ const router = createRouter({
       path: "/register-first-step",
       name: "Register",
       component: () => import("../views/Student/RegisterFirstStepView.vue"),
-      meta: { requiresGuest: true },
+      // meta: { requiresGuest: true },
     },
     {
       path: "/register-second-step",
       name: "RegisterStepTwo",
       component: () => import("../views/Student/RegisterSecondStepView.vue"),
-      meta: { requiresGuest: true },
+      // meta: { requiresGuest: true },
     },
     {
       path: "/school-register",
@@ -70,6 +70,18 @@ const router = createRouter({
       props: true,
     },
     {
+      path: "/students",
+      name: "StudentsView",
+      component: () => import("../views/Student/StudentsView.vue"),
+    },
+    {
+      path: "/students/:id/student-details",
+      name: "StudentDetailView",
+      component: () => import("../views/Student/StudentDetailsView.vue"),
+      meta: { requiresAuth: true },
+      props: true,
+    },
+    {
       path: "/teachers",
       name: "TeachersView",
       component: () => import("../views/teachers/TeachersView.vue"),
@@ -80,6 +92,19 @@ const router = createRouter({
       component: () => import("../views/teachers/TeacherDetailsView.vue"),
       meta: { requiresAuth: true },
       props: true,
+    },
+    {
+      path: "/waiting/:id/teacher-details",
+      name: "WaitingTeacherDetailView",
+      component: () => import("../views/Director/TeacherDetailsView.vue"),
+      meta: { requiresAuth: true },
+      props: true,
+    },
+    {
+      path: "/waiting",
+      name: "WaitingView",
+      component: () => import("../views/WaitingView.vue"),
+      meta: { requiresAuth: true },
     },
     {
       path: "/test",

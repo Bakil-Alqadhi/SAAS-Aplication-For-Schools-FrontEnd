@@ -1,14 +1,15 @@
 <script setup>
-import { computed, onMounted } from 'vue';
-import { mapActions } from 'vuex';
+import { computed, onMounted, watch } from 'vue';
 import { storeDataTeachers } from '../../store/storeDataTeachers';
+import { storeAuthUser } from '../../store/storeAuthUser';
 const teacher = computed(()=> storeDataTeachers.getters.teacher);
 const props= defineProps({
     id: String
 })
-onMounted(()=>{
-  mapActions['fetchOneTeacher', { school:7, teacher: props.id }]
-  storeDataTeachers.dispatch('fetchOneTeacher', { school:7, teacher: props.id });
+const authUser = computed(() => storeAuthUser.getters.user);
+
+watch(authUser, newValue =>{
+  storeDataTeachers.dispatch('fetchOneTeacher', { school:newValue.school_id, teacher: props.id })
 })
 </script>
 <template>
