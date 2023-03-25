@@ -36,10 +36,7 @@ const hideCards = (title)=>{
         <p class="text-5xl font-bold text-green-500">{{ accountStudents.length }}</p>
     </div>
 </div>
-    <!-- Cards the waiting students and teachers -->
-<div v-if="showStudents" class="flex justify-center items-center">
-    <h1>Students</h1>
-</div>
+    <!-- Cards the waiting  teachers -->
 <div v-else-if="showTeachers" class="flex justify-start mt-5 ml-10 items-start h-screen">
     <div class="w-full max-w-6xl mx-4">
         <h2 class="text-2xl font-bold mb-6  left-2text-center">All Are Waiting For You To Accept Them</h2>
@@ -61,7 +58,7 @@ const hideCards = (title)=>{
                             {{ index+1 }}
                         </td>
                         <td class="py-3 px-6 text-left">
-                            <img class="h-12 w-12 rounded-full object-cover" :src="teacher.image_path" alt="Teacher Image">
+                            <img class="h-12 w-12 rounded-full object-cover" :src="teacher.image" alt="Teacher Image">
                         </td>
                         <td class="py-3 px-6 text-left whitespace-nowrap">
                             {{ teacher.first_name +' '+ teacher.last_name }}
@@ -87,4 +84,56 @@ const hideCards = (title)=>{
     </div>
 
 </div>
+    <!-- Cards the waiting students -->
+<div v-if="showStudents" class="flex flex-col m-5 rounded-lg">
+    <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+        <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-blue-400">
+              <tr>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                  ID
+                </th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                  Image
+                </th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                  Name
+                </th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                  Email
+                </th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              <tr v-for="(student, index) in accountStudents" :key="student.id">
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                  {{ index + 1 }}
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                  <img :src="student.image" alt="Student Image" class="h-8 w-8 rounded-full">
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                  {{ student.student_first_name }}
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                  {{ student.student_email }}
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium text-gray-900">
+                    <router-link :to="{name: 'WaitingStudentDetailView', params:{id: student.id}}">
+                        <i class="far fa-eye hover:text-blue-500 hover:cursor-pointer"></i>
+                    </router-link>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </template>

@@ -20,62 +20,14 @@ export const storeAuthUser = new createStore({
   },
   mutations: {
     //getting auth user
-    getUser: async (state, guard = "web", school_id = null) => {
-      // const axiosInstance = axios.create({
-      //   withCredentials: true,
-      //   // ...
-      // });
-      // await axiosInstance
-      //   .get("/api/user", {
-      //     headers: {
-      //       Authorization: guard,
-      //       "X-School-Id": school_id,
-      //     },
-      //   })
-      //   .then((response) => {
-      //     state.authUser = response.data;
-      //     state.school_id = school_id;
-      //     state.guard = guard;
-      //   })
-      //   .catch((error) => console.log(error));
-      // try {
-      //   const response = null;
-      //   if (!school_id || !guard) {
-      //     response = await axios.get("/api/user");
-      //   } else {
-      //     response = await axios.get("/" + guard + "/user/" + school_id);
-      //   }
-      //   if (response) {
-      //     console.log("Response getting use after login=>" + response);
-      //     state.authUser = response.data;
-      //     state.school_id = school_id;
-      //     state.guard = guard;
-      //   }
-      // } catch (error) {
-      //   console.log(error);
-      // }
-      /////////
-      // if (school_id && guard) {
-      //   await axios
-      //     .get("/" + guard + "/user/" + school_id)
-      //     .then((response) => {
-      //       // state.authUser = response.data;
-      //       // state.school_id = school_id;
-      //       state.authUser = response.data;
-      //     })
-      //     .catch((error) => console.log(error));
-      // } else {
+    getUser: async (state) => {
       await axios
         .get("/api/user")
         .then((response) => {
-          // state.authUser = response.data;
-          // state.school_id = school_id;
-          state.authUser = response.data;
-          state.school_id = school_id;
-          state.guard = guard;
+          state.authUser = response.data.user;
+          console.log(response.data);
         })
         .catch((error) => console.log(error));
-      // }
     },
 
     //setting errors
@@ -115,9 +67,9 @@ export const storeAuthUser = new createStore({
     },
 
     //getting user's data
-    getUser: async (context, guard = "api", school_id = null) => {
-      await context.dispatch("getToken");
-      await context.commit("getUser", guard, school_id);
+    getUser: async (context) => {
+      //await context.dispatch("getToken");
+      context.commit("getUser");
     },
 
     //login
@@ -162,33 +114,23 @@ export const storeAuthUser = new createStore({
     },
 
     //logout
-    handleLogout: async (context, userTyp = null, school_id = null) => {
-      // try {
-      //   const response = "";
-      //   if (userType == "director") {
-      //     response = await axios.post("/logout");
-      //   } else if (userType == "teacher") {
-      //     response = await axios.post("teacher/logout", {
-      //       school_id: school_id,
-      //     });
-      //   } else if (userType == "student") {
-      //     response = await axios.post("student/logout", {
-      //       school_id: school_id,
-      //     });
-      //   }
-      //   if (response) {
-      //     context.commit("resetAuthUser");
-      //     console.log("loggedOUT");
-      //     router.push("/");
-      //   }
-      // } catch (error) {
-      //   console.log(error);
-      // }
+    handleLogout: async (context) => {
+      await context.dispatch("getToken");
       await axios
-        .post("/logout")
+        .post("/api/logout", {
+          headers: {
+            "X-School": localStorage.getItem("school"),
+            "X-Sanctum-Guard": localStorage.getItem("guard"),
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        })
         .then(() => {
-          context.commit("resetAuthUser");
-          router.push("/login");
+          // context.commit("resetAuthUser");
+          localStorage.removeItem("school"),
+            localStorage.removeItem("guard"),
+            localStorage.removeItem("token"),
+            router.push("/");
+            location.reload();
         })
         .catch((error) => console.log(error.response));
     },

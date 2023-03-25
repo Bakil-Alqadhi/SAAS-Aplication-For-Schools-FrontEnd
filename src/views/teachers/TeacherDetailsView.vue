@@ -6,26 +6,28 @@ const teacher = computed(()=> storeDataTeachers.getters.teacher);
 const props= defineProps({
     id: String
 })
-const authUser = computed(() => storeAuthUser.getters.user);
-
-watch(authUser, newValue =>{
-  storeDataTeachers.dispatch('fetchOneTeacher', { school:newValue.school_id, teacher: props.id })
+onMounted(()=>{
+  storeDataTeachers.dispatch('fetchOneTeacher', { teacher: props.id })
 })
+// const authUser = computed(() => storeAuthUser.getters.user);
+
+// watch(authUser, newValue =>{
+//   storeDataTeachers.dispatch('fetchOneTeacher', { teacher: props.id })
+// })
 </script>
 <template>
 <div v-if="teacher" class="flex items-center m-10 justify-between">
   <div class="max-w-screen-lg mx-auto rounded-lg overflow-hidden  bg-white flex">
     <div class="w-1/3 border-r border-gray-200">
-      <img :src="teacher.image_path
-      " alt="Teacher Image" class="w-full h-full object-cover border border-gray-300">
+      <img :src="teacher.image" alt="Teacher Image" class="w-full h-full object-cover border border-gray-300">
     </div>
     <div class="w-2/3 p-6">
-      <h1 class="text-3xl font-bold mb-2">{{ teacher.first_name +' '+ teacher.last_name }}}</h1>
+      <h1 class="text-3xl font-bold mb-2">{{ teacher.first_name +' '+ teacher.last_name }}</h1>
       <div class="flex items-center mb-2">
         <div class="w-4 h-4 rounded-full bg-green-500 mr-2"></div>
         <p class="text-gray-700">Available</p>
       </div>
-      <h2 class="text-lg font-bold mb-2">{{ teacher.about }}}</h2>
+      <h2 class="text-lg font-bold mb-2">{{ teacher.about }}</h2>
       <p class="text-gray-700 text-base">
         {{ teacher.about }}      
       </p>

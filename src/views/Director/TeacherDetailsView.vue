@@ -10,37 +10,29 @@ const props= defineProps({
     id: String
 })
 const school_id = ref(null)
-watch(authUser, newValue=>{
-  mapActions['fetchOneTeacher', { school:newValue.school_id, teacher: props.id }]
-  storeDataTeachers.dispatch('fetchOneTeacher', { school: newValue.school_id, teacher: props.id });
-  school_id.value = newValue.school_id
+// watch(authUser, newValue=>{
+//   mapActions['fetchOneTeacher', {  teacher: props.id }]
+//   storeDataTeachers.dispatch('fetchOneTeacher', {  teacher: props.id });
+//   school_id.value = newValue.school_id
+
+// })
+onMounted(()=>{
+  mapActions['fetchOneTeacher', {  teacher: props.id }]
+  storeDataTeachers.dispatch('fetchOneTeacher', {  teacher: props.id });
 
 })
-// onMounted(()=>{
-//   mapActions['fetchOneTeacher', { school:authUser.school_id, teacher: props.id }]
-//   storeDataTeachers.dispatch('fetchOneTeacher', { school: authUser.school_id, teacher: props.id });
-// })
 const handleAccept = async()=>{
-    // mapActions['acceptNewMember',{
-    //     'school_id': authUser.school_id,
-    //     'typeMember' : 'teacher',
-    //     'member_id' : props.id
-    //   } ];
-     await storeDataSchools.dispatch('acceptNewMember', {
-        'school_id': school_id.value,
-        'typeMember' : 'teacher',
-        'member_id' : props.id
-      })
-    console.log(school_id.value)
-    console.log('teacher')
-    console.log(props.id)
+    await storeDataSchools.dispatch('acceptNewMember', {  
+      'member_id' : props.id,
+    'userType': 'teacher' 
+  })
 }
 </script>
 <template>
 <div v-if="teacher && authUser" class="flex items-center m-10 justify-between">
   <div class="max-w-screen-lg mx-auto rounded-lg overflow-hidden  bg-white flex">
     <div class="w-1/3 border-r border-gray-200">
-      <img :src="teacher.image_path
+      <img :src="teacher.image
       " alt="Teacher Image" class="w-full h-full object-cover border border-gray-300">
     </div>
     <div class="w-2/3 p-6">
@@ -67,8 +59,7 @@ const handleAccept = async()=>{
   </div>
 </div>
 <div class="text-center ">
-  <button @click="handleAccept" v-if="school_id" class="bg-blue-600 p-2 hover:p-3 hover:bg-blue-700 font-bold rounded-lg  text-white">Accept</button>
+  <button @click="handleAccept" v-if="teacher" class="bg-blue-600 p-2 hover:p-3 hover:bg-blue-700 font-bold rounded-lg  text-white">Accept</button>
   <button  v-else class="bg-blue-600 p-2 hover:p-3 hover:bg-blue-400  cursor-not-allowed font-bold rounded-lg  text-white">Accept</button>
-
 </div>
 </template>

@@ -70,22 +70,19 @@ watch(isStudent, (newValue)=>{
     }
 })
 
-// watch(form.value.school_id, (newValue) => {
-//         schoolRequired.value = false;
-//         console.log(newValue)
-// })
+
 const handelSubmit = () =>{
         if(isDirector.value){
         // mapActions['handleSchoolLogin', form.value]
             if(storeDataSchools.dispatch('handleSchoolLogin',form.value)){
-                storeAuthUser.dispatch('getUser')
+                //storeAuthUser.dispatch('getUser')
             }
         // errors =computed(()=>storeDataSchools.getters.errors)
         } else if( isTeacher.value){
             // mapActions['handleTeacherLogin', form.value]
             if(form.value.school_id){
                 if(storeDataTeachers.dispatch('handleTeacherLogin', form.value)){
-                    storeAuthUser.dispatch('getUser', 'teacher', form.value.school_id)
+                  //  storeAuthUser.dispatch('getUser', 'teacher', form.value.school_id)
                 }
             }else {
                 schoolRequired.value = true;
@@ -94,7 +91,7 @@ const handelSubmit = () =>{
         } else if(isStudent.value){
             if(form.value.school_id){
                 if(storeDataStudents.dispatch('handleStudentLogin', form.value)){
-                    storeAuthUser.dispatch('getUser', 'student', form.value.school_id)
+                    //storeAuthUser.dispatch('getUser', 'student', form.value.school_id)
                 }
             }else {
                 schoolRequired.value = true;

@@ -38,15 +38,33 @@ export const storeDataTeachers = new createStore({
 
     //login teacher
     handleTeacherLogin: async (context, payload) => {
-      await context.dispatch("getToken"); //because I called it inside storeAuthUser in getUser from LoginView
+      await context.dispatch("getToken"); 
       await axios
-        .post("/teacher/login", {
-          school: payload.school_id,
-          email: payload.email,
-          password: payload.password,
-        })
-        .then(() => {
-          router.push("/");
+        .post(
+          "/login",
+          {
+            email: payload.email,
+            password: payload.password,
+          },
+          {
+            headers: {
+              "X-Sanctum-Guard": "teacher",
+              "X-School": payload.school_id,
+            },
+          }
+        )
+        .then((response) => {
+          console.log(response.data);
+          const token = response.data.token;
+
+          localStorage.setItem("guard", "teacher");
+          localStorage.setItem("school", payload.school_id);
+          localStorage.setItem("token", token);
+          //Set the Authorization header for all future requests
+          // axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+          // axios.defaults.headers.common["X-School"] = payload.school_id;
+          // axios.defaults.headers.common["X-Sanctum-Guard"] = "teacher";
+          router.push("/dashboard");
         })
         .catch((error) => {
           if (error.response.status === 422) {
@@ -57,10 +75,10 @@ export const storeDataTeachers = new createStore({
     },
 
     //fetch all the schools
-    fetchTeachers: async (context, db) => {
-      await context.dispatch("getToken");
+    fetchTeachers: async (context) => {
+      // await context.dispatch("getToken");
       await axios
-        .get("api/schools/" + db + "/teachers")
+        .get("api/teachers")
         .then((response) => {
           context.commit("setTeachers", response.data);
           // console.log(response.data);
@@ -68,9 +86,8 @@ export const storeDataTeachers = new createStore({
         .catch((error) => console.log(error));
     },
     fetchOneTeacher: async (context, payload) => {
-      await context.dispatch("getToken");
       await axios
-        .get("api/schools/" + payload.school + "/teachers/" + payload.teacher)
+        .get("api/teachers/" + payload.teacher)
         .then((response) => {
           console.log(response.data);
           context.commit("setOneTeacher", response.data);

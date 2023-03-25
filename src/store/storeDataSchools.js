@@ -52,7 +52,7 @@ export const storeDataSchools = new createStore({
     //fetch all the schools
     fetchSchools: async (context) => {
       await axios
-        .get("api/schools")
+        .get("/api/schools")
         .then((response) => {
           context.commit("setSchools", response.data);
           // console.log(response.data);
@@ -73,12 +73,29 @@ export const storeDataSchools = new createStore({
     handleSchoolLogin: async (context, payload) => {
       await context.dispatch("getToken");
       await axios
-        .post("/login", {
-          email: payload.email,
-          password: payload.password,
-        })
-        .then(() => {
-          router.push("/");
+        .post(
+          "/login",
+          {
+            email: payload.email,
+            password: payload.password,
+            // userType: "director",
+          },
+          {
+            headers: {
+              "X-Sanctum-Guard": "director",
+            },
+          }
+        )
+        .then((response) => {
+          const token = response.data.token;
+
+          localStorage.setItem("guard", "director");
+          localStorage.setItem("school", 0);
+          localStorage.setItem("token", token);
+          // Set the Authorization header for all future requests
+          axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+          axios.defaults.headers.common["X-Sanctum-Guard"] = "director";
+          router.push("/dashboard");
         })
         .catch((error) => {
           if (error.response.status === 422) {
@@ -126,15 +143,12 @@ export const storeDataSchools = new createStore({
     },
 
     //get waiting data
-    getWaitingRequests: async (context, school_id) => {
+    getWaitingRequests: async (context) => {
       await context.dispatch("getToken");
       await axios
-        .get("/api/waiting/" + school_id)
+        .get("/api/waiting")
         .then((response) => {
           context.commit("setWaitingData", response.data);
-          // console.log("students => " + response);
-          // console.log(response.data.students);
-          // console.log(response.data.teachers);
         })
         .catch((error) => console.log(error));
     },
@@ -143,14 +157,11 @@ export const storeDataSchools = new createStore({
     acceptNewMember: async (context, payload) => {
       await context.dispatch("getToken");
       await axios
-        .post("/api/acceptNewMember", {
-          school_id: payload.school_id,
-          typeMember: payload.typeMember,
-          member_id: payload.member_id,
+        .post("/api/acceptNewMember/" + payload.member_id, {
+          userType: payload.userType,
         })
         .then((response) => {
-          // console.log(response);
-          context.dispatch("getWaitingRequests", payload.school_id);
+          // context.dispatch("getWaitingRequests", payload.school_id);
           router.push("/dashboard");
         })
         .catch((error) => console.log(error));

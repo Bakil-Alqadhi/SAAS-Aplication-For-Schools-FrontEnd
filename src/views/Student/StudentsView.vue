@@ -4,13 +4,16 @@ import { storeDataStudents } from '../../store/storeDataStudents';
 import { storeAuthUser } from '../../store/storeAuthUser';
 
 const allTheStudents = computed(() => storeDataStudents.getters.students);
-const authUser = computed(()=> storeAuthUser.getters.user)
-watch( authUser, newValue => {
-    storeDataStudents.dispatch('fetchStudents', newValue.school_id)
-    console.log(allTheStudents);  
+// const authUser = computed(()=> storeAuthUser.getters.user)
+// watch( authUser, newValue => {
+//     storeDataStudents.dispatch('fetchStudents', newValue.school_id)
+//     console.log(allTheStudents);  
 
+// })
+
+onMounted(()=>{
+    storeDataStudents.dispatch('fetchStudents')
 })
-
 </script>
 <template>
 <!-- component -->
@@ -50,7 +53,7 @@ watch( authUser, newValue => {
                                 </td>
                                 <td class="p-2 whitespace-nowrap">
                                     <div class="flex items-center">
-                                        <div class="w-10 h-10 flex-shrink-0 mr-2 sm:mr-3"><img class="rounded-full" :src="student.image_path" width="40" height="40" alt="Alex Shatov"></div>
+                                        <div class="w-10 h-10 flex-shrink-0 mr-2 sm:mr-3"><img class="rounded-full" :src="student.image" width="40" height="40" alt="Alex Shatov"></div>
                                         <div class="font-medium text-gray-800">{{ student.student_first_name + ' ' + student.student_last_name }}</div>
                                     </div>
                                 </td>

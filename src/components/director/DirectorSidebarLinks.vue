@@ -9,14 +9,14 @@ const countNotifications = computed(() => storeDataSchools.getters.countNotifica
 // const router= useRouter()
 
 onMounted(async () => {
-    storeAuthUser.dispatch('getUser')
+    // storeAuthUser.dispatch('getUser')
     // storeDataSchools.dispatch('getWaitingRequests', authUser.school_id)
 })
 
-// const getWaiting = async(id)=>{
-//     storeDataSchools.dispatch('getWaitingRequests', id)
-//     router.push('/waiting')
-// }
+const getWaiting = async()=>{
+    storeDataSchools.dispatch('getWaitingRequests')
+    router.push('/waiting')
+}
 </script>
 <template>
 <!-- Sidebar -->

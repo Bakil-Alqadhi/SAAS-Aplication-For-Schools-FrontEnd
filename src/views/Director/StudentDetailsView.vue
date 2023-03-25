@@ -2,16 +2,22 @@
 import { computed,  watch, onMounted } from 'vue';
 import { storeDataStudents } from '../../store/storeDataStudents';
 import { storeAuthUser } from '../../store/storeAuthUser';
+import { storeDataSchools } from '../../store/storeDataSchools';
+
 const props= defineProps({
     id: String
 })
 const student = computed(()=> storeDataStudents.getters.student)
-// const authUser = computed(() => storeAuthUser.getters.user);
 onMounted(async()=>{
   await storeDataStudents.dispatch('fetchOneStudent', {  student: props.id })
 })
 
-
+const handleAccept = async()=>{
+    await storeDataSchools.dispatch('acceptNewMember', {  
+      'member_id' : props.id,
+      'userType': 'student' 
+  })
+}
 </script>
 <template>
   <div v-if="student" class="max-w-3xl mx-auto mx-10 mt-8">
@@ -65,5 +71,9 @@ onMounted(async()=>{
         </tr>
       </tbody>
     </table>
+    <div class="text-center mt-5">
+      <button @click="handleAccept" v-if="student" class="bg-blue-600 p-2 hover:p-2 hover:bg-blue-700 font-bold rounded-lg  text-white">Accept</button>
+      <button  v-else class="bg-blue-600 p-2 hover:p-3 hover:bg-blue-400  cursor-not-allowed font-bold rounded-lg  text-white">Accept</button>
+  </div>
   </div>
 </template>

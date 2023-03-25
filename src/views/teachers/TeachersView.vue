@@ -5,8 +5,8 @@ import { storeDataTeachers } from '../../store/storeDataTeachers';
 import SpinnerLoading from '../../components/SpinnerLoading.vue';
 const teachers =  computed(()=> storeDataTeachers.getters.teachers);
 onMounted(()=>{
-  mapActions['fetchTeachers', 7]
-  storeDataTeachers.dispatch('fetchTeachers', 7);
+  mapActions['fetchTeachers']
+  storeDataTeachers.dispatch('fetchTeachers');
 })
 </script>
 <template>
@@ -34,7 +34,7 @@ onMounted(()=>{
                             {{ index+1 }}
                         </td>
                         <td class="py-3 px-6 text-left">
-                            <img class="h-12 w-12 rounded-full object-cover" :src="teacher.image_path" alt="Teacher Image">
+                            <img class="h-12 w-12 rounded-full object-cover" :src="teacher.image" alt="Teacher Image">
                         </td>
                         <td class="py-3 px-6 text-left whitespace-nowrap">
                             {{ teacher.first_name +' '+ teacher.last_name }}

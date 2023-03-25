@@ -9,7 +9,7 @@ const router = createRouter({
       path: "/",
       name: "Home",
       component: () => import("../views/HomeView.vue"),
-      // meta: { requiresGuest: true },
+      meta: { requiresGuest: true },
     },
     {
       path: "/login",
@@ -21,13 +21,13 @@ const router = createRouter({
       path: "/register-first-step",
       name: "Register",
       component: () => import("../views/Student/RegisterFirstStepView.vue"),
-      // meta: { requiresGuest: true },
+      meta: { requiresGuest: true },
     },
     {
       path: "/register-second-step",
       name: "RegisterStepTwo",
       component: () => import("../views/Student/RegisterSecondStepView.vue"),
-      // meta: { requiresGuest: true },
+      meta: { requiresGuest: true },
     },
     {
       path: "/school-register",
@@ -85,6 +85,7 @@ const router = createRouter({
       path: "/teachers",
       name: "TeachersView",
       component: () => import("../views/teachers/TeachersView.vue"),
+      meta: { requiresAuth: true },
     },
     {
       path: "/teachers/:id/teacher-details",
@@ -97,6 +98,13 @@ const router = createRouter({
       path: "/waiting/:id/teacher-details",
       name: "WaitingTeacherDetailView",
       component: () => import("../views/Director/TeacherDetailsView.vue"),
+      meta: { requiresAuth: true },
+      props: true,
+    },
+    {
+      path: "/waiting/:id/student-details",
+      name: "WaitingStudentDetailView",
+      component: () => import("../views/Director/StudentDetailsView.vue"),
       meta: { requiresAuth: true },
       props: true,
     },
@@ -115,20 +123,45 @@ const router = createRouter({
       path: "/dashboard",
       name: "Dashboard",
       component: () => import("../views/Director/DashboardView.vue"),
-      // meta: { requiresAuth: true },
+      meta: {
+        requiresAuth: true,
+        // requiresRole: "director",
+      },
     },
+    {
+      path: "/error-component",
+      name: "ErrorComponent",
+      component: () => import("../views/ErrorComponent.vue"),
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    // catch-all 404 route
+    // { path: "*", component: NotFound },
   ],
 });
 
 router.beforeEach((to, from) => {
   const authUser = computed(() => storeAuthUser.getters.user);
-  if (to.meta.requiresGuest && authUser) {
-    return {
-      name: "Home",
-    };
-  } else if (to.meta.requiresAuth && !authUser) {
+  // if (to.meta.requiresGuest && authUser) {
+  //   // const requiresRole = to.matched.some((record) => record.meta.requiresRole);
+  //   // if (requiresRole && authUser.userType != requiresRole) {
+  //   //   next("/error-component");
+  //   // } else {
+  //   //   next();
+  //   // }
+
+  //   return {
+  //     name: 'Home'
+  //   }
+  // }
+  if (to.meta.requiresAuth && !authUser) {
     return {
       name: "Login",
+    };
+  } else {
+    return {
+      name: "Home",
     };
   }
 });

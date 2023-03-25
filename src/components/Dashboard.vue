@@ -13,23 +13,22 @@ import {
     ref,
     watch
 } from 'vue';
+import { mapActions } from 'vuex';
 
 
 const authUser = computed(() => storeAuthUser.getters.user);
 
 onMounted(async () => {
-    await storeAuthUser.dispatch('getUser')
+   // await storeAuthUser.dispatch('getUser')
 })
 
 watch(authUser, newValue =>{
     storeDataSchools.dispatch('getWaitingRequests', newValue.school_id)
 })
-// const handleLogout = async( guard)=> {
-//     console.log(guard)
-//     storeAuthUser.dispatch('handleLogout', guard, school_id)
-// }
+
 const logout = async()=>{
-  storeAuthUser.dispatch('handleLogout');
+    mapActions['handelLogout']
+    storeAuthUser.dispatch('handleLogout');
 }
 </script>
 <template>
@@ -40,7 +39,7 @@ const logout = async()=>{
         <div class="fixed w-full flex items-center justify-between h-14 text-white z-10">
             <div class="flex items-center justify-start md:justify-center pl-3 w-14 md:w-64 h-14 bg-blue-800 dark:bg-gray-800 border-none">
                 <img class="w-7 h-7 md:w-10 md:h-10 mr-2 rounded-md overflow-hidden" src="https://therminic2018.eu/wp-content/uploads/2018/07/dummy-avatar.jpg" />
-                <span v-if="authUser.userType === 'director'" class="hidden md:block">Dir. {{ authUser.name }}</span>
+                <span v-if="authUser.userType === 'director'" class="hidden md:block">Dir. {{ authUser.director_name }}</span>
                 <span v-if="authUser.userType === 'teacher'" class="hidden md:block">T. {{ authUser.name }}</span>
                 <span v-if="authUser.userType === 'student'" class="hidden md:block">Dear. {{ authUser }}</span>
             </div>
