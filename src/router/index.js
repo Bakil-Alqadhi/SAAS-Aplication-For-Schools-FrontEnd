@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { storeAuthUser } from "../store/storeAuthUser";
 import { computed } from "vue";
+import { mapActions } from "vuex";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,7 +16,7 @@ const router = createRouter({
       path: "/login",
       name: "Login",
       component: () => import("../views/LoginView.vue"),
-      // meta: { requiresGuest: true },
+      meta: { requiresGuest: true },
     },
     {
       path: "/register-first-step",
@@ -73,6 +74,10 @@ const router = createRouter({
       path: "/students",
       name: "StudentsView",
       component: () => import("../views/Student/StudentsView.vue"),
+      meta: {
+        requiresAuth: true,
+        requiresRole: "director",
+      },
     },
     {
       path: "/students/:id/student-details",
@@ -85,34 +90,49 @@ const router = createRouter({
       path: "/teachers",
       name: "TeachersView",
       component: () => import("../views/teachers/TeachersView.vue"),
-      meta: { requiresAuth: true },
+      meta: {
+        requiresAuth: true,
+        requiresRole: "director",
+      },
     },
     {
       path: "/teachers/:id/teacher-details",
       name: "TeacherDetailView",
       component: () => import("../views/teachers/TeacherDetailsView.vue"),
-      meta: { requiresAuth: true },
+      meta: {
+        requiresAuth: true,
+        requiresRole: "director",
+      },
       props: true,
     },
     {
       path: "/waiting/:id/teacher-details",
       name: "WaitingTeacherDetailView",
       component: () => import("../views/Director/TeacherDetailsView.vue"),
-      meta: { requiresAuth: true },
+      meta: {
+        requiresAuth: true,
+        requiresRole: "director",
+      },
       props: true,
     },
     {
       path: "/waiting/:id/student-details",
       name: "WaitingStudentDetailView",
       component: () => import("../views/Director/StudentDetailsView.vue"),
-      meta: { requiresAuth: true },
+      meta: {
+        requiresAuth: true,
+        requiresRole: "director",
+      },
       props: true,
     },
     {
       path: "/waiting",
       name: "WaitingView",
       component: () => import("../views/WaitingView.vue"),
-      meta: { requiresAuth: true },
+      meta: {
+        requiresAuth: true,
+        requiresRole: "director",
+      },
     },
     {
       path: "/test",
@@ -125,7 +145,7 @@ const router = createRouter({
       component: () => import("../views/Director/DashboardView.vue"),
       meta: {
         requiresAuth: true,
-        // requiresRole: "director",
+        requiresRole: "director",
       },
     },
     {
@@ -141,9 +161,37 @@ const router = createRouter({
   ],
 });
 
-router.beforeEach((to, from) => {
-  const authUser = computed(() => storeAuthUser.getters.user);
-  // if (to.meta.requiresGuest && authUser) {
+router.beforeEach(
+  (to, from, next) => {
+    const authUser = localStorage.getItem("guard");
+    if (to.meta.requiresAuth && !authUser) {
+      next("/login");
+    } else if (to.meta.requiresAuth && authUser) {
+      if (to.meta.requiresRole && authUser !== to.meta.requiresRole) {
+        next("/error-component");
+      } else {
+        next();
+      }
+    } else if (to.meta.requiresGuest && authUser) {
+      router.go(-1);
+      // next();
+      // next("/home");
+    } else if (to.meta.requiresGuest && !authUser) {
+      next();
+      // router.go(-1);
+    }
+
+    // if (to.meta.requiresGuest && authUser) {
+    //   const requiresRole = to.matched.some((record) => record.meta.requiresRole);
+    //   if (requiresRole && authUser.userType !== requiresRole) {
+    //     next("/error-component");
+    //   } else {
+    //     next();
+    //   }
+    // return {
+    //   name: "Home",
+    // };
+  }
   //   // const requiresRole = to.matched.some((record) => record.meta.requiresRole);
   //   // if (requiresRole && authUser.userType != requiresRole) {
   //   //   next("/error-component");
@@ -155,14 +203,18 @@ router.beforeEach((to, from) => {
   //     name: 'Home'
   //   }
   // }
-  if (to.meta.requiresAuth && !authUser) {
-    return {
-      name: "Login",
-    };
-  } else {
-    return {
-      name: "Home",
-    };
-  }
-});
+  // else{
+  //   // else if (to.meta.requiresAuth && !authUser) {
+  //     // return {
+  //   //   name: "Login",
+  //   // };
+  //   next("/login");
+  // }
+  //  else {
+  //   return {
+  //     name: "Home",
+  //   };
+  // }
+  // }
+);
 export default router;
