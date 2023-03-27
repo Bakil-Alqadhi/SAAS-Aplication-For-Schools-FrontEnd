@@ -149,6 +149,33 @@ const router = createRouter({
       },
     },
     {
+      path: "/teacher/dashboard",
+      name: "TeacherDashboard",
+      component: () => import("../views/teachers/DashboardView.vue"),
+      meta: {
+        requiresAuth: true,
+        requiresRole: "teacher",
+      },
+    },
+    {
+      path: "/student/dashboard",
+      name: "StudentDashboard",
+      component: () => import("../views/Student/DashboardView.vue"),
+      meta: {
+        requiresAuth: true,
+        requiresRole: "student",
+      },
+    },
+    {
+      path: "/student/parents",
+      name: "ParentsDashboard",
+      component: () => import("../views/Student/ParentsView.vue"),
+      meta: {
+        requiresAuth: true,
+        requiresRole: "student",
+      },
+    },
+    {
       path: "/error-component",
       name: "ErrorComponent",
       component: () => import("../views/ErrorComponent.vue"),

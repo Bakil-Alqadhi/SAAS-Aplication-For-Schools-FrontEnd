@@ -64,7 +64,7 @@ export const storeDataTeachers = new createStore({
           // axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
           // axios.defaults.headers.common["X-School"] = payload.school_id;
           // axios.defaults.headers.common["X-Sanctum-Guard"] = "teacher";
-          router.push("/dashboard");
+          router.push("/teacher/dashboard");
         })
         .catch((error) => {
           if (error.response.status === 422) {
