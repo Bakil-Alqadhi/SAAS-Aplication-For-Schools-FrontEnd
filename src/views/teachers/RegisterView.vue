@@ -12,6 +12,8 @@ import {
     storeDataSchools
 } from "../../store/storeDataSchools";
 import { storeDataTeachers } from "../../store/storeDataTeachers";
+import { storage } from '../../firebase'
+import {  uploadBytes,  ref as Ref, getDownloadURL} from "firebase/storage"
 const schoolsData = computed(() => storeDataSchools.getters.schools);
 onMounted(() => {
     mapActions['fetchSchools']
@@ -28,11 +30,25 @@ const form = ref({
     password: '',
     password_confirmation: ''
 })
+const image_url = ref('')
 const grabFile = (e) => {
-    form.value.image = e.target.files[0]
+    image_url.value = e.target.files[0]
 }
 
 function submit() {
+    const storageRef = Ref( storage,'Teachers/'+ image_url.value.name);
+    uploadBytes(storageRef, image_url.value ).then(
+        (snapshot ) => {
+                //console.log(snapshot);
+            // Get the download URL of the uploaded file
+            getDownloadURL(snapshot.ref).then((url) => {
+                form.value.image = url;
+                console.log('File download URL:', url);
+        // Use the URL to display the image or store it in your database
+        });
+    }).catch((error) => {
+        console.log(error);
+    });
     mapActions['handleTeacherRegister', form.value]
     storeDataTeachers.dispatch('handleTeacherRegister', form.value)
 }

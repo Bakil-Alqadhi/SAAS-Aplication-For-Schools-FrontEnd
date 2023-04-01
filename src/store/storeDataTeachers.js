@@ -60,10 +60,6 @@ export const storeDataTeachers = new createStore({
           localStorage.setItem("guard", "teacher");
           localStorage.setItem("school", payload.school_id);
           localStorage.setItem("token", token);
-          //Set the Authorization header for all future requests
-          // axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-          // axios.defaults.headers.common["X-School"] = payload.school_id;
-          // axios.defaults.headers.common["X-Sanctum-Guard"] = "teacher";
           router.push("/teacher/dashboard");
         })
         .catch((error) => {
@@ -100,28 +96,33 @@ export const storeDataTeachers = new createStore({
       await context.dispatch("getToken");
       await axios
         .post(
-          "/teacher/register",
+          "/api/register",
           {
-            school_id: payload.school_id,
+            // school_id: payload.school_id,
             first_name: payload.first_name,
             last_name: payload.last_name,
             about: payload.about,
-            image_path: payload.image_path,
+            image: payload.image_path,
             address: payload.address,
             phone: payload.phone,
             email: payload.email,
             password: payload.password,
             password_confirmation: payload.password_confirmation,
-          },
+          }, 
           {
             headers: {
-              "content-type": "multipart/form-data",
+              "X-Sanctum-Guard": "teacher",
+              "X-School": payload.school_id,
             },
           }
         )
         .then((response) => {
+          const token = response.data.token;
+          localStorage.setItem("guard", "teacher");
+          localStorage.setItem("school", payload.school_id);
+          localStorage.setItem("token", token);
           // context.commit("setAuthStatus", response.data.status);
-          router.push("/");
+          router.push("/teacher/dashboard");
         })
         .catch((error) => {
           if (error.response.status === 422) {

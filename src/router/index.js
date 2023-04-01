@@ -62,13 +62,14 @@ const router = createRouter({
       path: "/schools",
       name: "SchoolsView",
       component: () => import("../views/SchoolsView.vue"),
-      meta: { requiresGuest: true },
+      meta: { requiresAuth: true },
     },
     {
       path: "/schools/:id/school-details",
       name: "SchoolDetailView",
       component: () => import("../views/SchoolDetailsView.vue"),
       props: true,
+      meta: { requiresAuth: true },
     },
     {
       path: "/students",
