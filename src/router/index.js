@@ -150,6 +150,24 @@ const router = createRouter({
       },
     },
     {
+      path: "/grades",
+      name: "IndexGrade",
+      component: () => import("../views/Director/IndexGradesView.vue"),
+      meta: {
+        requiresAuth: true,
+        requiresRole: "director",
+      },
+    },
+    {
+      path: "/grade/create",
+      name: "CreateGrade",
+      component: () => import("../views/Director/CreateGradeView.vue"),
+      meta: {
+        requiresAuth: true,
+        requiresRole: "director",
+      },
+    },
+    {
       path: "/teacher/dashboard",
       name: "TeacherDashboard",
       component: () => import("../views/teachers/DashboardView.vue"),
