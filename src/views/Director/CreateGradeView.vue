@@ -11,7 +11,7 @@ const createGrade =  ()=> {
 }
 </script>
 <template>
-  <div class=" p-40 text-lg">
+  <div class="p-40 text-lg">
     <form @submit.prevent="createGrade" class="max-w-sm mx-auto mt-8 bg-blue-100 rounded-lg p-10 ">
         <h1 class="block text-gray-800 text-center font-bold mb-8">Create New Grade</h1>
         <div class="mb-4">

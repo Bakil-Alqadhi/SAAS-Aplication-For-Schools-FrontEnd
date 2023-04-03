@@ -43,7 +43,7 @@ const logout = async()=>{
                 <span v-if="authUser.userType === 'teacher'" class="hidden md:block">T. {{ authUser.last_name +' ' +  authUser.first_name }}</span>
                 <span v-if="authUser.userType === 'student'" class="hidden md:block">Dear. {{ authUser.student_last_name + ' '+ authUser.student_first_name }}</span>
             </div>
-            <div class="flex justify-between items-center h-14 bg-blue-800 dark:bg-gray-800 header-right">
+            <div class="flex justify-between items-center h-14  bg-blue-800 dark:bg-gray-800 header-right">
                 <div class="bg-white rounded flex items-center w-full max-w-xl mr-4 p-2 shadow-sm border border-gray-200">
                     <button class="outline-none focus:outline-none">
                         <svg class="w-5 text-gray-600 h-5 cursor-pointer" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24">
@@ -74,7 +74,7 @@ const logout = async()=>{
 
         <!-- Sidebar -->
         <!-- <div v-if="authUser.userType == 'director'"> -->
-        <div class="fixed flex flex-col top-14 left-0 w-14 hover:w-64 md:w-64 bg-blue-900 dark:bg-gray-900 h-full text-white transition-all duration-300 border-none z-10 sidebar">
+        <div class="fixed flex flex-col top-14 left-0 w-14  hover:w-64 md:w-64 bg-blue-900 dark:bg-gray-900 h-full text-white transition-all duration-300 border-none z-10 sidebar">
           <div class="overflow-y-auto overflow-x-hidden flex flex-col justify-between flex-grow">
             <ul class="flex flex-col py-4 space-y-1">
                     <DirectorSidebarLinks v-if="authUser.userType == 'director'" />
