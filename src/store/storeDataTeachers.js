@@ -38,7 +38,7 @@ export const storeDataTeachers = new createStore({
 
     //login teacher
     handleTeacherLogin: async (context, payload) => {
-      await context.dispatch("getToken"); 
+      await context.dispatch("getToken");
       await axios
         .post(
           "/login",
@@ -76,8 +76,8 @@ export const storeDataTeachers = new createStore({
       await axios
         .get("api/teachers")
         .then((response) => {
-          context.commit("setTeachers", response.data);
-          // console.log(response.data);
+          context.commit("setTeachers", response.data.data);
+          // console.log(response.data.data);
         })
         .catch((error) => console.log(error));
     },
@@ -85,8 +85,8 @@ export const storeDataTeachers = new createStore({
       await axios
         .get("api/teachers/" + payload.teacher)
         .then((response) => {
-          console.log(response.data);
-          context.commit("setOneTeacher", response.data);
+          // console.log(response.data.data);
+          context.commit("setOneTeacher", response.data.data);
         })
         .catch((error) => console.log(error));
     },
@@ -108,7 +108,7 @@ export const storeDataTeachers = new createStore({
             email: payload.email,
             password: payload.password,
             password_confirmation: payload.password_confirmation,
-          }, 
+          },
           {
             headers: {
               "X-Sanctum-Guard": "teacher",

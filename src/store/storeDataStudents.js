@@ -117,7 +117,7 @@ export const storeDataStudents = new createStore({
       await axios
         .get("api/students")
         .then((response) => {
-          context.commit("setStudents", response.data);
+          context.commit("setStudents", response.data.data);
           // console.log(response);
         })
         .catch((error) => console.log(error));
@@ -129,7 +129,7 @@ export const storeDataStudents = new createStore({
         .get("api/students/" + payload.student)
         .then((response) => {
           // console.log(response.data);
-          context.commit("setOneStudent", response.data);
+          context.commit("setOneStudent", response.data.data);
         })
         .catch((error) => console.log(error));
     },

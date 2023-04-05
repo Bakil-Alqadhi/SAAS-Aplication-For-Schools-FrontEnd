@@ -1,27 +1,43 @@
 <script setup>
-import { ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
+import { mapActions } from "vuex";
+import { storeDataSchools } from "../../store/storeDataSchools";
 
-    const grades = [
-        {
-            name: 'crade1', 
-        number: 12
-        }
-]
+const grades = computed( ()=> storeDataSchools.getters.grades)
+const message = computed( ()=> storeDataSchools.getters.gradeMessage)
 
 const updateGrade = (index) => {
 
 }
-const deleteGrade = (index) => {
-    
-}
 function launch_toast() {
     var x = document.getElementById("toast")
+
+
     x.className = "show";
-    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 5000);
+    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 4000);
 }
+onMounted( async()=>{
+  if(message.value){
+    launch_toast()
+  }
+    mapActions['fetchGrades']
+    await storeDataSchools.dispatch('fetchGrades');
+})
+
+
+const deleteGrade =async (id)=> {
+  if(confirm("Are you sure?")){
+    mapActions(['deleteGrade', id])
+    // await storeDataSchools.dispatch('deleteGrade', id)
+    if(storeDataSchools.dispatch('deleteGrade', id)){
+      launch_toast()
+    }
+  }
+}
+
 </script>
 <template>
-<div class="grade-table-container">   
+<div v-if="grades" class="grade-table-container">   
      <!-- bg-green-500  -->
     <div class="flex justify-between">
         <router-link to="/grade/create"  class="relative create-grade inline-flex items-center justify-center px-10 py-4 mb-5 overflow-hidden font-bold tracking-tighter  text-white bg-gray-800 rounded-lg group">
@@ -29,9 +45,7 @@ function launch_toast() {
             <span class="absolute inset-0 w-full h-full -mt-1 rounded-lg opacity-30 bg-gradient-to-b from-transparent via-transparent to-gray-700"></span>
             <span class="relative">New Grade</span>
         </router-link>
-    <div class="">
-        <p>Created successfully</p>
-    </div>
+        <div id="toast"><div id="img">&#128522;</div><div id="desc">{{ message }}</div></div>
     </div>
     <table class="grade-table">
       <thead>
@@ -43,33 +57,23 @@ function launch_toast() {
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>1</td>
-          <td>Math</td>
-          <td>A</td>
+        <tr v-for="(grade, index) in grades" :key="index">
+          <td>{{ index+1 }}</td>
+          <td>{{ grade.name }}</td>
+          <td>{{ grade.number }}</td>
           <td>
-            <button class="btn-update">Update</button>
-            <button class="btn-delete">Delete</button>
-          </td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Science</td>
-          <td>B+</td>
-          <td>
-            <button class="btn-update">Update</button>
-            <button class="btn-delete">Delete</button>
+            <router-link :to="{name: 'EditGrade', params:{id: grade.id}}"  class="btn-update">Update</router-link>
+            <button  @click="deleteGrade(grade.id)" class="btn-delete">Delete</button>
           </td>
         </tr>
         <!-- Add more rows here -->
       </tbody>
     </table>
   </div>
-
-  <div id="toast"><div id="img">&#128522;</div><div id="desc">New Grade Created successfully..</div></div>
 </template>
 
 <style>
+
 .create-grade {
     font-size: 1.2rem;
 }
@@ -141,11 +145,11 @@ function launch_toast() {
     color: #fff;
     text-align: center;
     border-radius: 2px;
-
     position: fixed;
     z-index: 1;
-    left: 0;right:0;
-    bottom: 30px;
+    /* left: 0; */
+    right:1rem;
+    top: 40px;
     font-size: 17px;
     white-space: nowrap;
 }

@@ -151,7 +151,7 @@ const router = createRouter({
     },
     {
       path: "/grades",
-      name: "IndexGrade",
+      name: "GradesHome",
       component: () => import("../views/Director/IndexGradesView.vue"),
       meta: {
         requiresAuth: true,
@@ -159,9 +159,28 @@ const router = createRouter({
       },
     },
     {
+      path: "/grades/:id",
+      name: "EditGrade",
+      component: () => import("../views/Director/EditGradeView.vue"),
+      meta: {
+        requiresAuth: true,
+        requiresRole: "director",
+      },
+      props: true,
+    },
+    {
       path: "/grade/create",
       name: "CreateGrade",
       component: () => import("../views/Director/CreateGradeView.vue"),
+      meta: {
+        requiresAuth: true,
+        requiresRole: "director",
+      },
+    },
+    {
+      path: "/classrooms/create",
+      name: "CreateGrade",
+      component: () => import("../views/Director/CreateClassroomView.vue"),
       meta: {
         requiresAuth: true,
         requiresRole: "director",
