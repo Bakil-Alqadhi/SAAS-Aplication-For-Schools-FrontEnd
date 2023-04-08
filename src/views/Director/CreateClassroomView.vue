@@ -2,15 +2,17 @@
 import { computed, onMounted, ref, watch } from "vue";
 import { mapActions } from "vuex";
 import { storeDataSchools } from "../../store/storeDataSchools";
+import { useRouter } from "vue-router";
 const classrooms = ref ([{
         name: '',
         grade: '',
       }])
 
+
 const grades = computed(()=> storeDataSchools.getters.grades)
 const errors = computed(()=> storeDataSchools.getters.errors)
 const errorsList= ref('')
-
+const router = useRouter()
 function addClassroom() {
       classrooms.value.push({
         name: '',
@@ -42,10 +44,15 @@ onMounted(async()=>{
     }
     console.log(grades);
 })
+
+const back = ()=>{
+  router.go(-1);
+}
 </script>
 <template>
   <div class="container">
-  <form @submit.prevent="saveClassrooms">
+    <form @submit.prevent="saveClassrooms">
+        <p @click="back">X</p>
     <div class="errors">
         <span v-for="(error, index) in errors" :key="index">{{ error }}</span>
     </div>
@@ -67,6 +74,11 @@ onMounted(async()=>{
 </template>
 
 <style scoped>
+
+body {
+  transition:ease-in-out linear 2s;
+
+}
 .errors{
     display: none;
     background-color: rgb(245, 101, 101);
@@ -83,16 +95,56 @@ onMounted(async()=>{
     display: block;
     font-size: 10px;
 }
-.container {
-    /* background-color: red; */
+/* .container {
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    /* margin: auto; */
+} */
+
+/* .container {
+  background-color: #59313166;
+  position: absolute;
+  height: 100vh;
+  width: 100%;
+  z-index: 1200;
+  margin:0 0;
+  top: 50%; left: 50%; 
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+  transform: translate(-50%, -50%);
+} */
+
+.container {
+  background-color: #d6cdcd66;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  min-width: 100%;
+  z-index: 1200;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+    /* transition: linear 2s ; */
+    /* transition: opacity 0.3s ease-in-out, visibility 0s linear 0.3s; */
+
+
 }
 
+.container-form {
+  background-color: #eee;
+  width: 50%;
+  z-index: 1300;
+  height: 70%;
+  padding: 20px;
+}
 .container form {
+  position: relative;
+  background-color: white;
     border: 1px solid #ccc;
     padding: 20px 20px 10px;
     border-radius: 10px;
@@ -100,9 +152,32 @@ onMounted(async()=>{
     -moz-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
     /* box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2); */
     box-shadow: 0 5px 30px 0 rgba(0,0,0,0.2);
+      transition: linear 2s ;
+
+}
+
+.container form p {
+  position: absolute;
+  background-color: rgb(210, 53, 18);
+  color: white;
+  font-size: large;
+  font-weight: bold;
+  width: 30px;
+  /* height: 30px; */
+  top: 5px;
+  left: 5px;
+  margin-bottom: 3px;
+  text-align: center;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.container form p:hover {
+  background-color: red;
 }
 .repeater {
-  margin-bottom: 10px;
+  margin: 15px;
+  margin-top: 20px;
   padding: 15px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -110,8 +185,8 @@ onMounted(async()=>{
   overflow: hidden;
   display: flex;
   justify-content: space-evenly;
-  /* transition: linear 2s ; */
-  transition: all 0.3s ease-in-out;
+  /* transition: linear 5s ; */
+  /* transition: all 0.3s ease-in-out; */
   -webkit-box-shadow: 0px 5px 5px -5px rgba(34, 60, 80, 0.6);
     -moz-box-shadow: 0px 5px 5px -5px rgba(34, 60, 80, 0.6);
     box-shadow: 0px 5px 5px -5px rgba(34, 60, 80, 0.6);
@@ -169,6 +244,7 @@ button {
 }
 .buttons .add {
     background-color: rgb(110, 79, 214);
+    margin-right: 4px;
 }
 .buttons .save {
     background-color: rgb(88, 214, 79);
@@ -188,6 +264,12 @@ button {
 }
     .repeater {
         padding: 7px;
+        margin-top: 30px;
+    }
+
+    .container form p {
+      font-size: medium;
+      width: 20px;
     }
 }
 </style>

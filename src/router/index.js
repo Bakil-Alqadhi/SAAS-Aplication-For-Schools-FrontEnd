@@ -179,12 +179,31 @@ const router = createRouter({
     },
     {
       path: "/classrooms/create",
-      name: "CreateGrade",
+      name: "CreateClassroom",
       component: () => import("../views/Director/CreateClassroomView.vue"),
       meta: {
         requiresAuth: true,
         requiresRole: "director",
       },
+    },
+    {
+      path: "/classrooms/index",
+      name: "Classrooms",
+      component: () => import("../views/Director/IndexClassroomsView.vue"),
+      meta: {
+        requiresAuth: true,
+        requiresRole: "director",
+      },
+    },
+    {
+      path: "/classrooms/:id",
+      name: "EditClassroom",
+      component: () => import("../views/Director/EditClassroomView.vue"),
+      meta: {
+        requiresAuth: true,
+        requiresRole: "director",
+      },
+      props: true,
     },
     {
       path: "/teacher/dashboard",

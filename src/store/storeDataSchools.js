@@ -15,6 +15,8 @@ export const storeDataSchools = new createStore({
     grades: {},
     grade: {},
     gradeMessage: null,
+    classrooms: {},
+    classroom: {},
   },
   getters: {
     schools: (state) => state.schools,
@@ -26,6 +28,8 @@ export const storeDataSchools = new createStore({
     grades: (state) => state.grades,
     grade: (state) => state.grade,
     gradeMessage: (state) => state.gradeMessage,
+    classrooms: (state) => state.classrooms,
+    classroom: (state) => state.classroom,
   },
   mutations: {
     //set waiting data
@@ -60,6 +64,14 @@ export const storeDataSchools = new createStore({
       state.gradeMessage = data;
     },
     //endGrades
+    //start classrooms
+    setClassrooms: (state, data) => {
+      state.classrooms = data;
+    },
+    setClassroom: (state, data) => {
+      state.classroom = data;
+    },
+    //end classrooms
   },
   actions: {
     //get Token
@@ -270,14 +282,70 @@ export const storeDataSchools = new createStore({
         .post("/api/classrooms", payload)
         .then((response) => {
           // context.commit("setGradeMessage", response.data.message);
-          localStorage.removeItem('classrooms');
-          router.push("/dashboard");
+          localStorage.removeItem("classrooms");
+          context.commit("setGradeMessage", response.data.message);
+          router.push("/classrooms/index");
           console.log(response.data);
         })
         .catch((error) => {
           if (error.response.status === 422) {
             context.commit("setErrors", error.response.data.errors);
           }
+          console.log(error.response.data.errors);
+        });
+    },
+
+    fetchClassrooms: async (context) => {
+      await axios
+        .get("/api/classrooms/index")
+        .then((response) => {
+          context.commit("setClassrooms", response.data);
+        })
+        .catch((error) => {
+          console.log(error.response.data.errors);
+        });
+    },
+    //fetching one grade
+    fetchOneClassroom: async (context, id) => {
+      await axios
+        .get("/api/classrooms/" + id)
+        .then((response) => {
+          context.commit("setClassroom", response.data);
+          // router.push("/classrooms/index");
+        })
+        .catch((error) => {
+          console.log(error.response.data.errors);
+        });
+    },
+    //update classroom
+    updateClassroom: async (context, payload) => {
+      await context.dispatch("getToken");
+      await axios
+        .put("/api/classrooms/" + payload.id, {
+          name: payload.name,
+          grade: payload.grade,
+        })
+        .then((response) => {
+          context.commit("setGradeMessage", response.data.message);
+          router.push("/classrooms/index");
+          // console.log(response.data);
+        })
+        .catch((error) => {
+          if (error.response.status === 422) {
+            context.commit("setErrors", error.response.data.errors);
+          }
+          console.log(error.response.data.errors);
+        });
+    },
+    deleteClassroom: async (context, id) => {
+      // await context.dispatch("getToken");
+      await axios
+        .delete("/api/classrooms/" + id)
+        .then((response) => {
+          context.commit("setGradeMessage", response.data.message);
+          context.dispatch("fetchClassrooms");
+        })
+        .catch((error) => {
           console.log(error.response.data.errors);
         });
     },

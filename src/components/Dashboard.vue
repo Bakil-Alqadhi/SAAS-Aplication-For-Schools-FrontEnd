@@ -94,7 +94,7 @@ const logout = async()=>{
 </div>
 </template>
 
-<style>
+<style scoped>
 /* Custom style */
 .header-right {
     width: calc(100% - 3.5rem);
