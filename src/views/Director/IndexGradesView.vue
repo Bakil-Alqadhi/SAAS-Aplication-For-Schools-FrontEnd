@@ -26,7 +26,7 @@ onMounted( async()=>{
 
 
 const deleteGrade =async (id)=> {
-  if(confirm("Are you sure?")){
+  if(confirm("Are you sure, the classrooms which connect to this grade will be deleted?")){
     mapActions(['deleteGrade', id])
     // await storeDataSchools.dispatch('deleteGrade', id)
     if(storeDataSchools.dispatch('deleteGrade', id)){
@@ -78,8 +78,8 @@ const deleteGrade =async (id)=> {
     font-size: 1.2rem;
 }
 .grade-table-container {
-    max-width: 600px;
-    margin: 0 auto;
+    max-width: 1000px;
+    margin: 0 100px;
     padding: 2rem;
   }
 
@@ -234,9 +234,13 @@ const deleteGrade =async (id)=> {
 }
 
 @media (max-width:768px){
-     .btn-update {
+     .btn-delete {
         /* display: block; */
-        margin-bottom: 3px;
+        margin-top: 8px;
+    }
+
+    .grade-table-container {
+        margin: 0 auto;
     }
 }
 </style>

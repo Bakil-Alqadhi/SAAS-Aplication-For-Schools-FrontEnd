@@ -31,7 +31,7 @@ onMounted( async()=>{
               <p>Students</p>
             </div>
           </div>
-          <router-link to="/teachers" v-if="allTheTeachers" class="bg-blue-500 dark:bg-gray-800 shadow-lg cursor-pointer rounded-md flex items-center justify-between p-3 border-b-4 border-blue-600 dark:border-gray-600 text-white font-medium group">
+          <router-link to="/teachers" v-if="allTheTeachers" class="bg-green-400 dark:bg-gray-800 shadow-lg cursor-pointer rounded-md flex items-center justify-between p-3 border-b-4 border-blue-600 dark:border-gray-600 text-white font-medium group">
             <div class="flex justify-center items-center w-14 h-14 bg-white rounded-full transition-all duration-300 transform group-hover:rotate-12">
               <span class="stroke-current text-blue-800 text-lg dark:text-gray-800 transform transition-transform duration-500 ease-in-out"> 
                 <i class="fa-solid fa-person-chalkboard"></i>
@@ -52,7 +52,7 @@ onMounted( async()=>{
             </div>
           </div>
           <div>
-            <router-link  to="/grades" class="block bg-blue-500  text-white rounded-lg shadow-lg hover:shadow-xl transition duration-300 transform hover:-translate-y-1 hover:scale-105">
+            <router-link  to="/grades" class="block bg-red-400  text-white rounded-lg shadow-lg hover:shadow-xl transition duration-300 transform hover:-translate-y-1 hover:scale-105">
               <div class="px-6 py-4">
                 <div class="font-bold text-xl  mb-2">Create a New Grade</div>
                 <p class=" text-base">Click here to create a new grade for Vue.js components.</p>
@@ -62,8 +62,21 @@ onMounted( async()=>{
               </div>
             </router-link>
           </div>
+
           <div>
-            <router-link  to="/classrooms/create" class="block bg-blue-500  text-white rounded-lg shadow-lg hover:shadow-xl transition duration-300 transform hover:-translate-y-1 hover:scale-105">
+            <router-link  to="/sections/create" class="block bg-orange-400  text-white rounded-lg shadow-lg hover:shadow-xl transition duration-300 transform hover:-translate-y-1 hover:scale-105">
+              <div class="px-6 py-4">
+                <div class="font-bold text-xl  mb-2">Create New Section</div>
+                <p class=" text-base">Click here to open create section's form.</p>
+              </div>
+              <div class="px-6 py-4">
+                <span class="inline-block bg-white rounded-full px-3 py-1 text-sm font-semibold text-blue-700">#Grades</span>
+              </div>
+            </router-link>
+          </div>
+          
+          <div>
+            <router-link  to="/classrooms/create" class="block bg-green-400  text-white rounded-lg shadow-lg hover:shadow-xl transition duration-300 transform hover:-translate-y-1 hover:scale-105">
               <div class="px-6 py-4">
                 <div class="font-bold text-xl  mb-2">Create a New ClassRoom</div>
                 <p class=" text-base">Click here to create a new classroom.</p>
@@ -74,7 +87,7 @@ onMounted( async()=>{
             </router-link>
           </div>
           <div>
-            <router-link  to="/classrooms/index" class="block bg-blue-500  text-white rounded-lg shadow-lg hover:shadow-xl transition duration-300 transform hover:-translate-y-1 hover:scale-105">
+            <router-link  to="/classrooms/index" class="block bg-orange-400  text-white rounded-lg shadow-lg hover:shadow-xl transition duration-300 transform hover:-translate-y-1 hover:scale-105">
               <div class="px-6 py-4">
                 <div class="font-bold text-xl  mb-2">Show All ClassRooms</div>
                 <p class=" text-base">Click here to check classrooms.</p>

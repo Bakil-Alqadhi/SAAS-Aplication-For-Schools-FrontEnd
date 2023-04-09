@@ -13,6 +13,7 @@ let body= ref('')
 const authUser = computed(() => storeAuthUser.getters.user);
 
 onMounted(()=>{
+   // window.location.reload()
   // storeAuthUser.dispatch('getUser')
    profile.value = window.document.querySelector('.header .flex .profile');
    sideBar.value = window.document.querySelector('.side-bar');

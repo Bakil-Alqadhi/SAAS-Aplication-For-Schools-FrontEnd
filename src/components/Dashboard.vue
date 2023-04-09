@@ -3,6 +3,7 @@ import DirectorSidebarLinks from './director/DirectorSidebarLinks.vue'
 import TeacherSidebarLinks from './teacher/TeacherSidebarLinks.vue'
 import StudentSidebarLinks from './student/StudentSidebarLinks.vue'
 import {storeDataSchools} from '../store/storeDataSchools'
+import SpinnerLoading from './SpinnerLoading.vue'
 
 import {
     storeAuthUser
@@ -19,7 +20,8 @@ import { mapActions } from 'vuex';
 const authUser = computed(() => storeAuthUser.getters.user);
 
 onMounted(async () => {
-   // await storeAuthUser.dispatch('getUser')
+//     mapActions['getUser']
+//    await storeAuthUser.dispatch('getUser')
 })
 
 watch(authUser, newValue =>{
@@ -32,13 +34,14 @@ const logout = async()=>{
 }
 </script>
 <template>
+<!-- <SpinnerLoading /> -->
 <div v-if="authUser">
     <div class="min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-white dark:bg-gray-700 text-black dark:text-white">
 
         <!-- Header -->
         <div class="fixed w-full flex items-center justify-between h-14 text-white z-10">
             <div class="flex items-center justify-start md:justify-center pl-3 w-14 md:w-64 h-14 bg-blue-800 dark:bg-gray-800 border-none">
-                <img class="w-7 h-7 md:w-10 md:h-10 mr-2 rounded-md overflow-hidden" src="{{ authUser.image }}" />
+                <img class="w-7 h-7 md:w-10 md:h-10 mr-2 rounded-md overflow-hidden" :src="authUser.school_image" />
                 <span v-if="authUser.userType === 'director'" class="hidden md:block">Dir. {{ authUser.director_name }}</span>
                 <span v-if="authUser.userType === 'teacher'" class="hidden md:block">T. {{ authUser.last_name +' ' +  authUser.first_name }}</span>
                 <span v-if="authUser.userType === 'student'" class="hidden md:block">Dear. {{ authUser.student_last_name + ' '+ authUser.student_first_name }}</span>

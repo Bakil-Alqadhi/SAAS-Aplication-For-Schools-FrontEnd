@@ -213,6 +213,19 @@ export const storeDataSchools = new createStore({
           console.log(error.response.data.errors);
         });
     },
+
+    //fetch grade's data
+    fetchGradesData: async (context) => {
+      await axios
+        .get("/api/grades/data")
+        .then((response) => {
+          context.commit("setGrades", response.data);
+          console.log(response.data.data);
+        })
+        .catch((error) => {
+          console.log(error.response.data.errors);
+        });
+    },
     //fetching one grade
     fetchOneGrade: async (context, id) => {
       await axios
@@ -233,6 +246,9 @@ export const storeDataSchools = new createStore({
         })
         .then((response) => {
           context.commit("setGradeMessage", response.data.message);
+          setTimeout(() => {
+            context.commit("setGradeMessage", null);
+          }, 4000);
           router.push("/grades");
           // console.log(response.data.message);
         })
@@ -252,6 +268,9 @@ export const storeDataSchools = new createStore({
         })
         .then((response) => {
           context.commit("setGradeMessage", response.data.message);
+          setTimeout(() => {
+            context.commit("setGradeMessage", null);
+          }, 4000);
           router.push("/grades");
           // console.log(response.data.message);
         })
@@ -268,6 +287,9 @@ export const storeDataSchools = new createStore({
         .delete("/api/grades/" + id)
         .then((response) => {
           context.commit("setGradeMessage", response.data.message);
+          setTimeout(() => {
+            context.commit("setGradeMessage", null);
+          }, 4000);
           context.dispatch("fetchGrades");
         })
         .catch((error) => {
@@ -284,6 +306,9 @@ export const storeDataSchools = new createStore({
           // context.commit("setGradeMessage", response.data.message);
           localStorage.removeItem("classrooms");
           context.commit("setGradeMessage", response.data.message);
+          setTimeout(() => {
+            context.commit("setGradeMessage", null);
+          }, 4000);
           router.push("/classrooms/index");
           console.log(response.data);
         })
@@ -327,6 +352,9 @@ export const storeDataSchools = new createStore({
         })
         .then((response) => {
           context.commit("setGradeMessage", response.data.message);
+          setTimeout(() => {
+            context.commit("setGradeMessage", null);
+          }, 4000);
           router.push("/classrooms/index");
           // console.log(response.data);
         })
@@ -343,6 +371,9 @@ export const storeDataSchools = new createStore({
         .delete("/api/classrooms/" + id)
         .then((response) => {
           context.commit("setGradeMessage", response.data.message);
+          setTimeout(() => {
+            context.commit("setGradeMessage", null);
+          }, 4000);
           context.dispatch("fetchClassrooms");
         })
         .catch((error) => {
@@ -350,5 +381,27 @@ export const storeDataSchools = new createStore({
         });
     },
     //End Classrooms
+    //Start Sections
+    createSection: async(context, payload)=> {
+      await context.dispatch("getToken");
+      axios.post('/api/sections/create', {
+        'name': payload.name,
+        'grade': payload.grade,
+        'classroom': payload.classroom
+      }).then((response) => {
+        context.commit("setGradeMessage", response.data.message);
+        setTimeout(() => {
+          context.commit("setGradeMessage", null);
+        }, 4000);
+        router.push("/classrooms/index");
+      })
+      .catch((error) => {
+        if (error.response.status === 422) {
+          context.commit("setErrors", error.response.data.errors);
+        }
+        console.log(error.response.data.errors);
+      });
+    }
+    //End Sections
   },
 });

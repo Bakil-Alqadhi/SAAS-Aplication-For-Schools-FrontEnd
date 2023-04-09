@@ -86,7 +86,8 @@ body {
     width: 100%;
     /* height: 50px; */
     border-radius: 10px;
-    margin-bottom: 10px;
+    /* margin-bottom: 5px; */
+    margin-top: 20px;
     padding: 3px 15px;
 }
 
@@ -129,7 +130,7 @@ body {
   justify-content: center;
   align-items: center;
   padding: 20px;
-    /* transition: linear 2s ; */
+  transition: linear 2s ;
     /* transition: opacity 0.3s ease-in-out, visibility 0s linear 0.3s; */
 
 
@@ -152,7 +153,7 @@ body {
     -moz-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
     /* box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2); */
     box-shadow: 0 5px 30px 0 rgba(0,0,0,0.2);
-      transition: linear 2s ;
+      transition: linear .4s ;
 
 }
 
@@ -270,6 +271,9 @@ button {
     .container form p {
       font-size: medium;
       width: 20px;
+    }
+    .errors {
+      margin-top: 30px;
     }
 }
 </style>

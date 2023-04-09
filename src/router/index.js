@@ -62,14 +62,14 @@ const router = createRouter({
       path: "/schools",
       name: "SchoolsView",
       component: () => import("../views/SchoolsView.vue"),
-      meta: { requiresAuth: true },
+      meta: { requiresGuest: true },
     },
     {
       path: "/schools/:id/school-details",
       name: "SchoolDetailView",
       component: () => import("../views/SchoolDetailsView.vue"),
       props: true,
-      meta: { requiresAuth: true },
+      meta: { requiresGuest: true },
     },
     {
       path: "/students",
@@ -150,7 +150,7 @@ const router = createRouter({
       },
     },
     {
-      path: "/grades",
+      path: "/grades/index",
       name: "GradesHome",
       component: () => import("../views/Director/IndexGradesView.vue"),
       meta: {
@@ -204,6 +204,15 @@ const router = createRouter({
         requiresRole: "director",
       },
       props: true,
+    },
+    {
+      path: "/sections/create",
+      name: "CreateSections",
+      component: () => import("../views/Director/CreateSectionsView.vue"),
+      meta: {
+        requiresAuth: true,
+        requiresRole: "director",
+      },
     },
     {
       path: "/teacher/dashboard",

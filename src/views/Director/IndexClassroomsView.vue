@@ -38,7 +38,9 @@ const deleteClassroom =async (id)=> {
 <div v-if="classrooms" class="grade-table-container">   
      <!-- bg-green-500  -->
     <div class="flex justify-between">
-        <router-link to="/classrooms/create"  class="relative create-grade inline-flex items-center justify-center px-10 py-4 mb-5 overflow-hidden font-bold tracking-tighter  text-white bg-gray-800 rounded-lg group">
+
+      <!-- bg-gray-800 -->
+        <router-link to="/classrooms/create"  class="relative create-grade inline-flex items-center justify-center px-10 py-4 mb-5 overflow-hidden font-bold tracking-tighter  text-white bg-green-600 rounded-lg group"> 
             <span class="absolute w-0 h-0 transition-all duration-500 ease-out bg-blue-500 rounded-full group-hover:w-60 group-hover:h-56"></span>
             <span class="absolute inset-0 w-full h-full -mt-1 rounded-lg opacity-30 bg-gradient-to-b from-transparent via-transparent to-gray-700"></span>
             <span class="relative">New Classroom</span>
@@ -76,14 +78,14 @@ const deleteClassroom =async (id)=> {
     font-size: 1.2rem;
 }
 .grade-table-container {
-    max-width: 600px;
-    margin: 0 auto;
+    max-width: 1000px;
+    margin: 0 100px;
     padding: 2rem;
   }
 
   .grade-table {
     border-collapse: collapse;
-    width: 100%;
+    width: 90%;
     font-size: 1.2rem;
     text-align: left;
     overflow: hidden;
@@ -92,7 +94,8 @@ const deleteClassroom =async (id)=> {
   }
 
   .grade-table th {
-    background-color: #333;
+    background-color: rgb(87, 87, 202);
+    /* background-color: #333; */
     color: #fff;
     padding: 0.8rem;
     font-weight: bold;
@@ -232,9 +235,14 @@ const deleteClassroom =async (id)=> {
 }
 
 @media (max-width:768px){
-     .btn-update {
+     .btn-delete {
         /* display: block; */
-        margin-bottom: 3px;
+        margin-top: 8px;
     }
+    
+    .grade-table-container {
+    max-width: 600px;
+    margin: 0 auto;
+  }
 }
 </style>
