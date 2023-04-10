@@ -196,6 +196,15 @@ const router = createRouter({
       },
     },
     {
+      path: "/sections/index",
+      name: "Sections",
+      component: () => import("../views/Director/IndexSectionsView.vue"),
+      meta: {
+        requiresAuth: true,
+        requiresRole: "director",
+      },
+    },
+    {
       path: "/classrooms/:id",
       name: "EditClassroom",
       component: () => import("../views/Director/EditClassroomView.vue"),
