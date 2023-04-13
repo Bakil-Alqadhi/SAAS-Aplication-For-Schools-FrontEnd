@@ -196,6 +196,16 @@ const router = createRouter({
       },
     },
     {
+      path: "/classrooms/:id",
+      name: "EditClassroom",
+      component: () => import("../views/Director/EditClassroomView.vue"),
+      meta: {
+        requiresAuth: true,
+        requiresRole: "director",
+      },
+      props: true,
+    },
+    {
       path: "/sections/index",
       name: "Sections",
       component: () => import("../views/Director/IndexSectionsView.vue"),
@@ -205,14 +215,14 @@ const router = createRouter({
       },
     },
     {
-      path: "/classrooms/:id",
-      name: "EditClassroom",
-      component: () => import("../views/Director/EditClassroomView.vue"),
+      path: "/sections/:id",
+      name: "EditSection",
+      component: () => import("../views/Director/EditSectionsView.vue"),
       meta: {
         requiresAuth: true,
         requiresRole: "director",
       },
-      props: true,
+      props: true
     },
     {
       path: "/sections/create",

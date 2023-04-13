@@ -17,6 +17,8 @@ export const storeDataSchools = new createStore({
     gradeMessage: null,
     classrooms: {},
     classroom: {},
+    sections: {},
+    section: {},
   },
   getters: {
     schools: (state) => state.schools,
@@ -30,6 +32,8 @@ export const storeDataSchools = new createStore({
     gradeMessage: (state) => state.gradeMessage,
     classrooms: (state) => state.classrooms,
     classroom: (state) => state.classroom,
+    sections: (state) => state.sections,
+    section: (state) => state.section,
   },
   mutations: {
     //set waiting data
@@ -72,6 +76,14 @@ export const storeDataSchools = new createStore({
       state.classroom = data;
     },
     //end classrooms
+    //Start Sections
+    setSections: (state, data) => {
+      state.sections = data;
+    },
+    setSection: (state, data) => {
+      state.section = data;
+    },
+    //End Sections
   },
   actions: {
     //get Token
@@ -382,26 +394,91 @@ export const storeDataSchools = new createStore({
     },
     //End Classrooms
     //Start Sections
-    createSection: async(context, payload)=> {
+    //create Section
+    createSection: async (context, payload) => {
       await context.dispatch("getToken");
-      axios.post('/api/sections/create', {
-        'name': payload.name,
-        'grade': payload.grade,
-        'classroom': payload.classroom
-      }).then((response) => {
-        context.commit("setGradeMessage", response.data.message);
-        setTimeout(() => {
-          context.commit("setGradeMessage", null);
-        }, 4000);
-        router.push("/classrooms/index");
-      })
-      .catch((error) => {
-        if (error.response.status === 422) {
-          context.commit("setErrors", error.response.data.errors);
-        }
-        console.log(error.response.data.errors);
-      });
-    }
+      axios
+        .post("/api/sections/create", {
+          name: payload.name,
+          grade: payload.grade,
+          classroom: payload.classroom,
+        })
+        .then((response) => {
+          context.commit("setGradeMessage", response.data.message);
+          setTimeout(() => {
+            context.commit("setGradeMessage", null);
+          }, 4000);
+          router.push("/classrooms/index");
+        })
+        .catch((error) => {
+          if (error.response.status === 422) {
+            context.commit("setErrors", error.response.data.errors);
+          }
+          console.log(error.response.data.errors);
+        });
+    },
+    //fetching all sections
+    fetchSections: async (context) => {
+      await axios
+        .get("/api/sections")
+        .then((response) => {
+          context.commit("setSections", response.data);
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error.response.data.errors);
+        });
+    },
+    fetchOneSection: async (context, id) => {
+      await axios
+        .get("/api/sections/" + id)
+        .then((response) => {
+          context.commit("setSection", response.data);
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error.response.data.errors);
+        });
+    },
+    //update Section
+    updateSection: async (context, payload) => {
+      await context.dispatch("getToken");
+      await axios
+        .put("/api/sections/" + payload.id, {
+          name: payload.name,
+          grade: payload.grade,
+          classroom: payload.classroom
+        })
+        .then((response) => {
+          context.commit("setGradeMessage", response.data.message);
+          setTimeout(() => {
+            context.commit("setGradeMessage", null);
+          }, 4000);
+          router.push("/sections/index");
+          // console.log(response.data);
+        })
+        .catch((error) => {
+          if (error.response.status === 422) {
+            context.commit("setErrors", error.response.data.errors);
+          }
+          console.log(error.response.data.errors);
+        });
+    },
+    deleteSection: async (context, id) => {
+      // await context.dispatch("getToken");
+      await axios
+        .delete("/api/sections/" + id)
+        .then((response) => {
+          context.commit("setGradeMessage", response.data.message);
+          setTimeout(() => {
+            context.commit("setGradeMessage", null);
+          }, 4000);
+          context.dispatch("fetchSections");
+        })
+        .catch((error) => {
+          console.log(error.response.data.errors);
+        });
+    },
     //End Sections
   },
 });
