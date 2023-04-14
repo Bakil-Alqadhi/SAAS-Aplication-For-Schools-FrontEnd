@@ -10,7 +10,7 @@ const allTheTeachers = computed(() => storeDataTeachers.getters.teachers);
 const authUser = computed(() => storeAuthUser.getters.user);
 
 watch(authUser, newValue =>{
-  storeDataStudents.dispatch('fetchStudents', newValue.school_id)
+    storeDataStudents.dispatch('fetchStudents', newValue.school_id)
     storeDataTeachers.dispatch('fetchTeachers', newValue.school_id)
 })
 onMounted( async()=>{

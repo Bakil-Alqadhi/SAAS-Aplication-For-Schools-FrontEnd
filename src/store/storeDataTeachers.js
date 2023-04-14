@@ -77,7 +77,7 @@ export const storeDataTeachers = new createStore({
         .get("api/teachers")
         .then((response) => {
           context.commit("setTeachers", response.data.data);
-          // console.log(response.data.data);
+          console.log(response);
         })
         .catch((error) => console.log(error));
     },

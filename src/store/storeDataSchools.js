@@ -186,7 +186,7 @@ export const storeDataSchools = new createStore({
 
     //get waiting data
     getWaitingRequests: async (context) => {
-      await context.dispatch("getToken");
+      // await context.dispatch("getToken");
       await axios
         .get("/api/waiting")
         .then((response) => {

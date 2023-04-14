@@ -51,7 +51,7 @@ export const storeAuthSchools = new createStore({
 
     //getting user's data
     getUser: async (context) => {
-      await context.dispatch("getToken");
+      // await context.dispatch("getToken");
       await context.commit("getUser");
     },
 
