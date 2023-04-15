@@ -19,6 +19,7 @@ export const storeDataSchools = new createStore({
     classroom: {},
     sections: {},
     section: {},
+    specializations: {}
   },
   getters: {
     schools: (state) => state.schools,
@@ -34,6 +35,7 @@ export const storeDataSchools = new createStore({
     classroom: (state) => state.classroom,
     sections: (state) => state.sections,
     section: (state) => state.section,
+    specializations: (state) => state.specializations,
   },
   mutations: {
     //set waiting data
@@ -84,12 +86,28 @@ export const storeDataSchools = new createStore({
       state.section = data;
     },
     //End Sections
+    //Start specializations 
+    setSpecializations: (state, data)=> {
+      state.specializations = data
+    }
+    //End specializations
   },
   actions: {
     //get Token
     getToken: async () => {
       await axios.get("/sanctum/csrf-cookie");
     },
+
+    // Start specializations
+    fetchSpecializations: async(context) => {
+      await axios.get('/api/specializations')
+      .then(response => {
+        // console.log(response.data);
+        context.commit('setSpecializations', response.data);
+      })
+      .catch((error) => console.log(error));
+    },
+    //End specializations
 
     //fetch all the schools
     fetchSchools: async (context) => {
@@ -402,6 +420,7 @@ export const storeDataSchools = new createStore({
           name: payload.name,
           grade: payload.grade,
           classroom: payload.classroom,
+          teachers: payload.teachers,
         })
         .then((response) => {
           context.commit("setGradeMessage", response.data.message);
@@ -447,7 +466,7 @@ export const storeDataSchools = new createStore({
         .put("/api/sections/" + payload.id, {
           name: payload.name,
           grade: payload.grade,
-          classroom: payload.classroom
+          classroom: payload.classroom,
         })
         .then((response) => {
           context.commit("setGradeMessage", response.data.message);

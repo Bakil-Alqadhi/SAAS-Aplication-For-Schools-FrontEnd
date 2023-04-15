@@ -15,18 +15,22 @@ import { storeDataTeachers } from "../../store/storeDataTeachers";
 import { storage } from '../../firebase'
 import {  uploadBytes,  ref as Ref, getDownloadURL} from "firebase/storage"
 const schoolsData = computed(() => storeDataSchools.getters.schools);
+const specializations = computed(() => storeDataSchools.getters.specializations)
 onMounted(() => {
     mapActions['fetchSchools']
     storeDataSchools.dispatch("fetchSchools");
+    storeDataSchools.dispatch("fetchSpecializations");
 })
 
 const form = ref({
     first_name: '',
     last_name: '',
     school_id: '',
+    specialization: '',
     phone: '',
     email: '',
     image: '',
+    about: '',
     password: '',
     password_confirmation: ''
 })
@@ -81,6 +85,15 @@ function submit() {
                 </select>
             </div>
             <div class="mb-4">
+                <label class="block text-gray-700 font-bold mb-2" for="school">
+                    Choose Specialization
+                </label>
+                <select v-model="form.specialization" name="" id="school" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    <option value="">All Specializations</option>
+                    <option v-for="specialization in specializations" :key="specialization.id" :value="specialization.id">{{ specialization.name }}</option>
+                </select>
+            </div>
+            <div class="mb-4">
                 <label class="block text-gray-700 font-bold mb-2" for="image">
                     Image
                 </label>
@@ -97,6 +110,12 @@ function submit() {
                     Phone
                 </label>
                 <input v-model="form.phone" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="phone" type="tel" placeholder="Enter phone number">
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 font-bold mb-2" for="about">
+                    About
+                </label>
+                <textarea v-model="form.about" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="about" type="text" placeholder="about you"></textarea>
             </div>
             <div class="mb-8">
                 <label class="block text-gray-700 font-bold mb-2" for="password">
@@ -119,3 +138,35 @@ function submit() {
     </form>
 </div>
 </template>
+<style >
+.container form  {
+    border: 1px solid blue;
+    border-radius: 10px;
+}
+.container form h2 {
+    width: 100%;
+    /* background-color: blue ; */
+    border: 1px solid blue;
+    padding: 4px;
+    color: blue ;
+    border-radius: 5px;
+    text-align: center;
+    margin: 0 0 20px;
+    font-size: large;
+    font-weight: bold;
+}
+.container label {
+    background-color: rgb(221, 221, 232);
+    color: blue ;
+    border: 1px solid blue;
+    width: 100%;
+    font-size: small;
+    padding-left: 4px;
+    border-radius: 5px;
+
+}
+
+.container form input {
+    border: 1px solid rgb(210, 210, 213);
+}
+</style>
