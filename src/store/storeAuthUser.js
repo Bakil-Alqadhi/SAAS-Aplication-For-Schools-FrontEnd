@@ -25,7 +25,7 @@ export const storeAuthUser = new createStore({
         .get("/api/user")
         .then((response) => {
           state.authUser = response.data.user;
-          localStorage.setItem('school_name', response.data.school_name);
+          localStorage.setItem("school_name", response.data.school_name);
           console.log(response.data);
         })
         .catch((error) => console.log(error));
@@ -127,11 +127,12 @@ export const storeAuthUser = new createStore({
         })
         .then(() => {
           // context.commit("resetAuthUser");
-          localStorage.removeItem("school"),
+          localStorage.removeItem("school_name"),
+            localStorage.removeItem("school"),
             localStorage.removeItem("guard"),
             localStorage.removeItem("token"),
             router.push("/");
-            location.reload();
+          location.reload();
         })
         .catch((error) => console.log(error.response));
     },

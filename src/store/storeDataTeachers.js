@@ -6,13 +6,15 @@ export const storeDataTeachers = new createStore({
   router,
   state: {
     teachers: [],
-    teacher: [],
+    teacher: {},
     errors: {},
+    message: null,
   },
   getters: {
     teachers: (state) => state.teachers,
     teacher: (state) => state.teacher,
     errors: (state) => state.errors,
+    message: (state) => state.message,
   },
   mutations: {
     //set schools data
@@ -28,6 +30,11 @@ export const storeDataTeachers = new createStore({
     //setting errors
     setErrors: (state, errors) => {
       state.errors = errors;
+    },
+
+    //setting message
+    setMessage: (state, message) => {
+      state.message = message;
     },
   },
   actions: {
@@ -69,28 +76,6 @@ export const storeDataTeachers = new createStore({
           console.log(error.response.data.errors);
         });
     },
-
-    //fetch all the schools
-    fetchTeachers: async (context) => {
-      // await context.dispatch("getToken");
-      await axios
-        .get("api/teachers")
-        .then((response) => {
-          context.commit("setTeachers", response.data.data);
-          console.log(response);
-        })
-        .catch((error) => console.log(error));
-    },
-    fetchOneTeacher: async (context, payload) => {
-      await axios
-        .get("api/teachers/" + payload.teacher)
-        .then((response) => {
-          // console.log(response.data.data);
-          context.commit("setOneTeacher", response.data.data);
-        })
-        .catch((error) => console.log(error));
-    },
-
     //teacher register
     handleTeacherRegister: async (context, payload) => {
       await context.dispatch("getToken");
@@ -98,11 +83,12 @@ export const storeDataTeachers = new createStore({
         .post(
           "/api/register",
           {
-            // school_id: payload.school_id,
             first_name: payload.first_name,
             last_name: payload.last_name,
             about: payload.about,
-            image: payload.image_path,
+            image: payload.image,
+            about: payload.about,
+            specialization: payload.specialization,
             address: payload.address,
             phone: payload.phone,
             email: payload.email,
@@ -122,7 +108,12 @@ export const storeDataTeachers = new createStore({
           localStorage.setItem("school", payload.school_id);
           localStorage.setItem("token", token);
           // context.commit("setAuthStatus", response.data.status);
+          // window.location.reload();
+          setTimeout(() => {
+            location.reload();
+          }, 1000);
           router.push("/teacher/dashboard");
+          // router.go(router.push("/teacher/dashboard"));
         })
         .catch((error) => {
           if (error.response.status === 422) {
@@ -132,10 +123,52 @@ export const storeDataTeachers = new createStore({
         });
     },
 
-    //show details school
-    // showSchool: async (context, id) => {
-    //   await context.dispatch("getToken");
-    //   //   await
-    // },
+    //fetch all the teachers
+    fetchTeachers: async (context) => {
+      await axios
+        .get("api/teachers")
+        .then((response) => {
+          context.commit("setTeachers", response.data.data);
+          console.log(response);
+        })
+        .catch((error) => console.log(error));
+    },
+    //fetch one teacher
+    fetchOneTeacher: async (context, id) => {
+      await axios
+        .get("api/teachers/" + id)
+        .then((response) => {
+          console.log(response.data.data);
+          context.commit("setOneTeacher", response.data.data);
+        })
+        .catch((error) => console.log(error));
+    },
+    //update profile teacher
+    updateTeacher: async (context, payload) => {
+      await context.dispatch("getToken");
+      await axios
+        .put("/api/teachers/" + payload.id, {
+            first_name: payload.first_name,
+            last_name: payload.last_name,
+            about: payload.about,
+            image: payload.image,
+            phone: payload.phone,
+            email: payload.email,
+        })
+        .then((response) => {
+          context.commit("setMessage", response.data.message);
+          setTimeout(() => {
+            context.commit("setMessage", null);
+          }, 4000);
+          router.push("/teacher/dashboard");
+          // console.log(response.data.message);
+        })
+        .catch((error) => {
+          if (error.response.status === 422) {
+            context.commit("setErrors", error.response.data.errors);
+          }
+          console.log(error.response.data.errors);
+        });
+    },
   },
 });

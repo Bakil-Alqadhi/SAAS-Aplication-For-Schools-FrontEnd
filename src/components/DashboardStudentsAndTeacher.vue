@@ -63,11 +63,11 @@ const logout = async()=>{
           <div id="user-btn" @click="handleUser" class="fas fa-user"></div>
         </div>
         <div class="profile">
-            <img src="https://via.placeholder.com/640x480.png/001111?text=quia" class="image" alt="">
+            <img :src=authUser.image class="image" alt="">
             <h3 v-if="authUser.userType === 'teacher'" class="name">T.{{ authUser.last_name +' ' +  authUser.first_name }}</h3>
             <h3 v-if="authUser.userType === 'student'" class="name">Dear. {{ authUser.student_last_name + ' '+ authUser.student_first_name }}</h3>
             <p class="role">{{ authUser.userType }}</p>
-            <a href="profile.html" class="btn">view profile</a>
+            <router-link :to="{name: 'EditTeacher', params:{ id: authUser.id}}" v-if="authUser.userType === 'teacher'"  class="btn">view profile</router-link>
             <a @click="logout" class="option-btn">logout</a>
           </div>
       </section>
@@ -336,6 +336,8 @@ section{
    /* width: 100px; */
    height: 100vh;
    text-align: center;
+   padding-top: 20px;
+   margin-bottom: 20px;
    object-fit: contain;
    z-index: 1500;
 }

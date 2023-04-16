@@ -43,6 +43,14 @@ const router = createRouter({
       meta: { requiresGuest: true },
     },
     {
+    path: "/teachers/:id",
+    name: "EditTeacher",
+    component: () => import("../views/teachers/EditTeacherView.vue"),
+    meta: { requiresAuth: true },
+    requiresRole: "teacher",
+    props:true
+    },
+    {
       path: "/forgot-password",
       name: "ForgotPassword",
       component: () => import("../components/ForgetPassword.vue"),

@@ -15,8 +15,11 @@ const authUser = computed(() => storeAuthUser.getters.user);
 //     storeDataTeachers.dispatch('fetchTeachers', newValue.school_id)
 // })
 onMounted( async()=>{
-    mapActions['getUser']
-  storeAuthUser.dispatch('getUser')
+    //mapActions['getUser']
+    storeAuthUser.dispatch('getUser')
+    // if(!authUser.value){
+    //     location.reload()
+    // }
 })
 
 </script>

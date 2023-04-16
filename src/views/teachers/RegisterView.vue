@@ -40,21 +40,25 @@ const grabFile = (e) => {
 }
 
 function submit() {
-    const storageRef = Ref( storage,'Teachers/'+ image_url.value.name);
-    uploadBytes(storageRef, image_url.value ).then(
-        (snapshot ) => {
-                //console.log(snapshot);
-            // Get the download URL of the uploaded file
-            getDownloadURL(snapshot.ref).then((url) => {
-                form.value.image = url;
-                console.log('File download URL:', url);
-        // Use the URL to display the image or store it in your database
+    try{
+        const storageRef = Ref( storage,'Teachers/'+ image_url.value.name);
+        uploadBytes(storageRef, image_url.value ).then(
+            (snapshot ) => {
+                // Get the download URL of the uploaded file
+                getDownloadURL(snapshot.ref).then((url) => {
+                    form.value.image = url;
+                    console.log('File download URL:', url);
+            // Use the URL to display the image or store it in your database
+            });
+        }).catch((error) => {
+            console.log(error);
         });
-    }).catch((error) => {
-        console.log(error);
-    });
-    mapActions['handleTeacherRegister', form.value]
-    storeDataTeachers.dispatch('handleTeacherRegister', form.value)
+        mapActions['handleTeacherRegister', form.value]
+        storeDataTeachers.dispatch('handleTeacherRegister', form.value)
+        console.log(form.value)
+    } catch(err){
+        console.log(err)
+    }
 }
 </script>
 
