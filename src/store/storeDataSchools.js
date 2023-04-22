@@ -467,6 +467,7 @@ export const storeDataSchools = new createStore({
           name: payload.name,
           grade: payload.grade,
           classroom: payload.classroom,
+          teachers: payload.teachers
         })
         .then((response) => {
           context.commit("setGradeMessage", response.data.message);

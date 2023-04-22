@@ -88,7 +88,7 @@ const store = ()=>{
 
         <div class="parent">
             <label for="countries_multiple" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Teachers</label>
-            <select multiple id="countries_multiple" v-model="selectedTeachers" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <select multiple id="countries_multiple" v-model="selectedTeachers" class="bg-gray-50 border border-gray-300 text-gray-900 text-2xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 <option v-for="teacher in teachers" :key="teacher.id" :value="teacher.id">{{ teacher.last_name + ' ' + teacher.first_name  }}</option>
             </select>
             <span v-if="errors.teachers">{{ errors.teachers[0] }}</span>

@@ -2,6 +2,7 @@
 import { computed, onMounted, ref, watch } from "vue";
 import { mapActions } from "vuex";
 import { storeDataSchools } from "../../store/storeDataSchools";
+import { storeDataTeachers } from "../../store/storeDataTeachers";
 import { useRouter } from "vue-router";
 const form = ref ([{
         name: '',
@@ -12,11 +13,14 @@ const form = ref ([{
 // const grade_id = ref('')
 const grades = computed(()=> storeDataSchools.getters.grades)
 const section = computed(()=> storeDataSchools.getters.section)
+const teachers = computed(()=> storeDataTeachers.getters.teachers)
 const errors = computed(()=> storeDataSchools.getters.errors)
 // const classroom = computed(()=> storeDataSchools.getters.classroom)
 const classrooms = ref('')
 const selectedGrade = ref('')
 const selectedClassroom = ref('')
+const selectedTeachers = ref('')
+
 const router = useRouter()
 const props = defineProps({
     id: String
@@ -26,6 +30,8 @@ onMounted(async()=>{
 
     await  storeDataSchools.dispatch('fetchGradesData')
     await  storeDataSchools.dispatch('fetchOneSection', props.id)
+    await  storeDataTeachers.dispatch('fetchTeachers')
+    selectedTeachers.value = section.value.teachers
     grades.value.forEach(function(element, index){
         if(element.id == section.value.grade_id){
             selectedGrade.value = index;
@@ -57,7 +63,8 @@ const update = ()=>{
         'id': props.id,
         'name': section.value.section_name,
         'grade' : form.value.grade,
-        'classroom': form.value.classroom
+        'classroom': form.value.classroom, 
+        'teachers': selectedTeachers.value
     })
     // console.log(form.value);
 }
@@ -88,6 +95,13 @@ const update = ()=>{
                 <option v-for="classroom in classrooms" :key="classroom.id" :value="classroom.id">{{ classroom.name }}</option>
             </select>
             <span v-if="errors.classroom">{{ errors.classroom[0] }}</span>
+        </div>
+        <div class="parent">
+            <label for="countries_multiple" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Teachers</label>
+            <select multiple id="countries_multiple" v-model="selectedTeachers" class="bg-gray-50 border border-gray-300 text-gray-900 text-2xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option v-for="teacher in teachers" :key="teacher.id" :value="teacher.id">{{ teacher.last_name + ' ' + teacher.first_name  }}</option>
+            </select>
+            <span v-if="errors.teachers">{{ errors.teachers[0] }}</span>
         </div>
         <div class="buttons">
             <button type="submit" class="create field">Update</button>

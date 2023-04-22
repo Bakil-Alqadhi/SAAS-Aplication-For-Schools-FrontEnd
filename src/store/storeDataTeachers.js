@@ -148,12 +148,12 @@ export const storeDataTeachers = new createStore({
       await context.dispatch("getToken");
       await axios
         .put("/api/teachers/" + payload.id, {
-            first_name: payload.first_name,
-            last_name: payload.last_name,
-            about: payload.about,
-            image: payload.image,
-            phone: payload.phone,
-            email: payload.email,
+          first_name: payload.first_name,
+          last_name: payload.last_name,
+          about: payload.about,
+          image: payload.image,
+          phone: payload.phone,
+          email: payload.email,
         })
         .then((response) => {
           context.commit("setMessage", response.data.message);

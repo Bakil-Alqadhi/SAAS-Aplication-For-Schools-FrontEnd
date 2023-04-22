@@ -5,10 +5,14 @@ import TeacherSidebarLinks from '../components/teacher/TeacherSidebarLinks.vue'
 import StudentSidebarLinks from '../components/student/StudentSidebarLinks.vue'
 import { storeAuthUser } from '../store/storeAuthUser'
 import { mapActions } from "vuex";
+// import router from "../router";
+import { useRouter } from "vue-router";
 
 let profile = ref('')
 let sideBar= ref('')
 let body= ref('')
+
+const router = useRouter()
 
 const authUser = computed(() => storeAuthUser.getters.user);
 
@@ -43,6 +47,11 @@ const logout = async()=>{
     mapActions['handelLogout']
     storeAuthUser.dispatch('handleLogout');
 }
+
+const showEdit = (id)=> {
+   router.push({ name: 'EditTeacher', params:{ id: id}})
+   profile.value.classList.remove('active');
+}
 </script>
 
 
@@ -67,9 +76,10 @@ const logout = async()=>{
             <h3 v-if="authUser.userType === 'teacher'" class="name">T.{{ authUser.last_name +' ' +  authUser.first_name }}</h3>
             <h3 v-if="authUser.userType === 'student'" class="name">Dear. {{ authUser.student_last_name + ' '+ authUser.student_first_name }}</h3>
             <p class="role">{{ authUser.userType }}</p>
-            <router-link :to="{name: 'EditTeacher', params:{ id: authUser.id}}" v-if="authUser.userType === 'teacher'"  class="btn">view profile</router-link>
+            <button @click="showEdit(authUser.id)" v-if="authUser.userType === 'teacher'"  class="btn">view profile</button>
+            <!-- <router-link :to="{name: 'EditTeacher', params:{ id: authUser.id}}" v-if="authUser.userType === 'teacher'"  class="btn">view profile</router-link> -->
             <a @click="logout" class="option-btn">logout</a>
-          </div>
+         </div>
       </section>
 </header>
 
