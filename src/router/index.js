@@ -31,6 +31,12 @@ const router = createRouter({
       meta: { requiresGuest: true },
     },
     {
+      path: "/register-third-step",
+      name: "RegisterStepThree",
+      component: () => import("../views/Student/RegisterThirdStepView.vue"),
+      meta: { requiresGuest: true },
+    },
+    {
       path: "/school-register",
       name: "SchoolRegister",
       component: () => import("../views/Director/SchoolRegister.vue"),

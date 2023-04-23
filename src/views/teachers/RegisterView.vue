@@ -119,7 +119,7 @@ function submit() {
                 <label class="block text-gray-700 font-bold mb-2" for="about">
                     About
                 </label>
-                <textarea v-model="form.about" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="about" type="text" placeholder="about you"></textarea>
+                <textarea v-model="form.about" class="shadow appearance-none border rounded w-full py-2 px-3 text-2xl text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="about" type="text" placeholder="about you"></textarea>
             </div>
             <div class="mb-8">
                 <label class="block text-gray-700 font-bold mb-2" for="password">
@@ -137,7 +137,7 @@ function submit() {
             </div>
         </div>
         <div class="text-center">
-            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline">Register</button>
+            <button type="submit" class="bg-blue-500  hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline">Register</button>
         </div>
     </form>
 </div>
@@ -164,7 +164,7 @@ function submit() {
     color: blue ;
     border: 1px solid blue;
     width: 100%;
-    font-size: small;
+    font-size: medium;
     padding-left: 4px;
     border-radius: 5px;
 
@@ -172,5 +172,7 @@ function submit() {
 
 .container form input {
     border: 1px solid rgb(210, 210, 213);
+    font-size: medium;
+
 }
 </style>

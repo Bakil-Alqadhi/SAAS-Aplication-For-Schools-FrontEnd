@@ -9,23 +9,30 @@ const form= ref({
   parent_email:''
 })
 const data = ref(null)
-onMounted(()=> {
-    data.value = JSON.parse(sessionStorage.getItem('student_data'));
-})
+// onMounted(()=> {
+//     data.value = JSON.parse(sessionStorage.getItem('student_data'));
+// })
 const handleStudentRegister = ()=>{
     console.log({...data.value, ...form.value});
 
     storeDataStudents.dispatch('handleStudentRegister',{...data.value, ...form.value} )
     //remove session
-    sessionStorage.removeItem('student_data')
+   // sessionStorage.removeItem('student_data')
 }
 
+
+const next = ()=>{
+  console.log(data.value)
+  sessionStorage.setItem('parent_data', JSON.stringify(form.value))
+  //sessionStorage.setItem('student_data', JSON.stringify(form.value))
+
+}
 </script>
 
 <template>
   <div class="container mx-auto">
-    <form action="" @submit.prevent="handleStudentRegister">
-      <div class="w-full px-6 py-12 md:w-1/2 mx-auto">
+    <form action="">
+      <div class="w-full form px-6 py-12 md:w-1/2 mx-auto">
       <div class="mb-6">
         <h2 class="text-2xl font-bold mb-2">Step 2: Parent's Information</h2>
         <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
@@ -58,10 +65,44 @@ const handleStudentRegister = ()=>{
 
       <div class="flex justify-between">
         <router-link to="/register-first-step" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" @click="previousStep">Previous</router-link>
-        <button type="submit"  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Register</button>
+        <router-link to="/register-third-step" @click="next" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">next</router-link>
       </div>
     </div>
     </form>
   </div>
 </template>
 
+<style scoped>
+.form {
+  border: 1px solid blue;
+  border-radius: 10px;
+  font-size: medium;
+}
+
+h2 {
+  width: 100%;
+    /* background-color: blue ; */
+    border: 1px solid blue;
+    padding: 4px;
+    color: blue ;
+    border-radius: 5px;
+    text-align: center;
+    margin: 0 0 20px;
+    font-size: large;
+    font-weight: bold;
+}
+label {
+    background-color: rgb(221, 221, 232);
+    color: blue ;
+    border: 1px solid blue;
+    width: 100%;
+    font-size: medium;
+    padding-left: 4px;
+    border-radius: 5px;
+}
+
+form input {
+    border: 1px solid rgb(210, 210, 213);
+}
+
+</style>
