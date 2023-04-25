@@ -80,28 +80,47 @@ export const storeDataStudents = new createStore({
     handleStudentRegister: async (context, payload) => {
       await context.dispatch("getToken");
       await axios
-        .post("/student/register", {
-          school_id: payload.school_id,
-          student_first_name: payload.student_first_name,
-          student_middle_name: payload.student_middle_name,
-          student_last_name: payload.student_last_name,
-          parent_first_name: payload.parent_first_name,
-          parent_last_name: payload.parent_last_name,
-          birthday: payload.birthday,
-          sex: payload.sex,
-          image_path: payload.image_path,
-          student_address: payload.student_address,
-          student_phone: payload.student_phone,
-          parent_phone: payload.parent_phone,
-          student_email: payload.student_email,
-          parent_email: payload.parent_email,
-          password: payload.password,
-          password_confirmation: payload.password_confirmation,
-        })
+        .post(
+          "/api/register",
+          {
+            school_id: payload.school_id,
+            grade: payload.grade,
+            student_first_name: payload.student_first_name,
+            student_middle_name: payload.student_middle_name,
+            student_last_name: payload.student_last_name,
+            parent_first_name: payload.parent_first_name,
+            parent_last_name: payload.parent_last_name,
+            birthday: payload.birthday,
+            sex: payload.sex,
+            image: payload.image,
+            student_address: payload.student_address,
+            student_phone: payload.student_phone,
+            parent_phone: payload.parent_phone,
+            student_email: payload.student_email,
+            parent_email: payload.parent_email,
+            password: payload.password,
+            password_confirmation: payload.password_confirmation,
+          },
+          {
+            headers: {
+              "X-Sanctum-Guard": "student",
+              "X-School": payload.school_id,
+            },
+          }
+        )
         .then((response) => {
           // context.commit("setAuthStatus", response.data.status);
-          console.log("student registrated");
-          router.push("/");
+          // console.log("student registrated");
+          const token = response.data.data.token;
+          localStorage.setItem("guard", "student");
+          localStorage.setItem("school", payload.school_id);
+          localStorage.setItem("token", token);
+          // context.commit("setAuthStatus", response.data.status);
+          // window.location.reload();
+          setTimeout(() => {
+            location.reload();
+          }, 1000);
+          // router.push("/");
         })
         .catch((error) => {
           console.log("student is not registrated");

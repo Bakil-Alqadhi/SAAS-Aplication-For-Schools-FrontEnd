@@ -76,7 +76,7 @@ const showEdit = (id)=> {
             <h3 v-if="authUser.userType === 'teacher'" class="name">T.{{ authUser.last_name +' ' +  authUser.first_name }}</h3>
             <h3 v-if="authUser.userType === 'student'" class="name">Dear. {{ authUser.student_last_name + ' '+ authUser.student_first_name }}</h3>
             <p class="role">{{ authUser.userType }}</p>
-            <button @click="showEdit(authUser.id)" v-if="authUser.userType === 'teacher'"  class="btn">view profile</button>
+            <button @click="showEdit(authUser.id)" class="btn">view profile</button>
             <!-- <router-link :to="{name: 'EditTeacher', params:{ id: authUser.id}}" v-if="authUser.userType === 'teacher'"  class="btn">view profile</router-link> -->
             <a @click="logout" class="option-btn">logout</a>
          </div>

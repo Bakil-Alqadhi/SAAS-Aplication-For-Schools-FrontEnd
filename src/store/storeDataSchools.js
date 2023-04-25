@@ -208,8 +208,8 @@ export const storeDataSchools = new createStore({
       await axios
         .get("/api/waiting")
         .then((response) => {
-          context.commit("setWaitingData", response.data);
-          console.log(response.data);
+          context.commit("setWaitingData", response.data.data);
+          console.log(response.data.data);
         })
         .catch((error) => console.log(error));
     },

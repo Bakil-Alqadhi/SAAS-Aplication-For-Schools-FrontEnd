@@ -20,60 +20,153 @@ const handleAccept = async()=>{
 }
 </script>
 <template>
-  <div v-if="student" class="max-w-3xl mx-auto mx-10 mt-8">
-    <h2 class="text-2xl font-medium mb-4">Student Information</h2>
-    <table class="w-full border-collapse border border-gray-200">
-      <tbody>
-        <tr>
-          <td class="p-4 border border-gray-200 font-medium">Name:</td>
-          <td class="p-4 border border-gray-200"> {{ student.student_first_name + ' '+ student.student_middle_name + ' '+ student.student_last_name}} </td>
-        </tr>
-        <tr>
-          <td class="p-4 border border-gray-200 font-medium">Birthday:</td>
-          <td class="p-4 border border-gray-200"> {{ student.birthday }} </td>
-        </tr>
-        <tr>
-          <td class="p-4 border border-gray-200 font-medium">Class:</td>
-          <td class="p-4 border border-gray-200"> student.class </td>
-        </tr>
-        <tr>
-          <td class="p-4 border border-gray-200 font-medium">Image:</td>
-          <td class="p-4 border border-gray-200"><img :src="student.image" class="h-24 rounded-full object-cover" alt="Student Photo"></td>
-        </tr>
-        <tr>
-          <td class="p-4 border border-gray-200 font-medium">Phone:</td>
-          <td class="p-4 border border-gray-200"> {{ student.student_phone }} </td>
-        </tr>
-        <tr>
-          <td class="p-4 border border-gray-200 font-medium">Email:</td>
-          <td class="p-4 border border-gray-200"> {{ student.student_email }} </td>
-        </tr>
-        <tr>
-          <td class="p-4 border border-gray-200 font-medium">Address:</td>
-          <td class="p-4 border border-gray-200"> {{ student.address }} </td>
-        </tr>
-      </tbody>
-    </table>
-    <h2 class="text-2xl font-medium mt-8 mb-4">Parent Information</h2>
-    <table class="w-full border-collapse border border-gray-200">
-      <tbody>
-        <tr>
-          <td class="p-4 border border-gray-200 font-medium">Name:</td>
-          <td class="p-4 border border-gray-200"> {{ student.parent_first_name + ' '+ student.parent_last_name }} </td>
-        </tr>
-        <tr>
-          <td class="p-4 border border-gray-200 font-medium">Phone:</td>
-          <td class="p-4 border border-gray-200"> {{ student.parent_phone }} </td>
-        </tr>
-        <tr>
-          <td class="p-4 border border-gray-200 font-medium">Email:</td>
-          <td class="p-4 border border-gray-200"> {{ student.parent_email }} </td>
-        </tr>
-      </tbody>
-    </table>
+  <div v-if="student" class=" container">
+    <div class="main student">
+      <h1>Student Information</h1>
+      <div class="about">
+        <div class="data">
+          <div class="item">
+            <label for="name">Full Name:</label>
+            <p id="name">{{ student.student_first_name + ' '+ student.student_middle_name + ' '+ student.student_last_name}}</p>
+          </div>
+          <div class="item">
+            <label for="birthday">Birthday: </label>
+          <p id="birthday">{{ student.birthday }}</p>
+          </div>
+          <div class="item">
+            <label for="phone">Phone:</label>
+          <p for="phone">{{ student.student_phone }}</p>
+          </div>
+          <div class="item">
+            <label for="email">Email:</label>
+          <p for="email">{{ student.student_email }}</p>
+          </div>
+          <div class="item">
+            <label for="address">Address:</label>
+            <p id="address">{{ student.address }}</p>
+          </div>
+        </div>
+        <div class="image">
+          <img :src="student.image" class="" alt="Student Photo">
+        </div>
+      </div>
+    </div>
+    <div class="main parent">
+      <h1>Parent Information</h1>
+      <div class="about">
+        <div class="data">
+          <div class="item">
+            <label for="name">Full Name:</label>
+            <p id="name">{{ student.parent_first_name + ' '+ student.parent_last_name }}</p>
+          </div>
+          <div class="item">
+            <label for="phone">Phone:</label>
+          <p for="phone">{{ student.parent_phone }}</p>
+          </div>
+          <div class="item">
+            <label for="email">Email:</label>
+          <p for="email">{{ student.parent_email }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="text-center mt-5">
-      <button @click="handleAccept" v-if="student" class="bg-blue-600 p-2 hover:p-2 hover:bg-blue-700 font-bold rounded-lg  text-white">Accept</button>
-      <button  v-else class="bg-blue-600 p-2 hover:p-3 hover:bg-blue-400  cursor-not-allowed font-bold rounded-lg  text-white">Accept</button>
-  </div>
-  </div>
+      <button @click="handleAccept" class="bg-blue-600  hover:bg-blue-700 font-bold rounded-lg  text-white">Accept</button>
+      <button @click="handleRejection" class="bg-red-600 hover:bg-red-700 font-bold rounded-lg  text-white">Reject</button>
+  </div> 
+ </div>
 </template>
+
+<style scoped>
+button {
+  width: auto;
+  padding: 7px;
+  margin: 10px;
+  font-size: large;
+}
+.container {
+  /* background-color: aqua; */
+  padding: 30px;
+}
+
+.container .main {
+  background-color: white;
+  margin: 20px;
+}
+.container .main h1{
+  width: 40%;
+  font-size: large;
+
+}
+.container .main .about {
+  /* background-color: blueviolet; */
+  width: 100%;
+  height: auto;
+  display: flex; 
+  justify-content: space-between;
+  padding: 10px;
+
+}
+
+.container .main .about .data {
+  /* display: inline-block; */
+  width: 50%;
+}
+.container .main .about .item {
+  display: flex;
+  /* justify-content: space-between; */
+  width: 100%;
+  font-size: medium;
+}
+.container .main h1, .item label{
+  background-color: rgb(221, 221, 232);
+  border: 1px solid blue;
+  padding: 10px;
+  color: blue;
+  border-radius: 10px;
+  font-weight: bold;
+ }
+.item label {
+  max-width: 20%;
+  width: 30%;
+  font-size: small;
+  margin-bottom: 5px;
+}
+.item p {
+  padding: 10px;
+  text-align: center;
+  margin-left: 10px;
+}
+.container .main .about .image {
+  margin-right: 50px;
+}
+.container .main .about img {
+  border-radius: 10px;
+}
+
+@media (max-width:540px){
+.item label {
+  display: block;
+  max-width: 100%;
+}
+
+}
+@media (max-width:768px){
+  .container .main .about {
+  /* display: flex;  */
+  flex-direction: column;
+  /* justify-content: space-between; */
+}
+.container .main h1{
+  width: 100%;
+}
+.item label {
+  max-width: 80%;
+}
+}
+@media (max-width:1040px){
+.item label {
+  max-width: 50%;
+}
+}
+</style>

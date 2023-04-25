@@ -2,8 +2,11 @@
 import { computed, onMounted, ref, watch } from "vue";
 import { mapActions } from "vuex";
 import { storeDataSchools } from "../../store/storeDataSchools";
+import {storeDataStudents } from "../../store/storeDataStudents";
 import {  uploadBytes,  ref as Ref, getDownloadURL} from "firebase/storage";
 import axios from "axios";
+import { storage } from '../../firebase'
+
 
 // const schoolsData = computed(() => storeDataSchools.getters.schools);
 const schoolsData = computed(()=> storeDataSchools.getters.schools);
@@ -25,6 +28,7 @@ watch(gradesData, newValue => {
 })
 watch(school_id, newValue => {
     grades.value = ''
+    form.value.school_id = newValue
     // localStorage.setItem('school', newValue)
     axios.defaults.headers.common["X-School"] = newValue
     mapActions['fetchGrades']
@@ -39,41 +43,42 @@ onMounted(()=> {
 
 const grabFile = (e) => {
     image_url.value = e.target.files[0]
-    console.log(image_url.value)
+    // console.log(image_url.value)
 }
 
 
-function handleStudentRegister(){
-    console.log({...data_st.value, ...data_pa.value, ...form.value});
+const handleStudentRegister = ()=>{
+  // console.log('this is register student')
+    // console.log({...data_st.value, ...data_pa.value, ...form.value});
 
-    console.log(form.value.school_id)
-    // try{
-    //     const storageRef = Ref( storage,'Students/'+ image_url.value.name);
-    //     uploadBytes(storageRef, image_url.value ).then(
-    //         (snapshot ) => {
-    //             // Get the download URL of the uploaded file
-    //             getDownloadURL(snapshot.ref).then((url) => {
-    //                 form.value.image = url;
-    //                 console.log('File download URL:', url);
-    //         });
-    //     }).catch((error) => {
-    //         console.log(error);
-    //     });
+    try{
+        const storageRef = Ref( storage,'Students/'+ image_url.value.name);
+        uploadBytes(storageRef, image_url.value ).then(
+            (snapshot ) => {
+                // Get the download URL of the uploaded file
+                getDownloadURL(snapshot.ref).then((url) => {
+                    form.value.image = url;
+                    console.log('File download URL:', url);
+            });
+        }).catch((error) => {
+            console.log(error);
+        });
 
-    // } catch(err){
-    //     console.log(err)
-    // }
-    // // storeDataStudents.dispatch('handleStudentRegister',{...data.value, ...form.value} )
+    } catch(err){
+        console.log(err)
+    }
+    mapActions['handleStudentRegister',{...data_st.value, ...form.value, ...data_pa.value} ]
+    storeDataStudents.dispatch('handleStudentRegister',{...data_st.value, ...form.value, ...data_pa.value} )
     // //remove session
-    // sessionStorage.removeItem('student_data')
-    // sessionStorage.removeItem('parent_data')
+    sessionStorage.removeItem('student_data')
+    sessionStorage.removeItem('parent_data')
 }
 
 </script>
 
 <template>
   <div class="container mx-auto">
-    <form action="" @submit.prevent="handleStudentRegister">
+    <form  @submit.prevent="handleStudentRegister">
       <div class="w-full form px-6 py-12 md:w-1/2 mx-auto">
         <div class="mb-6">
         <h2 class="text-2xl font-bold mb-2">Step 3: Other Information</h2>

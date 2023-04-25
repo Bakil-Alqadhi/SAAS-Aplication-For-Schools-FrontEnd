@@ -17,8 +17,8 @@ const school_id = ref(null)
 
 // })
 onMounted(()=>{
-  mapActions['fetchOneTeacher', {  teacher: props.id }]
-  storeDataTeachers.dispatch('fetchOneTeacher', {  teacher: props.id });
+  mapActions['fetchOneTeacher',  props.id]
+  storeDataTeachers.dispatch('fetchOneTeacher',  props.id );
 
 })
 const handleAccept = async()=>{

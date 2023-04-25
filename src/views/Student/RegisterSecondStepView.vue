@@ -1,6 +1,6 @@
 <script setup>
-import { onMounted, ref } from "vue";
-import { storeDataStudents } from "../../store/storeDataStudents";
+import { ref } from "vue";
+
 
 const form= ref({
   parent_first_name: '',
@@ -9,17 +9,6 @@ const form= ref({
   parent_email:''
 })
 const data = ref(null)
-// onMounted(()=> {
-//     data.value = JSON.parse(sessionStorage.getItem('student_data'));
-// })
-const handleStudentRegister = ()=>{
-    console.log({...data.value, ...form.value});
-
-    storeDataStudents.dispatch('handleStudentRegister',{...data.value, ...form.value} )
-    //remove session
-   // sessionStorage.removeItem('student_data')
-}
-
 
 const next = ()=>{
   console.log(data.value)
