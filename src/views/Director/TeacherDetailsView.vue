@@ -29,13 +29,12 @@ const handleAccept = async()=>{
 }
 </script>
 <template>
-<div v-if="teacher && authUser" class="flex items-center m-10 justify-between">
-  <div class="max-w-screen-lg mx-auto rounded-lg overflow-hidden  bg-white flex">
-    <div class="w-1/3 border-r border-gray-200">
-      <img :src="teacher.image
-      " alt="Teacher Image" class="w-full h-full object-cover border border-gray-300">
+<div v-if="teacher && authUser" di="container" class="flex items-center m-10 justify-between">
+  <div id="parent" class="max-w-screen-lg mx-auto rounded-lg overflow-hidden  bg-white flex">
+    <div id="image" class="w-1/3 border-r border-gray-200">
+      <img :src="teacher.image" alt="Teacher Image" class="w-full h-full object-cover border border-gray-300">
     </div>
-    <div class="w-2/3 p-6">
+    <div id="info" class="w-2/3 p-6">
       <h1 class="text-3xl font-bold mb-2">{{ teacher.first_name +' '+ teacher.last_name }}</h1>
       <div class="flex items-center mb-2">
         <div class="w-4 h-4 rounded-full bg-green-500 mr-2"></div>
@@ -58,8 +57,28 @@ const handleAccept = async()=>{
     </div>
   </div>
 </div>
-<div class="text-center ">
+<div class="text-center " v-if="!teacher.isJoined">
   <button @click="handleAccept" v-if="teacher" class="bg-blue-600 p-2 hover:p-3 hover:bg-blue-700 font-bold rounded-lg  text-white">Accept</button>
   <button  v-else class="bg-blue-600 p-2 hover:p-3 hover:bg-blue-400  cursor-not-allowed font-bold rounded-lg  text-white">Accept</button>
 </div>
 </template>
+<style scoped>
+
+@media (max-width:768px){ 
+  #parent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+  #image {
+    display: block;
+    margin-bottom: 30px;
+    background-color: red ;
+    width: 100%;
+  }
+  #info {
+    width: 100%;
+  }
+}
+</style>

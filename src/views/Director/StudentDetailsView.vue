@@ -8,6 +8,7 @@ const props= defineProps({
     id: String
 })
 const student = computed(()=> storeDataStudents.getters.student)
+const authUser = computed(()=> storeAuthUser.getters.user)
 onMounted(async()=>{
   await storeDataStudents.dispatch('fetchOneStudent', {  student: props.id })
 })
@@ -70,7 +71,7 @@ const handleAccept = async()=>{
         </div>
       </div>
     </div>
-    <div class="text-center mt-5">
+    <div class="text-center mt-5" v-if="!student.isJoined">
       <button @click="handleAccept" class="bg-blue-600  hover:bg-blue-700 font-bold rounded-lg  text-white">Accept</button>
       <button @click="handleRejection" class="bg-red-600 hover:bg-red-700 font-bold rounded-lg  text-white">Reject</button>
   </div> 

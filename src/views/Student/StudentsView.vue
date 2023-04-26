@@ -49,8 +49,11 @@ onMounted(()=>{
             <td>{{ student.birthday }}</td>
             <td>1</td>
             <td>
-                <router-link :to="{name: 'StudentDetailView', params:{id: student.id}}"  class="btn-update">Update</router-link>
-                <button  @click="deleteClassroom(student.id)" class="btn-delete">Delete</button>
+                <router-link :to="{name: 'WaitingStudentDetailView', params:{id: student.id}}" >
+                    <i class="far fa-eye hover:text-blue-500 hover:cursor-pointer"></i>
+                </router-link>
+                
+                <!-- <button  @click="deleteClassroom(student.id)" class="btn-delete">Delete</button> -->
             </td>
         </tr>
         <!-- Add more rows here -->

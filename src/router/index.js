@@ -49,12 +49,12 @@ const router = createRouter({
       // meta: { requiresGuest: true },
     },
     {
-    path: "/teachers/:id",
-    name: "EditTeacher",
-    component: () => import("../views/teachers/EditTeacherView.vue"),
-    meta: { requiresAuth: true },
-    requiresRole: "teacher",
-    props:true
+      path: "/teachers/:id",
+      name: "EditTeacher",
+      component: () => import("../views/teachers/EditTeacherView.vue"),
+      meta: { requiresAuth: true },
+      requiresRole: "teacher",
+      props: true,
     },
     {
       path: "/forgot-password",
@@ -97,8 +97,17 @@ const router = createRouter({
     {
       path: "/students/:id/student-details",
       name: "StudentDetailView",
-      component: () => import("../views/Student/StudentDetailsView.vue"),
+      component: () =>
+        import("../views/Student/StudentDetailsView(noneed).vue"),
       meta: { requiresAuth: true },
+      props: true,
+    },
+    {
+      path: "/students/:id",
+      name: "EditStudent",
+      component: () => import("../views/Student/EditStudentView.vue"),
+      meta: { requiresAuth: true },
+      requiresRole: "student",
       props: true,
     },
     {
@@ -113,7 +122,8 @@ const router = createRouter({
     {
       path: "/teachers/:id/teacher-details",
       name: "TeacherDetailView",
-      component: () => import("../views/teachers/TeacherDetailsView.vue"),
+      component: () =>
+        import("../views/teachers/TeacherDetailsView(noneed).vue"),
       meta: {
         requiresAuth: true,
         requiresRole: "director",
@@ -236,7 +246,7 @@ const router = createRouter({
         requiresAuth: true,
         requiresRole: "director",
       },
-      props: true
+      props: true,
     },
     {
       path: "/sections/create",

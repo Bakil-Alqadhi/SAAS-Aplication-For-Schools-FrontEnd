@@ -152,7 +152,56 @@ export const storeDataStudents = new createStore({
         })
         .catch((error) => console.log(error));
     },
-
+    //update student
+    handleUpdateStudent: async (context, payload) => {
+      await context.dispatch("getToken");
+      await axios
+        .put("/api/students/" + payload.id, {
+          school_id: payload.school,
+          student_first_name: payload.student_first_name,
+          student_middle_name: payload.student_middle_name,
+          student_last_name: payload.student_last_name,
+          parent_first_name: payload.parent_first_name,
+          parent_last_name: payload.parent_last_name,
+          birthday: payload.birthday,
+          sex: payload.sex,
+          student_address: payload.student_address,
+          student_phone: payload.student_phone,
+          parent_phone: payload.parent_phone,
+          student_email: payload.student_email,
+          parent_email: payload.parent_email,
+        })
+        .then((response) => {
+          // context.commit("setGradeMessage", response.data.message);
+          // setTimeout(() => {
+          //   context.commit("setGradeMessage", null);
+          // }, 4000);
+          // router.push("/sections/index");
+          console.log(response.data)
+        })
+        .catch((error) => {
+          if (error.response.status === 422) {
+            context.commit("setErrors", error.response.data.errors);
+          }
+          console.log(error.response.data.errors);
+        });
+    },
+    handleDeleteStudent: async (context, id) => {
+      // await context.dispatch("getToken");
+      await axios
+        .delete("/api/students/" + id)
+        .then((response) => {
+            localStorage.removeItem("school_name"),
+            localStorage.removeItem("school"),
+            localStorage.removeItem("guard"),
+            localStorage.removeItem("token"),
+            router.push("/");
+          location.reload();
+        })
+        .catch((error) => {
+          console.log(error.response.data.errors);
+        });
+    },
     //show details school
     // showSchool: async (context, id) => {
     //   await context.dispatch("getToken");
