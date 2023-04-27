@@ -97,7 +97,7 @@ const logout = async()=>{
         </div>
         <!-- ./Sidebar -->
 
-        <div class="h-full ml-14 mt-14 mb-10 md:ml-64">
+        <div class="h-full ml-14 mt-14 md:ml-64">
             <!-- {{ authUser }} -->
 
             <slot></slot>

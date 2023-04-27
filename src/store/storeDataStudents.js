@@ -85,6 +85,7 @@ export const storeDataStudents = new createStore({
           {
             school_id: payload.school_id,
             grade: payload.grade,
+            classroom: payload.classroom,
             student_first_name: payload.student_first_name,
             student_middle_name: payload.student_middle_name,
             student_last_name: payload.student_last_name,
@@ -165,6 +166,8 @@ export const storeDataStudents = new createStore({
           parent_last_name: payload.parent_last_name,
           birthday: payload.birthday,
           sex: payload.sex,
+          image: payload.image,
+          address: payload.address,
           student_address: payload.student_address,
           student_phone: payload.student_phone,
           parent_phone: payload.parent_phone,
@@ -177,7 +180,7 @@ export const storeDataStudents = new createStore({
           //   context.commit("setGradeMessage", null);
           // }, 4000);
           // router.push("/sections/index");
-          console.log(response.data)
+          console.log(response.data);
         })
         .catch((error) => {
           if (error.response.status === 422) {
@@ -191,7 +194,7 @@ export const storeDataStudents = new createStore({
       await axios
         .delete("/api/students/" + id)
         .then((response) => {
-            localStorage.removeItem("school_name"),
+          localStorage.removeItem("school_name"),
             localStorage.removeItem("school"),
             localStorage.removeItem("guard"),
             localStorage.removeItem("token"),

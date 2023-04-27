@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from "vue";
-
+import { useRouter } from "vue-router";
 
 const form= ref({
   parent_first_name: '',
@@ -8,12 +8,15 @@ const form= ref({
   parent_phone: '',
   parent_email:''
 })
+const router = useRouter()
 const data = ref(null)
 
 const next = ()=>{
   console.log(data.value)
   sessionStorage.setItem('parent_data', JSON.stringify(form.value))
   //sessionStorage.setItem('student_data', JSON.stringify(form.value))
+  router.push('/register-third-step')
+
 
 }
 </script>

@@ -12,9 +12,13 @@ import { storage } from '../../firebase'
 const schoolsData = computed(()=> storeDataSchools.getters.schools);
 const gradesData = computed(()=> storeDataSchools.getters.grades);
 const grades= ref({})
+const classrooms = ref('')
+const selectedGrade = ref('')
+const selectedClassroom = ref('')
 const form = ref({
     school_id: '',
     grade: '',
+    classroom: '',
     image: '',
     password: '',
     password_confirmation: ''
@@ -31,8 +35,8 @@ watch(school_id, newValue => {
     form.value.school_id = newValue
     // localStorage.setItem('school', newValue)
     axios.defaults.headers.common["X-School"] = newValue
-    mapActions['fetchGrades']
-    storeDataSchools.dispatch('fetchGrades');
+    mapActions['fetchGradesData']
+    storeDataSchools.dispatch('fetchGradesData');
 })
 onMounted(()=> {
     mapActions['fetchSchools']
@@ -46,8 +50,14 @@ const grabFile = (e) => {
     // console.log(image_url.value)
 }
 
+const selected = ()=> {
+    classrooms.value = grades.value[selectedGrade.value].classrooms;
+    // console.log(grades.value[form.value.grade].classrooms)
+}
 
 const handleStudentRegister = ()=>{
+    form.value.grade = grades.value[selectedGrade.value].id;
+    form.value.classroom = selectedClassroom.value;
   // console.log('this is register student')
     // console.log({...data_st.value, ...data_pa.value, ...form.value});
 
@@ -96,9 +106,18 @@ const handleStudentRegister = ()=>{
             <label class="block text-gray-700 font-bold mb-2" for="grade">
               Choose Grade
             </label>
-            <select  v-model="form.grade" name="" id="grade"  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" >
+            <select  v-model="selectedGrade" name="" id="grade" @change="selected"  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" >
               <option value="">All Grades</option>  
-              <option  v-for="grade in grades" :key="grade.id" :value="grade.id">{{ grade.name }}</option>
+              <option  v-for="(grade, index) in grades" :key="index" :value="index">{{ grade.name }}</option>
+            </select>
+          </div>
+          <div class="mb-4">
+            <label class="block text-gray-700 font-bold mb-2" for="grade">
+              Choose Classroom
+            </label>
+            <select  v-model="selectedClassroom" name="" id="grade"  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" >
+              <option value="">All Classrooms</option>  
+              <option v-for="classroom in classrooms" :key="classroom.id" :value="classroom.id">{{ classroom.name }}</option>
             </select>
           </div>
           <div class="mb-4">

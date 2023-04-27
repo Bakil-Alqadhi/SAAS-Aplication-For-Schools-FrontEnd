@@ -62,8 +62,15 @@ const deleteClassroom =async (id)=> {
           <td>{{ classroom.name }}</td>
           <td>{{ classroom.grade }}</td>
           <td>
-            <router-link :to="{name: 'EditClassroom', params:{id: classroom.id}}"  class="btn-update">Update</router-link>
-            <button  @click="deleteClassroom(classroom.id)" class="btn-delete">Delete</button>
+            <router-link class="btn-show" :to="{name: 'ShowClassroom', params:{id: classroom.id}}">
+                <i class="far fa-eye hover:text-blue-500 hover:cursor-pointer"></i>
+            </router-link>
+            <router-link :to="{name: 'EditClassroom', params:{id: classroom.id}}"  class="btn-update hover:text-green-600">
+              <i class="fas fa-edit"></i>
+            </router-link>
+            <button  @click="deleteClassroom(classroom.id)" class="btn-delete">
+              <i class="fa fa-trash" aria-hidden="true"></i>
+            </button>
           </td>
         </tr>
         <!-- Add more rows here -->
@@ -73,7 +80,6 @@ const deleteClassroom =async (id)=> {
 </template>
 
 <style>
-
 .create-grade {
     font-size: 1.2rem;
 }
@@ -86,7 +92,7 @@ const deleteClassroom =async (id)=> {
   .grade-table {
     border-collapse: collapse;
     width: 90%;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     text-align: left;
     overflow: hidden;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
@@ -111,29 +117,32 @@ const deleteClassroom =async (id)=> {
   }
 
   .btn-update,
+  .btn-show,
   .btn-delete {
-    padding: 0.6rem 1rem;
+    padding: 0.6rem .9rem;
     border: none;
     border-radius: 4px;
-    font-size: 0.9rem;
-    margin-right: 0.6rem;
+    font-size: 1.4rem;
+    margin-right: 0.2rem;
     cursor: pointer;
     transition: transform 0.3s ease-in-out;
   }
 
   .btn-update:hover,
-  .btn-delete:hover {
+  .btn-delete:hover,
+  .btn-show:hover {
     transform: translateY(-3px);
   }
 
+
   .btn-update {
-    background-color: #4caf50;
-    color: #fff;
+    /* background-color: #4caf50; */
+    color: #4caf50;
   }
 
   .btn-delete {
-    background-color: #f44336;
-    color: #fff;
+    /* background-color: #f44336; */
+    color: #f44336;
   }
 
   #toast {

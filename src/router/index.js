@@ -28,13 +28,13 @@ const router = createRouter({
       path: "/register-second-step",
       name: "RegisterStepTwo",
       component: () => import("../views/Student/RegisterSecondStepView.vue"),
-      // meta: { requiresGuest: true },
+      meta: { requiresGuest: true },
     },
     {
       path: "/register-third-step",
       name: "RegisterStepThree",
       component: () => import("../views/Student/RegisterThirdStepView.vue"),
-      // meta: { requiresGuest: true },
+      meta: { requiresGuest: true },
     },
     {
       path: "/school-register",
@@ -46,7 +46,7 @@ const router = createRouter({
       path: "/teacher-register",
       name: "TeacherRegister",
       component: () => import("../views/teachers/RegisterView.vue"),
-      // meta: { requiresGuest: true },
+      meta: { requiresGuest: true },
     },
     {
       path: "/teachers/:id",
@@ -223,6 +223,16 @@ const router = createRouter({
       path: "/classrooms/:id",
       name: "EditClassroom",
       component: () => import("../views/Director/EditClassroomView.vue"),
+      meta: {
+        requiresAuth: true,
+        requiresRole: "director",
+      },
+      props: true,
+    },
+    {
+      path: "/classrooms/:id/index",
+      name: "ShowClassroom",
+      component: () => import("../views/Director/ClassroomDetailsView.vue"),
       meta: {
         requiresAuth: true,
         requiresRole: "director",

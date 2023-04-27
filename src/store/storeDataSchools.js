@@ -19,7 +19,7 @@ export const storeDataSchools = new createStore({
     classroom: {},
     sections: {},
     section: {},
-    specializations: {}
+    specializations: {},
   },
   getters: {
     schools: (state) => state.schools,
@@ -86,10 +86,10 @@ export const storeDataSchools = new createStore({
       state.section = data;
     },
     //End Sections
-    //Start specializations 
-    setSpecializations: (state, data)=> {
-      state.specializations = data
-    }
+    //Start specializations
+    setSpecializations: (state, data) => {
+      state.specializations = data;
+    },
     //End specializations
   },
   actions: {
@@ -99,13 +99,14 @@ export const storeDataSchools = new createStore({
     },
 
     // Start specializations
-    fetchSpecializations: async(context) => {
-      await axios.get('/api/specializations')
-      .then(response => {
-        // console.log(response.data);
-        context.commit('setSpecializations', response.data);
-      })
-      .catch((error) => console.log(error));
+    fetchSpecializations: async (context) => {
+      await axios
+        .get("/api/specializations")
+        .then((response) => {
+          // console.log(response.data);
+          context.commit("setSpecializations", response.data);
+        })
+        .catch((error) => console.log(error));
     },
     //End specializations
 
@@ -352,9 +353,9 @@ export const storeDataSchools = new createStore({
 
     fetchClassrooms: async (context) => {
       await axios
-        .get("/api/classrooms/index")
+        .get("/api/classrooms")
         .then((response) => {
-          context.commit("setClassrooms", response.data);
+          context.commit("setClassrooms", response.data.data);
         })
         .catch((error) => {
           console.log(error.response.data.errors);
@@ -365,7 +366,7 @@ export const storeDataSchools = new createStore({
       await axios
         .get("/api/classrooms/" + id)
         .then((response) => {
-          context.commit("setClassroom", response.data);
+          context.commit("setClassroom", response.data.data);
           // router.push("/classrooms/index");
         })
         .catch((error) => {
@@ -400,14 +401,14 @@ export const storeDataSchools = new createStore({
       await axios
         .delete("/api/classrooms/" + id)
         .then((response) => {
-          context.commit("setGradeMessage", response.data.message);
+          context.commit("setGradeMessage", response.data.data.message);
           setTimeout(() => {
             context.commit("setGradeMessage", null);
           }, 4000);
           context.dispatch("fetchClassrooms");
         })
         .catch((error) => {
-          console.log(error.response.data.errors);
+          console.log(error.response.data.data.errors);
         });
     },
     //End Classrooms
@@ -467,7 +468,7 @@ export const storeDataSchools = new createStore({
           name: payload.name,
           grade: payload.grade,
           classroom: payload.classroom,
-          teachers: payload.teachers
+          teachers: payload.teachers,
         })
         .then((response) => {
           context.commit("setGradeMessage", response.data.message);
