@@ -1,38 +1,31 @@
 <script setup>
 import { computed, onMounted } from "vue"
 import { storeDataSchools } from "../../store/storeDataSchools"
-import { useRouter } from "vue-router";
-const classroom = computed(()=>storeDataSchools.getters.classroom)
-const router = useRouter()
+
+const section = computed(()=>storeDataSchools.getters.section)
 const props = defineProps({
     id: String
 })
 onMounted(()=>{
-    storeDataSchools.dispatch('fetchOneClassroom', props.id)
+    storeDataSchools.dispatch('fetchOneSection', props.id)
+    console.log(section.value)
 })
-function showCount(){
-    console.log(classroom.value.students.length)
-}
-const back = ()=> {
-    router.go(-1);
-}
 </script>
 <template>
-<div v-if="classroom" class="container"> 
-    <button @click="back" class="back"> 
-        <i class="fa fa-arrow-left" aria-hidden="true"></i>back
-    </button>
+<div v-if="section" class="container"> 
     <div class="btns-heaer">
-        <button  class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
+        <button class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
         <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-            <router-link :to="{name: 'EditClassroom', params: { id: props.id}}">
-                Update Classroom's Data
-            </router-link>   
+            <router-link :to="{name: 'EditSection', params: { id: props.id}}">
+                Update Section's Data
+            </router-link>        
         </span>
         </button>
         <button class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
         <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-            All Students
+            <router-link :to="{name:'AddingStudentToSection', params: { id: props.id}}">
+                Add Student To This Section
+            </router-link>
         </span>
         </button>
         <button class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
@@ -63,13 +56,8 @@ const back = ()=> {
 
     </div>
     <div class="data">
-        <h1>The total jointed students to this classroom is <span v-if="classroom.students">{{ classroom.students.length }}</span> <span v-else>0</span></h1>
+        <h1>The total jointed students to this classroom is <span v-if="section.students">{{ section.students.length }}</span> <span v-else>0</span></h1>
         <h1>The total jointed Teachers to this classroom is </h1>
-        <h1>The Sections: 
-            <ul v-for="section in classroom.sections" :key="section.id">
-                <li ><router-link :to="{name:'ShowSection', params: { id: section.id }}">{{ section.name }}</router-link></li>
-            </ul>
-        </h1>
     </div>
 </div>
 </template>
@@ -82,25 +70,10 @@ const back = ()=> {
     padding: 1px 1px 20px;
     margin-bottom: 0;
 }
-.container .back {
-    font-size: 16px;
-    width: auto;
-    padding: 5px;
-    color: white;
-    background-color: rgb(202, 65, 34);
-    border-radius: 10px;
-    margin: 35px 35px 3px;
-}
-
-.container .back:hover {
-    background-color: red;
-}
-.container .back i {
-    margin-right: 5px;
-}
 .container .btns-heaer {
-    /* margin-top: 3%; */
-    padding: 10px 30px;
+    /* background-color: blue; */
+    margin-top: 3%;
+    padding: 30px;
 }
 .container .btns-heaer button {
     font-size: large;

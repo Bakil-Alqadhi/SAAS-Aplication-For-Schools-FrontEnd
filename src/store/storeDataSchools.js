@@ -449,12 +449,28 @@ export const storeDataSchools = new createStore({
           console.log(error.response.data.errors);
         });
     },
+    //
     fetchOneSection: async (context, id) => {
       await axios
         .get("/api/sections/" + id)
         .then((response) => {
           context.commit("setSection", response.data);
           console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error.response.data.errors);
+        });
+    },
+    //add students to the section
+    addStudentsToSection: async (context, payload) => {
+      await context.dispatch("getToken");
+      await axios
+        .post("/api/sections/add/students/to/" + payload.section, {
+          students: payload.students,
+        })
+        .then((response) => {
+          router.go(-1);
+          // console.log(response.data);
         })
         .catch((error) => {
           console.log(error.response.data.errors);

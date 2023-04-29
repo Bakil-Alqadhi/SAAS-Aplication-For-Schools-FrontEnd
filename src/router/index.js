@@ -259,6 +259,26 @@ const router = createRouter({
       props: true,
     },
     {
+      path: "/add/students/to/sections/:id",
+      name: "AddingStudentToSection",
+      component: () => import("../views/Student/AddingStudentsToSectionView.vue"),
+      meta: {
+        requiresAuth: true,
+        requiresRole: "director",
+      },
+      props: true,
+    },
+    {
+      path: "/sections/:id/index",
+      name: "ShowSection",
+      component: () => import("../views/Director/SectionDetailsView.vue"),
+      meta: {
+        requiresAuth: true,
+        requiresRole: "director",
+      },
+      props: true,
+    },
+    {
       path: "/sections/create",
       name: "CreateSections",
       component: () => import("../views/Director/CreateSectionsView.vue"),

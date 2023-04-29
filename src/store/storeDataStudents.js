@@ -142,6 +142,18 @@ export const storeDataStudents = new createStore({
         })
         .catch((error) => console.log(error));
     },
+    // fetch students a specific classroom using section_id to add them to this section
+    fetchOneSectionStudents: async (context, id) => {
+      await axios
+        .get("/api/classrooms/" + id + "/students/")
+        .then((response) => {
+          context.commit("setStudents", response.data.data);
+          console.log(response.data.data);
+        })
+        .catch((error) => {
+          console.log(error.response.data.errors);
+        });
+    },
 
     //fetch one student
     fetchOneStudent: async (context, payload) => {

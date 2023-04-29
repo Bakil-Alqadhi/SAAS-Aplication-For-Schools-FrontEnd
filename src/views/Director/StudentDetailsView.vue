@@ -3,7 +3,8 @@ import { computed,  watch, onMounted } from 'vue';
 import { storeDataStudents } from '../../store/storeDataStudents';
 import { storeAuthUser } from '../../store/storeAuthUser';
 import { storeDataSchools } from '../../store/storeDataSchools';
-
+import { useRouter } from "vue-router";
+const router = useRouter()
 const props= defineProps({
     id: String
 })
@@ -19,9 +20,15 @@ const handleAccept = async()=>{
       'userType': 'student' 
   })
 }
+const back = ()=> {
+    router.go(-1);
+}
 </script>
 <template>
   <div v-if="student" class=" container">
+    <button @click="back" class="back"> 
+        <i class="fa fa-arrow-left" aria-hidden="true"></i>back
+    </button>
     <div class="main student">
       <h1>Student Information</h1>
       <div class="about">
@@ -90,6 +97,22 @@ button {
   padding: 30px;
 }
 
+.container .back {
+    font-size: 16px;
+    width: auto;
+    padding: 5px;
+    color: white;
+    background-color: rgb(202, 65, 34);
+    border-radius: 10px;
+    margin: 35px 35px 3px;
+}
+
+.container .back:hover {
+    background-color: red;
+}
+.container .back i {
+    margin-right: 5px;
+}
 .container .main {
   background-color: white;
   margin: 20px;

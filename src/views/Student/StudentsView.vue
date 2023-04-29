@@ -34,8 +34,8 @@ onMounted(()=>{
             <th>Id</th>
             <th>Image</th>
             <th>Full name</th>
-            <th>Birthday</th>
             <th>Grade</th>
+            <th>Classroom</th>
             <th>Actions</th>
         </tr>
       </thead>
@@ -43,16 +43,15 @@ onMounted(()=>{
         <tr v-for="(student, index) in allTheStudents" :key="index">
             <td>{{ index + 1 }}</td>
             <td>
-                <img class="h-12 w-12 rounded-full object-cover" :src="student.image" alt="Teacher Image">
+                <img class="h-12 w-12 rounded-full object-cover" :src="student.image" alt="Student Image">
             </td>
             <td>{{ student.student_first_name + ' ' + student.student_last_name }}</td>
-            <td>{{ student.birthday }}</td>
-            <td>1</td>
+            <td>{{ student.grad_name }}</td>
+            <td>{{ student.classroom_name }}</td>
             <td>
                 <router-link :to="{name: 'WaitingStudentDetailView', params:{id: student.id}}" >
                     <i class="far fa-eye hover:text-blue-500 hover:cursor-pointer"></i>
                 </router-link>
-                
                 <!-- <button  @click="deleteClassroom(student.id)" class="btn-delete">Delete</button> -->
             </td>
         </tr>
@@ -60,65 +59,7 @@ onMounted(()=>{
       </tbody>
     </table>
   </div>
-<!-- component -->
-<!-- <section v-if="allTheStudents" class="antialiased  mt-10 text-gray-600  px-1">
-    <div class="flex flex-col justify-center  h-full">
-        <div class="w-full max-w-6xl mx-auto bg-white shadow-lg rounded-sm border border-gray-200">
-            <header class="px-5 py-4 border-b border-gray-100">
-                <h2 class="font-semibold text-gray-800">All The Students</h2>
-            </header>
-            <div class="p-3">
-                <div class="overflow-x-auto">
-                    <table class="table-auto w-full">
-                        <thead class="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
-                            <tr>
-                                <th class="p-2 whitespace-nowrap">
-                                    <div class="font-semibold text-left">Id</div>
-                                </th>
-                                <th class="p-2 whitespace-nowrap">
-                                    <div class="font-semibold text-left">Name</div>
-                                </th>
-                                <th class="p-2 whitespace-nowrap">
-                                    <div class="font-semibold text-left">Birthday</div>
-                                </th>
-                                <th class="p-2 whitespace-nowrap">
-                                    <div class="font-semibold text-left">Grid</div>
-                                </th>
-                                <th class="p-2 whitespace-nowrap">
-                                    <div class="font-semibold text-center"></div>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-sm divide-y divide-gray-100">
-                            <tr v-for="(student, index) in allTheStudents" :key="index">
-                                <td class="p-2 whitespace-nowrap">
-                                    <div class="text-left">{{ index+1 }}</div>
-                                </td>
-                                <td class="p-2 whitespace-nowrap">
-                                    <div class="flex items-center">
-                                        <div class="w-10 h-10 flex-shrink-0 mr-2 sm:mr-3"><img class="rounded-full" :src="student.image" width="40" height="40" alt="Alex Shatov"></div>
-                                        <div class="font-medium text-gray-800">{{ student.student_first_name + ' ' + student.student_last_name }}</div>
-                                    </div>
-                                </td>
-                                <td class="p-2 whitespace-nowrap">
-                                    <div class="text-left">{{ student.birthday }}</div>
-                                </td>
-                                <td class="p-2 whitespace-nowrap">
-                                    <div class="text-left font-medium text-green-500">1 </div>
-                                </td>
-                                <td class="p-2 whitespace-nowrap">
-                                    <router-link :to="{name: 'StudentDetailView', params:{id: student.id}}" class="text-lg text-center text-blue-300 hover:text-blue-700 cursor-pointer">
-                                      <i class="fa-solid fa-eye"></i>
-                                    </router-link>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-</section> -->
+
 </template>
 <style scoped>
 
