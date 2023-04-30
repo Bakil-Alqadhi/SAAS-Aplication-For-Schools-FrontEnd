@@ -476,6 +476,32 @@ export const storeDataSchools = new createStore({
           console.log(error.response.data.errors);
         });
     },
+    //create promotion
+    handleCreatePromotion: async (context, payload) => {
+      await context.dispatch("getToken");
+      await axios
+        .post("/api/promotions", {
+          grade_id: payload.grade_id,
+          classroom_id: payload.classroom_id,
+          section_id: payload.section_id,
+          grade_id_new: payload.grade_id_new,
+          classroom_id_new: payload.classroom_id_new,
+          section_id_new: payload.section_id_new,
+        })
+        .then((response) => {
+          if (response.status === 204) {
+            console.log(response.data.data.message);
+          } else {
+            router.go(-1);
+          }
+        })
+        .catch((error) => {
+          if (error.response.status === 422) {
+            context.commit("setErrors", error.response.data.errors);
+          }
+          console.log(error.response.data.errors);
+        });
+    },
     //update Section
     updateSection: async (context, payload) => {
       await context.dispatch("getToken");

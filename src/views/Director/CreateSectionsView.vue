@@ -124,9 +124,6 @@ const saveSelectedTeachers = ()=> {
         </div>
     </div>
 
-
-
-
         <!--  -->
     <form class="main-form" @submit.prevent="store">
         <p  @click="back">X</p>

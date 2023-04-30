@@ -288,6 +288,15 @@ const router = createRouter({
       },
     },
     {
+      path: "/promotions/create",
+      name: "CreatePromotions",
+      component: () => import("../views/Director/CreatePromotionView.vue"),
+      meta: {
+        requiresAuth: true,
+        requiresRole: "director",
+      },
+    },
+    {
       path: "/teacher/dashboard",
       name: "TeacherDashboard",
       component: () => import("../views/teachers/DashboardView.vue"),
