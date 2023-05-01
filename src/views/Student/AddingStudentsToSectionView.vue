@@ -88,7 +88,7 @@ const addStudentsToSection = ()=>{
     max-width: 100%;
     height: 100vh;
     margin: 0 100px;
-    padding: 2rem;
+    padding:7rem 2rem 2rem;
   }
 
   .grade-table {

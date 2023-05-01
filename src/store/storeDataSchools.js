@@ -20,6 +20,7 @@ export const storeDataSchools = new createStore({
     sections: {},
     section: {},
     specializations: {},
+    promotions: {},
   },
   getters: {
     schools: (state) => state.schools,
@@ -36,8 +37,13 @@ export const storeDataSchools = new createStore({
     sections: (state) => state.sections,
     section: (state) => state.section,
     specializations: (state) => state.specializations,
+    promotions: (state) => state.promotions,
   },
   mutations: {
+    //set all promotions
+    setPromotions: (state, data) => {
+      state.promotions = data;
+    },
     //set waiting data
     setWaitingData: (state, data) => {
       state.waitingStudents = data.students;
@@ -476,6 +482,19 @@ export const storeDataSchools = new createStore({
           console.log(error.response.data.errors);
         });
     },
+
+    //fetching all promotions
+    fetchPromotions: async (context) => {
+      await axios
+        .get("/api/promotions")
+        .then((response) => {
+          context.commit("setPromotions", response.data.data);
+          console.log(response.data.data);
+        })
+        .catch((error) => {
+          console.log(error.response.data.errors);
+        });
+    },
     //create promotion
     handleCreatePromotion: async (context, payload) => {
       await context.dispatch("getToken");
@@ -484,14 +503,18 @@ export const storeDataSchools = new createStore({
           grade_id: payload.grade_id,
           classroom_id: payload.classroom_id,
           section_id: payload.section_id,
+          academic_year: payload.academic_year,
           grade_id_new: payload.grade_id_new,
           classroom_id_new: payload.classroom_id_new,
           section_id_new: payload.section_id_new,
+          academic_year_new: payload.academic_year_new,
         })
         .then((response) => {
           if (response.status === 204) {
-            console.log(response.data.data.message);
+            console.log(response.data.message);
           } else {
+            // console.log(response.data);
+
             router.go(-1);
           }
         })
@@ -499,6 +522,44 @@ export const storeDataSchools = new createStore({
           if (error.response.status === 422) {
             context.commit("setErrors", error.response.data.errors);
           }
+          console.log(error.response.data.errors);
+        });
+    },
+    //delete all promotions
+    handleDeletePromotions: async (context) => {
+      // await context.dispatch("getToken");
+      await axios
+        .delete("/api/promotions", {
+          headers: {
+            Type: "all",
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error.response.data.errors);
+        });
+    },
+    //delete all promotions
+    handleDeletePromotion: async (context, payload) => {
+      await context.dispatch("getToken");
+      await axios
+        .delete(
+          "/api/promotions",
+          {
+            headers: {
+              Type: payload.type,
+              id: payload.id,
+            },
+          }
+        )
+        .then((response) => {
+          console.log("===============");
+          console.log(response.data);
+          console.log("===============");
+        })
+        .catch((error) => {
           console.log(error.response.data.errors);
         });
     },

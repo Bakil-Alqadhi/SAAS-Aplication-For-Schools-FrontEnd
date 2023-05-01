@@ -85,7 +85,7 @@ const deleteClassroom =async (id)=> {
 }
 .grade-table-container {
     max-width: 1000px;
-    margin: 0 100px;
+    margin: 20px 100px 0;
     padding: 2rem;
   }
 

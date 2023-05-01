@@ -15,8 +15,9 @@ import {
     watch
 } from 'vue';
 import { mapActions } from 'vuex';
+import { useRouter } from "vue-router";
 
-
+const router = useRouter()
 const sideBar = ref('')
 const user = ref('')
 const authUser = computed(() => storeAuthUser.getters.user);
@@ -42,6 +43,10 @@ const handleSideBar = ()=>{
     // user.value.style.display = 'block'
 
 }
+
+const back = ()=> {
+    router.go(-1);
+}
 </script>
 <template>
 <!-- <SpinnerLoading /> -->
@@ -52,7 +57,7 @@ const handleSideBar = ()=>{
         <div class="fixed pt-15 w-full flex items-center header pl-40 justify-between text-white text-lg   bg-blue-600 z-10">
             <div class="flex items-center ml-40 school justify-start md:justify-center  pl-3 w-14 md:w-64 h-20 bg-blue-600 dark:bg-gray-800 border-none">
                 <img class="w-7 h-7 md:w-10 md:h-10 mr-2 rounded-md overflow-hidden" :src="authUser.school_image" />
-                <span v-if="authUser.userType === 'director'" class="hidden md:block">Dir. {{ authUser.director_name }}</span>
+                <span v-if="authUser.userType === 'director'" class="hidden md:block">S. {{ authUser.school_name }}</span>
                 <!-- <span v-if="authUser.userType === 'teacher'" class="hidden md:block">T. {{ authUser.last_name +' ' +  authUser.first_name }}</span>
                 <span v-if="authUser.userType === 'student'" class="hidden md:block">Dear. {{ authUser.student_last_name + ' '+ authUser.student_first_name }}</span> -->
             </div>
@@ -113,9 +118,15 @@ const handleSideBar = ()=>{
         <!-- ./Sidebar -->
 
         <!-- <div class="h-full ml-14 mt-14 md:ml-64"> -->
-            <div class="h-full content  mt-20 md:ml-64">
+            <div class="h-full content   md:ml-64">
             <!-- {{ authUser }} -->
 
+            <div class='btn-back'>
+                <button @click="back" class="back"> 
+                    <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                    <p>back</p>
+                </button>
+            </div>
             <slot></slot>
         </div>
     </div>
@@ -123,6 +134,35 @@ const handleSideBar = ()=>{
 </template>
 
 <style scoped>
+
+.btn-back {
+    /* background-color: blue; */
+    margin-top: 2rem;
+    padding-left: 10% ;
+    /* margin-bottom: 0; */
+    /* display: flex;
+    justify-content: space-between; */
+}
+.back {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+    width: 5%;
+    padding: 5px;
+    color: white;
+    background-color: rgb(202, 65, 34);
+    border-radius: 10px;
+    margin-right: 100px;
+}
+
+.back:hover {
+    background-color: red;
+}
+ .back i {
+    margin-right: 5px;
+}
+
 
 .sidebar.active{
    left: -30rem;
@@ -138,7 +178,10 @@ const handleSideBar = ()=>{
     padding-bottom: 15px;
 }
 .content {
-    margin-left: 20rem;
+    height: 100vh;
+    padding-top:5rem;
+    /* background-color: rgb(166, 212, 243); */
+    margin-left: 15rem;
     z-index: 1;
 }
 .user {
@@ -191,8 +234,33 @@ div .sidebar {
     width: 20rem;
 }
 
+@media (max-width:1200px) {
+    .back{
+        width: 10%;
+        padding:5px 2rem;
+    }
+    .content {
+        margin-left: 1rem;
+    }
+}
 
+@media (max-width:900px) {
+    .back{
+        width: 15%;
+        padding:5px 2rem;
+}
+}
+@media (max-width:400px) {
+    .back{
+        width: 20%;
+        padding:5px 2rem;
+}
+}
 @media (max-width:750px) {
+    .back {
+        padding:5px 2rem;
+        width: 20%;
+}
     .header {
         padding-left: 0;
     }

@@ -25,7 +25,7 @@ const hideCards = (title)=>{
 </script>
 <template>
     <!-- Cards the waiting students and teachers -->
-<div v-if="showCards" class="flex flex-wrap justify-center items-center mt-8">
+<div v-if="showCards" class="flex flex-wrap justify-center p-8 items-center mt-8">
     <div @click="hideCards('teachers')"  class="bg-lime-600 cursor-pointer text-center rounded-lg shadow-md p-6 m-4 w-72 animate-pulse">
         <h2 class="text-xl text-white font-medium mb-4">Number of Teachers</h2>
         <p class="text-5xl font-bold text-white">{{ accountTeachers.length }}</p>

@@ -6,6 +6,8 @@ import { storeDataSchools } from "../../store/storeDataSchools";
 const grades = computed(()=> storeDataSchools.getters.grades)
 const errors = computed(()=> storeDataSchools.getters.errors)
 
+const years= ref([])
+const currentYear = ref('')
 const classrooms = ref('')
 const sections = ref('')
 const selectedGrade = ref('')
@@ -21,11 +23,15 @@ const form = ref({
     grade_id: '',
     classroom_id: '',
     section_id:'',
+    academic_year: '',
     grade_id_new: '',
     classroom_id_new: '',
     section_id_new:'',
+    academic_year_new: '',
 })
 onMounted(()=>{
+    currentYear.value = new Date().getFullYear();
+    years.value.push((currentYear.value - 1).toString() , (currentYear.value).toString(), (currentYear.value + 1).toString())
     mapActions['fetchGradesData']
     storeDataSchools.dispatch('fetchGradesData');
 })
@@ -58,8 +64,6 @@ const create= async()=> {
     form.value.grade_id_new = grades.value[selectedGrade_new.value].id;
     form.value.classroom_id_new = grades.value[selectedGrade_new.value].sectionsClassroom[selectedClassroom_new.value].id;
     form.value.section_id_new = selectedSection_new.value
-
-    console.log(form.value)
     await mapActions['handleCreatePromotion', form.value]
     await storeDataSchools.dispatch('handleCreatePromotion', form.value)
 }
@@ -95,6 +99,14 @@ const create= async()=> {
                 </select>
                 <span v-if="errors.section_id">{{ errors.section_id[0] }}</span>
             </div>
+            <div class="fields">
+                <label for="classroom">Academic Year:</label>
+                <select class="field" v-model="form.academic_year" id="classroom">
+                    <option value="">Select Section</option>
+                    <option v-for="(year, index) in years" :key="index" :value="year">{{ year }}</option>
+                </select>
+                <span v-if="errors.academic_year">{{ errors.academic_year[0] }}</span>
+            </div>
         </div>
     </div>
     <div class="to">
@@ -124,6 +136,14 @@ const create= async()=> {
                 </select>
                 <span v-if="errors.section_id_new">{{ errors.section_id_new[0] }}</span>
             </div>
+            <div class="fields">
+                <label for="academic_year_new">Academic Year:</label>
+                <select class="field" v-model="form.academic_year_new" id="academic_year_new">
+                    <option value="">Select Section</option>
+                    <option v-for="(year, index) in years" :key="index" :value="year">{{ year }}</option>
+                </select>
+                <span v-if="errors.academic_year_new">{{ errors.academic_year_new[0] }}</span>
+            </div>
         </div>
     </div>
     <div class="button mt-10">
@@ -138,7 +158,11 @@ const create= async()=> {
     /* background-color: rgb(166, 212, 243); */
     min-width: 100%;
     height: 100vh;
-    left: 0; top: 0; right: 0; bottom: 0;
+    /* left: 0; top: 0; right: 0; bottom: 0; */
+
+
+    margin: 0 0 0 5rem;
+    padding: 0;
 }
 
 .container .parent {
@@ -181,6 +205,7 @@ const create= async()=> {
         /* text-align: center; */
     display:flex;
     flex-direction: column;
+    justify-content: center;
     /* align-items: center; */
 }
 .container .parent .data .fields {

@@ -261,7 +261,8 @@ const router = createRouter({
     {
       path: "/add/students/to/sections/:id",
       name: "AddingStudentToSection",
-      component: () => import("../views/Student/AddingStudentsToSectionView.vue"),
+      component: () =>
+        import("../views/Student/AddingStudentsToSectionView.vue"),
       meta: {
         requiresAuth: true,
         requiresRole: "director",
@@ -282,6 +283,15 @@ const router = createRouter({
       path: "/sections/create",
       name: "CreateSections",
       component: () => import("../views/Director/CreateSectionsView.vue"),
+      meta: {
+        requiresAuth: true,
+        requiresRole: "director",
+      },
+    },
+    {
+      path: "/promotions/index",
+      name: "IndexPromotions",
+      component: () => import("../views/Director/IndexPromotionsView.vue"),
       meta: {
         requiresAuth: true,
         requiresRole: "director",

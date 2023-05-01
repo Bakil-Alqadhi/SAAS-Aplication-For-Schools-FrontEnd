@@ -31,7 +31,7 @@ const updateGrade =  ()=> {
 
 </script>
 <template>
-  <div v-if="grade" class="p-40 text-lg">
+  <div v-if="grade" class="p-40 mt-20 text-lg">
     <form @submit.prevent="updateGrade" class="max-w-sm mx-auto mt-8 bg-blue-100 rounded-lg p-10 ">
         <h1 class="block text-gray-800 text-center font-bold mb-8">Update New Grade</h1>
         <div class="mb-4">

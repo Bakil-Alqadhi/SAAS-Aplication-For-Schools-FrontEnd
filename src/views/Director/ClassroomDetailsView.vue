@@ -1,9 +1,7 @@
 <script setup>
 import { computed, onMounted } from "vue"
 import { storeDataSchools } from "../../store/storeDataSchools"
-import { useRouter } from "vue-router";
 const classroom = computed(()=>storeDataSchools.getters.classroom)
-const router = useRouter()
 const props = defineProps({
     id: String
 })
@@ -13,15 +11,9 @@ onMounted(()=>{
 function showCount(){
     console.log(classroom.value.students.length)
 }
-const back = ()=> {
-    router.go(-1);
-}
 </script>
 <template>
 <div v-if="classroom" class="container"> 
-    <button @click="back" class="back"> 
-        <i class="fa fa-arrow-left" aria-hidden="true"></i>back
-    </button>
     <div class="btns-heaer">
         <button  class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
         <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
@@ -76,27 +68,12 @@ const back = ()=> {
 
 <style scoped>
 .container {
-    background-color: rgb(166, 212, 243);
+    /* background-color: rgb(166, 212, 243); */
     height: 100vh;
     min-width: 100%;
-    padding: 1px 1px 20px;
+    padding: 2rem 1px 20px;
     margin-bottom: 0;
-}
-.container .back {
-    font-size: 16px;
-    width: auto;
-    padding: 5px;
-    color: white;
-    background-color: rgb(202, 65, 34);
-    border-radius: 10px;
-    margin: 35px 35px 3px;
-}
-
-.container .back:hover {
-    background-color: red;
-}
-.container .back i {
-    margin-right: 5px;
+    /* margin-top: 20rem;    */
 }
 .container .btns-heaer {
     /* margin-top: 3%; */
