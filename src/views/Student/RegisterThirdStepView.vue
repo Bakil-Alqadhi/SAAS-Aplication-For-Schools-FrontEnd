@@ -58,8 +58,6 @@ const selected = ()=> {
 const handleStudentRegister = ()=>{
     form.value.grade = grades.value[selectedGrade.value].id;
     form.value.classroom = selectedClassroom.value;
-  // console.log('this is register student')
-    // console.log({...data_st.value, ...data_pa.value, ...form.value});
 
     try{
         const storageRef = Ref( storage,'Students/'+ image_url.value.name);
@@ -79,9 +77,7 @@ const handleStudentRegister = ()=>{
     }
     mapActions['handleStudentRegister',{...data_st.value, ...form.value, ...data_pa.value} ]
     storeDataStudents.dispatch('handleStudentRegister',{...data_st.value, ...form.value, ...data_pa.value} )
-    // //remove session
-    sessionStorage.removeItem('student_data')
-    sessionStorage.removeItem('parent_data')
+    // console.log({...data_st.value, ...form.value, ...data_pa.value})
 }
 
 </script>

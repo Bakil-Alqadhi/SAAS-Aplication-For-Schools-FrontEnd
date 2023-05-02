@@ -56,8 +56,8 @@ onMounted(()=>{
 
     </div>
     <div class="data">
-        <h1>The total jointed students to this classroom is <span v-if="section.students">{{ section.students.length }}</span> <span v-else>0</span></h1>
-        <h1>The total jointed Teachers to this classroom is </h1>
+        <h1>The total jointed students to this section is <span v-if="section.students">{{ section.students.length }}</span> <span v-else>0</span></h1>
+        <h1>The total jointed Teachers to this section is </h1>
     </div>
 </div>
 </template>

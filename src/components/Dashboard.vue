@@ -4,6 +4,7 @@ import TeacherSidebarLinks from './teacher/TeacherSidebarLinks.vue'
 import StudentSidebarLinks from './student/StudentSidebarLinks.vue'
 import {storeDataSchools} from '../store/storeDataSchools'
 import SpinnerLoading from './SpinnerLoading.vue'
+import AlerMessage from './AlerMessage.vue'
 
 import {
     storeAuthUser
@@ -51,8 +52,8 @@ const back = ()=> {
 <template>
 <!-- <SpinnerLoading /> -->
 <div v-if="authUser">
-    <div class="min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-white dark:bg-gray-700 text-black dark:text-white">
-
+    <div class="min-h-screen relative flex flex-col flex-auto flex-shrink-0 antialiased bg-white dark:bg-gray-700 text-black dark:text-white">
+        <AlerMessage />
         <!-- Header -->
         <div class="fixed pt-15 w-full flex items-center header pl-40 justify-between text-white text-lg   bg-blue-600 z-10">
             <div class="flex items-center ml-40 school justify-start md:justify-center  pl-3 w-14 md:w-64 h-20 bg-blue-600 dark:bg-gray-800 border-none">
@@ -118,7 +119,7 @@ const back = ()=> {
         <!-- ./Sidebar -->
 
         <!-- <div class="h-full ml-14 mt-14 md:ml-64"> -->
-            <div class="h-full content   md:ml-64">
+            <div class="h-full content rounded-md  md:ml-64">
             <!-- {{ authUser }} -->
 
             <div class='btn-back'>
@@ -134,7 +135,6 @@ const back = ()=> {
 </template>
 
 <style scoped>
-
 .btn-back {
     /* background-color: blue; */
     margin-top: 2rem;
@@ -218,13 +218,8 @@ const back = ()=> {
 }
 /* Custom style */
 div .sidebar {
-    /* display: none; */
-    /* width: 16rem; */
     width: 20rem;
-    /* top: 4rem; */
-
     transition: .2s linear;
-
 }
 /* .header-right {
     width: calc(100% - 3.5rem);
@@ -235,6 +230,9 @@ div .sidebar {
 }
 
 @media (max-width:1200px) {
+    .close {
+        display: flex;
+    }
     .back{
         width: 10%;
         padding:5px 2rem;

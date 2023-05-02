@@ -17,6 +17,10 @@ const router= useRouter()
 onMounted(() => {
     mapActions['fetchSchools']
     storeDataSchools.dispatch("fetchSchools");
+   const data = sessionStorage.getItem('student_data')
+    if(data){
+      form.value = JSON.parse(data)
+    }
 })
 
 const form = ref({

@@ -60,7 +60,7 @@ function submit() {
 </script>
 
 <template>
-<div v-if="teacher" class="container top-10 mx-auto">
+<div v-if="teacher" class="container  mx-auto">
     <form @submit.prevent="submit" class=" ">
         <h2 class="">Your Profile</h2>
         <div class="form-container">
@@ -160,9 +160,9 @@ function submit() {
     /* background-color: rgb(217, 220, 217)  ; */
     border: 1px solid blue;
     border-radius: 10px;
-    padding: 10px;
+    padding: 20px;
     width: 70%;
-    margin:30px auto;
+    margin:0 auto;
 }
 .container .form-container {
     /* background-color: red; */

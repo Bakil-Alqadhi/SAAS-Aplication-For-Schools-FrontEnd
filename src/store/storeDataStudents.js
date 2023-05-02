@@ -69,10 +69,10 @@ export const storeDataStudents = new createStore({
           router.push("/student/dashboard");
         })
         .catch((error) => {
-          if (error.response.status === 422) {
-            context.commit("setErrors", error.response.data.errors);
-          }
-          console.log(error.response.data.errors);
+          // if (error.response.status === 422) {
+          // context.commit("setErrors", error.response.data.errors);
+          // }
+          console.log(error.response);
         });
     },
 
@@ -89,15 +89,16 @@ export const storeDataStudents = new createStore({
             student_first_name: payload.student_first_name,
             student_middle_name: payload.student_middle_name,
             student_last_name: payload.student_last_name,
-            parent_first_name: payload.parent_first_name,
-            parent_last_name: payload.parent_last_name,
             birthday: payload.birthday,
             sex: payload.sex,
             image: payload.image,
             student_address: payload.student_address,
             student_phone: payload.student_phone,
-            parent_phone: payload.parent_phone,
             student_email: payload.student_email,
+
+            parent_first_name: payload.parent_first_name,
+            parent_last_name: payload.parent_last_name,
+            parent_phone: payload.parent_phone,
             parent_email: payload.parent_email,
             password: payload.password,
             password_confirmation: payload.password_confirmation,
@@ -110,25 +111,28 @@ export const storeDataStudents = new createStore({
           }
         )
         .then((response) => {
-          // context.commit("setAuthStatus", response.data.status);
-          // console.log("student registrated");
-          const token = response.data.data.token;
+          console.log(response.data);
+          // const token = response.data.data.token;
           localStorage.setItem("guard", "student");
           localStorage.setItem("school", payload.school_id);
           localStorage.setItem("token", token);
+          console.log(response.data);
           // context.commit("setAuthStatus", response.data.status);
           // window.location.reload();
-          setTimeout(() => {
-            location.reload();
-          }, 1000);
-          // router.push("/");
+          // setTimeout(() => {
+          //   location.reload();
+          // }, 1000);
+          // //remove session
+          sessionStorage.removeItem("student_data");
+          sessionStorage.removeItem("parent_data");
+          router.push("/");
         })
         .catch((error) => {
           console.log("student is not registrated");
           if (error.response.status === 422) {
             context.commit("setErrors", error.response.data.errors);
           }
-          console.log(error.response.data.errors);
+          console.log(error.response);
         });
     },
 

@@ -351,7 +351,7 @@ section{
    height: 100vh;
    text-align: center;
    padding-top: 20px;
-   margin-bottom: 20px;
+   /* margin-top: 40px; */
    object-fit: contain;
    z-index: 1500;
 }

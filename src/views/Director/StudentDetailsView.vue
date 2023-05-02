@@ -53,6 +53,10 @@ const back = ()=> {
             <label for="address">Address:</label>
             <p id="address">{{ student.address }}</p>
           </div>
+          <div class="item">
+            <label for="address">Grade and Classroom:</label>
+            <p id="address">{{ student.grad_name + ', '+ student.classroom_name }}</p>
+          </div>
         </div>
         <div class="image">
           <img :src="student.image" class="" alt="Student Photo">

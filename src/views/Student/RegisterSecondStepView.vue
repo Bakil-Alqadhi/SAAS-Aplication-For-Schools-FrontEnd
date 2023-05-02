@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 
 const form= ref({
@@ -7,6 +7,13 @@ const form= ref({
   parent_last_name: '',
   parent_phone: '',
   parent_email:''
+})
+
+onMounted(()=>{
+   const data = sessionStorage.getItem('parent_data')
+    if(data){
+      form.value = JSON.parse(data)
+    }
 })
 const router = useRouter()
 const data = ref(null)

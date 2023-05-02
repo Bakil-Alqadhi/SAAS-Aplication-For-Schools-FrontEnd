@@ -2,6 +2,9 @@
 import { computed, onMounted, ref, watch } from 'vue';
 import { storeDataStudents } from '../../store/storeDataStudents';
 import { storeAuthUser } from '../../store/storeAuthUser';
+import { storeAuthSchools } from '../../store/storeAuthSchools';
+import { storeDataSchools } from '../../store/storeDataSchools';
+import { mapActions } from 'vuex';
 
 const allTheStudents = computed(() => storeDataStudents.getters.students);
 // const authUser = computed(()=> storeAuthUser.getters.user)
@@ -12,8 +15,16 @@ const allTheStudents = computed(() => storeDataStudents.getters.students);
 // })
 
 onMounted(()=>{
-    storeDataStudents.dispatch('fetchStudents')
+  storeDataStudents.dispatch('fetchStudents')
 })
+
+
+const graduate = (id, name)=>{
+  if(confirm("Are you sure, You want to delete "+ name + "?")){
+    mapActions('handleCreateGraduateOneStudent', id)
+    storeDataSchools.dispatch('handleCreateGraduateOneStudent', id)
+  }
+}
 </script>
 <template>
     <div  v-if="allTheStudents" class="grade-table-container">   
@@ -26,7 +37,6 @@ onMounted(()=>{
             <span class="absolute inset-0 w-full h-full -mt-1 rounded-lg opacity-30 bg-gradient-to-b from-transparent via-transparent to-gray-700"></span>
             <span class="relative">New Classroom</span>
         </router-link>
-        <div id="toast"><div id="img">&#128522;</div><div id="desc">{{ message }}</div></div>
     </div>
     <table class="grade-table">
       <thead>
@@ -49,9 +59,18 @@ onMounted(()=>{
             <td>{{ student.grad_name }}</td>
             <td>{{ student.classroom_name }}</td>
             <td>
-                <router-link :to="{name: 'WaitingStudentDetailView', params:{id: student.id}}" >
-                    <i class="far fa-eye hover:text-blue-500 hover:cursor-pointer"></i>
+                <button class="btn-show" >
+                  <router-link :to="{name: 'WaitingStudentDetailView', params:{id: student.id}}" >
+                    <!-- <i class="far fa-eye hover:text-blue-500 hover:cursor-pointer"></i> -->
+                    Show
                 </router-link>
+                </button>
+                <button  class="btn-update hover:text-green-600">
+                  Promotion
+                </button>
+                <button @click="graduate(student.id, student.student_first_name)"  class="btn-delete">
+                  Graduate
+                </button>
                 <!-- <button  @click="deleteClassroom(student.id)" class="btn-delete">Delete</button> -->
             </td>
         </tr>
@@ -69,11 +88,13 @@ onMounted(()=>{
 .grade-table-container {
     /* max-width: 600px;
     margin: 0 auto; */
-    max-width: 100%;
+    max-width: 90%;
     margin: 0 100px;
     padding: 2rem;
   }
-
+td,th {
+  text-align: center;
+  }
   .grade-table {
     border-collapse: collapse;
     width: 100%;
@@ -102,134 +123,57 @@ onMounted(()=>{
   }
 
   .btn-update,
+  .btn-show,
   .btn-delete {
-    padding: 0.6rem 1rem;
+    padding: 0.6rem .9rem;
     border: none;
     border-radius: 4px;
-    font-size: 0.9rem;
-    margin-right: 0.6rem;
+    font-size: 1.4rem;
+    margin-right: 0.2rem;
     cursor: pointer;
     transition: transform 0.3s ease-in-out;
   }
 
   .btn-update:hover,
-  .btn-delete:hover {
+  .btn-delete:hover,
+  .btn-show:hover {
     transform: translateY(-3px);
   }
 
+
+  .btn-show {
+    /* background-color: #4caf50; */
+    color: #4c74af;
+    border: 1px solid #4c74af;
+  }
   .btn-update {
-    background-color: #4caf50;
-    color: #fff;
+    /* background-color: #4caf50; */
+    color: #4caf50;
+    margin-top: 4px;
+    border: 1px solid #4caf50;
   }
 
   .btn-delete {
-    background-color: #f44336;
-    color: #fff;
+    /* background-color: #f44336; */
+    color: #f44336;
+    margin-top: 4px;
+    border: 1px solid #f44336;
   }
 
-  #toast {
-    visibility: hidden;
-    max-width: 50px;
-    height: 50px;
-    /*margin-left: -125px;*/
-    margin: auto;
-    background-color: rgb(38, 195, 38);
-    color: #fff;
-    text-align: center;
-    border-radius: 2px;
-    position: fixed;
-    z-index: 1;
-    /* left: 0; */
-    right:1rem;
-    top: 40px;
-    font-size: 17px;
-    white-space: nowrap;
-}
-#toast #img{
-	width: 50px;
-	height: 50px;
+@media (max-width:768px){
+     .btn-delete {
+        /* display: block; */
+        margin-top: 8px;
+    }
     
-    float: left;
-    
-    padding-top: 16px;
-    padding-bottom: 16px;
-    
-    box-sizing: border-box;
-
-    
-    background-color: rgb(158, 231, 32);
-    color: #fff;
-}
-#toast #desc{
-
-    
-    color: #fff;
-   
-    padding: 16px;
-    
-    overflow: hidden;
-	white-space: nowrap;
-}
-
-#toast.show {
-    visibility: visible;
-    -webkit-animation: fadein 0.5s, expand 0.5s 0.5s,stay 3s 1s, shrink 0.5s 2s, fadeout 0.5s 2.5s;
-    animation: fadein 0.5s, expand 0.5s 0.5s,stay 3s 1s, shrink 0.5s 4s, fadeout 0.5s 4.5s;
-}
-
-@-webkit-keyframes fadein {
-    from {bottom: 0; opacity: 0;} 
-    to {bottom: 30px; opacity: 1;}
-}
-
-@keyframes fadein {
-    from {bottom: 0; opacity: 0;}
-    to {bottom: 30px; opacity: 1;}
-}
-
-@-webkit-keyframes expand {
-    from {min-width: 50px} 
-    to {min-width: 350px}
-}
-
-@keyframes expand {
-    from {min-width: 50px}
-    to {min-width: 350px}
-}
-@-webkit-keyframes stay {
-    from {min-width: 350px} 
-    to {min-width: 350px}
-}
-
-@keyframes stay {
-    from {min-width: 350px}
-    to {min-width: 350px}
-}
-@-webkit-keyframes shrink {
-    from {min-width: 350px;} 
-    to {min-width: 50px;}
-}
-
-@keyframes shrink {
-    from {min-width: 350px;} 
-    to {min-width: 50px;}
-}
-
-@-webkit-keyframes fadeout {
-    from {bottom: 30px; opacity: 1;} 
-    to {bottom: 60px; opacity: 0;}
-}
-
-@keyframes fadeout {
-    from {bottom: 30px; opacity: 1;}
-    to {bottom: 60px; opacity: 0;}
+    .grade-table-container {
+    max-width: 600px;
+    margin: 0 auto;
+  }
 }
 
 @media (max-width:768px){
 
-    .btn-delete {
-        margin-top: 8px;
-    }
     .grade-table-container {
         margin: 0 auto;
     }

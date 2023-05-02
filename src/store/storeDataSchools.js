@@ -21,6 +21,7 @@ export const storeDataSchools = new createStore({
     section: {},
     specializations: {},
     promotions: {},
+    graduates: {},
   },
   getters: {
     schools: (state) => state.schools,
@@ -38,8 +39,13 @@ export const storeDataSchools = new createStore({
     section: (state) => state.section,
     specializations: (state) => state.specializations,
     promotions: (state) => state.promotions,
+    graduates: (state) => state.graduates,
   },
   mutations: {
+    //set all graduates
+    setGraduates: (state, data) => {
+      state.graduates = data;
+    },
     //set all promotions
     setPromotions: (state, data) => {
       state.promotions = data;
@@ -257,7 +263,7 @@ export const storeDataSchools = new createStore({
         .get("/api/grades/data")
         .then((response) => {
           context.commit("setGrades", response.data);
-          console.log(response.data.data);
+          console.log(response.data);
         })
         .catch((error) => {
           console.log(error.response.data.errors);
@@ -407,11 +413,11 @@ export const storeDataSchools = new createStore({
       await axios
         .delete("/api/classrooms/" + id)
         .then((response) => {
+          context.dispatch("fetchClassrooms");
           context.commit("setGradeMessage", response.data.data.message);
           setTimeout(() => {
             context.commit("setGradeMessage", null);
-          }, 4000);
-          context.dispatch("fetchClassrooms");
+          }, 2000);
         })
         .catch((error) => {
           console.log(error.response.data.data.errors);
@@ -482,6 +488,18 @@ export const storeDataSchools = new createStore({
           console.log(error.response.data.errors);
         });
     },
+    //handel fetching sections of teacher
+    fetchTeacherSection: async (context) => {
+      await axios
+        .get("/api/teacher/sections")
+        .then((response) => {
+          context.commit("setSections", response.data.data);
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error.response.data.errors);
+        });
+    },
 
     //fetching all promotions
     fetchPromotions: async (context) => {
@@ -545,19 +563,85 @@ export const storeDataSchools = new createStore({
     handleDeletePromotion: async (context, payload) => {
       await context.dispatch("getToken");
       await axios
-        .delete(
-          "/api/promotions",
-          {
-            headers: {
-              Type: payload.type,
-              id: payload.id,
-            },
-          }
-        )
+        .delete("/api/promotions", {
+          headers: {
+            Type: payload.type,
+            id: payload.id,
+          },
+        })
         .then((response) => {
           console.log("===============");
           console.log(response.data);
           console.log("===============");
+        })
+        .catch((error) => {
+          console.log(error.response.data.errors);
+        });
+    },
+    //fetch all graduated students
+    fetchGraduated: async (context) => {
+      await axios
+        .get("/api/graduate")
+        .then((response) => {
+          context.commit("setGraduates", response.data.data);
+          console.log(response.data.data);
+        })
+        .catch((error) => {
+          console.log(error.response.data.errors);
+        });
+    },
+    //graduate section's students
+    handleCreateGraduate: async (context, payload) => {
+      await context.dispatch("getToken");
+      await axios
+        .post("/api/graduate", {
+          grade_id: payload.grade_id,
+          classroom_id: payload.classroom_id,
+          section_id: payload.section_id,
+        })
+        .then((response) => {
+          console.log(response.data);
+          context.dispatch("setMessage", response.data.message);
+          router.push("/graduated/index");
+        })
+        .catch((error) => {
+          console.log(error.response.data.errors);
+        });
+    },
+    //handle graduate one student by student id
+    handleCreateGraduateOneStudent: async (context, id) => {
+      await context.dispatch("getToken");
+      await axios
+        .post("/api/graduate/" + id)
+        .then((response) => {
+          console.log(response.data);
+          context.dispatch("setMessage", response.data.message);
+          router.push("/graduated/index");
+        })
+        .catch((error) => {
+          console.log(error.response.data.errors);
+        });
+    },
+    //restore graduated student
+    handleRestoreGraduated: async (context, id) => {
+      await context.dispatch("getToken");
+      await axios
+        .put("/api/graduate/" + id)
+        .then((response) => {
+          context.dispatch("setMessage", response.data.message);
+          context.dispatch("fetchGraduated");
+        })
+        .catch((error) => {
+          console.log(error.response.data.errors);
+        });
+    },
+    //handle delete graduated student
+    handleDeleteGraduated: async (context, id) => {
+      await axios
+        .delete("/api/graduate/" + id)
+        .then((response) => {
+          context.dispatch("setMessage", response.data.message);
+          context.dispatch("fetchGraduated");
         })
         .catch((error) => {
           console.log(error.response.data.errors);
@@ -574,10 +658,7 @@ export const storeDataSchools = new createStore({
           teachers: payload.teachers,
         })
         .then((response) => {
-          context.commit("setGradeMessage", response.data.message);
-          setTimeout(() => {
-            context.commit("setGradeMessage", null);
-          }, 4000);
+          context.dispatch("setMessage", response.data.message);
           router.push("/sections/index");
           // console.log(response.data);
         })
@@ -593,10 +674,7 @@ export const storeDataSchools = new createStore({
       await axios
         .delete("/api/sections/" + id)
         .then((response) => {
-          context.commit("setGradeMessage", response.data.message);
-          setTimeout(() => {
-            context.commit("setGradeMessage", null);
-          }, 4000);
+          context.dispatch("setMessage", response.data.message);
           context.dispatch("fetchSections");
         })
         .catch((error) => {
@@ -604,5 +682,13 @@ export const storeDataSchools = new createStore({
         });
     },
     //End Sections
+
+    //set message
+    setMessage: (context, message) => {
+      context.commit("setGradeMessage", message);
+      setTimeout(() => {
+        context.commit("setGradeMessage", null);
+      }, 4000);
+    },
   },
 });

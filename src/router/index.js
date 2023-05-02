@@ -307,6 +307,24 @@ const router = createRouter({
       },
     },
     {
+      path: "/graduated/index",
+      name: "IndexGraduated",
+      component: () => import("../views/Director/IndexGraduateView.vue"),
+      meta: {
+        requiresAuth: true,
+        requiresRole: "director",
+      },
+    },
+    {
+      path: "/graduated/create",
+      name: "CreateGraduated",
+      component: () => import("../views/Director/CreateGraduatedView.vue"),
+      meta: {
+        requiresAuth: true,
+        requiresRole: "director",
+      },
+    },
+    {
       path: "/teacher/dashboard",
       name: "TeacherDashboard",
       component: () => import("../views/teachers/DashboardView.vue"),
@@ -314,6 +332,26 @@ const router = createRouter({
         requiresAuth: true,
         requiresRole: "teacher",
       },
+    },
+    {
+      path: "/teacher/section/{id}/attendance",
+      name: "CreateAttendanceView",
+      component: () => import("../views/teachers/CreateAttendanceView.vue"),
+      meta: {
+        requiresAuth: true,
+        requiresRole: "teacher",
+      },
+      props: true
+    },
+    {
+      path: "/teacher/sections/index",
+      name: "IndexTeacherSectionsView",
+      component: () => import("../views/teachers/IndexTeacherSectionsView.vue"),
+      meta: {
+        requiresAuth: true,
+        requiresRole: "teacher",
+      },
+      props: true
     },
     {
       path: "/student/dashboard",
