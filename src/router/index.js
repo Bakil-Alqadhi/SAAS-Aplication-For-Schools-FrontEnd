@@ -334,14 +334,14 @@ const router = createRouter({
       },
     },
     {
-      path: "/teacher/section/{id}/attendance",
+      path: "/teacher/section/:id/attendance",
       name: "CreateAttendanceView",
       component: () => import("../views/teachers/CreateAttendanceView.vue"),
       meta: {
         requiresAuth: true,
         requiresRole: "teacher",
       },
-      props: true
+      props: true,
     },
     {
       path: "/teacher/sections/index",
@@ -351,7 +351,7 @@ const router = createRouter({
         requiresAuth: true,
         requiresRole: "teacher",
       },
-      props: true
+      props: true,
     },
     {
       path: "/student/dashboard",

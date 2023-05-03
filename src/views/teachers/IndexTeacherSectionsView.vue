@@ -12,16 +12,6 @@ onMounted( async()=>{
     await  storeDataSchools.dispatch('fetchTeacherSection')    
 })
 
-
-const deleteSection =async (id)=> {
-  if(confirm("Are you sure?")){
-    mapActions(['deleteSection', id])
-    if(storeDataSchools.dispatch('deleteSection', id)){
-      launch_toast()
-    }
-  }
-}
-
 </script>
 <template>
     <div v-if="gradesData" class="container">
@@ -45,10 +35,10 @@ const deleteSection =async (id)=> {
                             <td>{{ section.section_name }}</td>
                             <td>{{ section.classroom_name }}</td>
                             <td>
-                                <router-link :to="{ name: 'EditSection', params: { id: section.section_id }}" class="btn-update">
-                                    update
+                                <router-link :to="{ name: 'CreateAttendanceView', params: { id: section.section_id }}" class="btn-update">
+                                    Attendance
                                 </router-link>
-                                <button  @click="deleteSection(section.section_id)" class="btn-delete">Delete</button>
+                                <!-- <button  @click="deleteSection(section.section_id)" class="btn-delete">Delete</button> -->
                             </td>
                         </tr>
                     </tbody>
@@ -128,11 +118,6 @@ const deleteSection =async (id)=> {
     color: white;
 
 }
-.container .data .show {
-    display: block;
-    /* min-width: 95%; */
-
-}
 .container .data tbody{
     background-color:rgb(202, 202, 211) ;
     margin: 5px 0 5px;
@@ -140,35 +125,32 @@ const deleteSection =async (id)=> {
 }
 
 .element {
-    padding: 5px;
+    padding: 5px 5px 20px;
     height: 35px;
     font-size: 1.4rem;
 }
+td {
+    padding: 1rem;
+}
+
+  
 .btn-update {
     background-color: #4caf50;
     color: #fff;
-  }
-
-  .btn-delete {
-    background-color: #f44336;
-    color: #fff;
-  }
-
-  .btn-update:hover,
-.btn-delete:hover {
-    /* padding: 10px; */
-    transform: translateY(-3px);
-  }
-
-.btn-update,
-.btn-delete {
 padding: 0.6rem 1rem;
 border: none;
 border-radius: 4px;
-font-size: 0.9rem;
-margin-right: 0.6rem;
+font-size: 1.3rem;
+/* margin-right: 0.6rem;
+margin-right: 1rem; */
 cursor: pointer;
 transition: transform 0.3s ease-in-out;
 }
+
+.btn-update:hover {
+    /* padding: 10px; */
+    background-color: #43d147;
+    transform: translateY(-3px);
+  }
 
 </style>

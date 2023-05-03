@@ -158,7 +158,16 @@ export const storeDataStudents = new createStore({
           console.log(error.response.data.errors);
         });
     },
-
+    //fetch students of one section
+    fetchStudentsOfSection: async (context, id) => {
+      await axios
+        .get("api/sections/" + id + "/students")
+        .then((response) => {
+          context.commit("setStudents", response.data.data);
+          console.log(response);
+        })
+        .catch((error) => console.log(error));
+    },
     //fetch one student
     fetchOneStudent: async (context, payload) => {
       await axios
