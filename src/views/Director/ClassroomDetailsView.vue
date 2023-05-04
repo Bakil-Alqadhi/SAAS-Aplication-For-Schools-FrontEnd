@@ -57,9 +57,9 @@ function showCount(){
     <div class="data">
         <h1>The total jointed students to this classroom is <span v-if="classroom.students">{{ classroom.students.length }}</span> <span v-else>0</span></h1>
         <h1>The total jointed Teachers to this classroom is </h1>
-        <h1>The Sections: 
+        <h1 >The Sections: 
             <ul v-for="section in classroom.sections" :key="section.id">
-                <li ><router-link :to="{name:'ShowSection', params: { id: section.id }}">{{ section.name }}</router-link></li>
+                <li ><router-link class="link" :to="{name:'ShowSection', params: { id: section.id }}">{{ section.name }}</router-link></li>
             </ul>
         </h1>
     </div>
@@ -68,12 +68,13 @@ function showCount(){
 
 <style scoped>
 .container {
-    /* background-color: rgb(166, 212, 243); */
-    height: 100vh;
+    /* height: 100vh;
     min-width: 100%;
     padding: 2rem 1px 20px;
-    margin-bottom: 0;
-    /* margin-top: 20rem;    */
+    margin-bottom: 0; */
+    max-width: 90%;
+    margin: 0 auto;
+    padding: 2rem;
 }
 .container .btns-heaer {
     /* margin-top: 3%; */
@@ -97,20 +98,20 @@ function showCount(){
 .container h1{
     /* background-color: rgb(221, 221, 232); */
     background-color: white;
-  border: 1px solid blue;
-  padding: 10px;
-  color: blue;
-  border-radius: 5px;
-  font-weight: bold;
-  margin:20px  40px;
-  font-size: large;
+    border: 1px solid blue;
+    padding: 10px;
+    color: blue;
+    border-radius: 5px;
+    font-weight: bold;
+    margin:20px  40px;
+    font-size: large;
  }
  .container h1 ul {
     margin: 10px;
+    min-width: 100%;
 
  }
  .container h1 ul li {
-    padding: 10px;
     border: 1px solid rgb(17, 17, 202);
     border-radius: 5px;
     font-size: medium;
@@ -124,6 +125,11 @@ function showCount(){
  .container h1 ul li:hover {
     background-color:rgb(26, 155, 198);
     color: white;
+ }
+ .container h1 ul li .link {
+    padding: 20px;
+    min-width: 100%;
+    /* background-color: red; */
  }
 
  @media (max-width:1200px){

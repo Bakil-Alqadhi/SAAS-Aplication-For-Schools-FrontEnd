@@ -26,9 +26,6 @@ const back = ()=> {
 </script>
 <template>
   <div v-if="student" class=" container">
-    <button @click="back" class="back"> 
-        <i class="fa fa-arrow-left" aria-hidden="true"></i>back
-    </button>
     <div class="main student">
       <h1>Student Information</h1>
       <div class="about">
@@ -98,25 +95,12 @@ button {
 }
 .container {
   /* background-color: aqua; */
-  padding: 30px;
+  /* padding: 30px; */
+  max-width: 80%;
+    margin: 0 auto;
+    padding: 2rem 1rem;
 }
 
-.container .back {
-    font-size: 16px;
-    width: auto;
-    padding: 5px;
-    color: white;
-    background-color: rgb(202, 65, 34);
-    border-radius: 10px;
-    margin: 35px 35px 3px;
-}
-
-.container .back:hover {
-    background-color: red;
-}
-.container .back i {
-    margin-right: 5px;
-}
 .container .main {
   background-color: white;
   margin: 20px;
@@ -167,15 +151,16 @@ button {
 }
 .container .main .about .image {
   margin-right: 50px;
+  max-width: 400px;
 }
 .container .main .about img {
   border-radius: 10px;
 }
 
 @media (max-width:540px){
-.item label {
+  .container .main .about .item label {
   display: block;
-  max-width: 100%;
+  max-width: 70%;
 }
 
 }
@@ -188,8 +173,18 @@ button {
 .container .main h1{
   width: 100%;
 }
+.image {
+  margin-top: 1rem;
+}
 .item label {
-  max-width: 80%;
+  min-width: 80%;
+  text-align: center;
+  align-content: center;
+}
+.item p {
+  /* text-align: start; */
+  min-width: fit-content;
+  /* padding: 0; */
 }
 }
 @media (max-width:1040px){

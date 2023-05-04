@@ -16,16 +16,13 @@ onMounted(()=>{
 <div v-else class="">
     <div class="grade-table-container">   
      <!-- bg-green-500  -->
-    <div class="flex justify-between">
+    <!-- <div class="flex justify-between">
         <router-link to="/grade/create"  class="relative create-grade inline-flex items-center justify-center px-10 py-4 mb-5 overflow-hidden font-bold tracking-tighter  text-white bg-green-600 rounded-lg group">
             <span class="absolute w-0 h-0 transition-all duration-500 ease-out bg-blue-500 rounded-full group-hover:w-60 group-hover:h-56"></span>
             <span class="absolute inset-0 w-full h-full -mt-1 rounded-lg opacity-30 bg-gradient-to-b from-transparent via-transparent to-gray-700"></span>
             <span class="relative">New Grade</span>
         </router-link>
-    <div class="">
-        <p>Created successfully</p>
-    </div>
-    </div>
+    </div> -->
     <table class="grade-table">
       <thead>
         <tr>

@@ -88,7 +88,7 @@ export const storeDataTeachers = new createStore({
             about: payload.about,
             image: payload.image,
             about: payload.about,
-            specialization: payload.specialization,
+            // specialization: payload.specialization,
             address: payload.address,
             phone: payload.phone,
             email: payload.email,
@@ -103,7 +103,7 @@ export const storeDataTeachers = new createStore({
           }
         )
         .then((response) => {
-          const token = response.data.token;
+          const token = response.data.data.token;
           localStorage.setItem("guard", "teacher");
           localStorage.setItem("school", payload.school_id);
           localStorage.setItem("token", token);

@@ -34,7 +34,7 @@ const addStudentsToSection = ()=>{
 <template>
     <div  v-if="students" class="grade-table-container">   
      <!-- bg-green-500  -->
-    <div class="flex justify-end">
+    <div class="flex justify-end save">
 
       <!-- bg-gray-800 -->
         <button @click="addStudentsToSection" class="relative create-grade inline-flex items-center justify-center px-10 py-4 mb-5 overflow-hidden font-bold tracking-tighter  text-white bg-green-600 rounded-lg group"> 
@@ -79,8 +79,13 @@ const addStudentsToSection = ()=>{
 </template>
 <style scoped>
 
+.save {
+  max-width: 90%;
+}
 .create-grade {
     font-size: 1.2rem;
+    
+    /* margin-left: -2rem; */
 }
 .grade-table-container {
     /* max-width: 600px;
@@ -88,14 +93,14 @@ const addStudentsToSection = ()=>{
     max-width: 100%;
     height: 100vh;
     margin: 0 100px;
-    padding:7rem 2rem 2rem;
+    padding:0 2rem 2rem;
   }
 
   .grade-table {
     border-collapse: collapse;
-    width: 100%;
+    width: 90%;
     font-size: 1.2rem;
-    text-align: left;
+    text-align: center;
     overflow: hidden;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
     border-radius: 10px 10px 0 0;

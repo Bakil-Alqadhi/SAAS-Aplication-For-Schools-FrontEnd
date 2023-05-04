@@ -25,7 +25,7 @@ const hideCards = (title)=>{
 </script>
 <template>
     <!-- Cards the waiting students and teachers -->
-<div v-if="showCards" class="flex flex-wrap justify-center p-8 items-center mt-8">
+<div v-if="showCards" class="flex flex-wrap  justify-center p-8 items-center mt-8">
     <div @click="hideCards('teachers')"  class="bg-lime-600 cursor-pointer text-center rounded-lg shadow-md p-6 m-4 w-72 animate-pulse">
         <h2 class="text-xl text-white font-medium mb-4">Number of Teachers</h2>
         <p class="text-5xl font-bold text-white">{{ accountTeachers.length }}</p>
@@ -37,7 +37,7 @@ const hideCards = (title)=>{
     </div>
 </div>
     <!-- Cards the waiting  teachers -->
-<div v-else-if="showTeachers" class="flex justify-start mt-5 ml-10 text-4xl items-start h-screen">
+<div v-else-if="showTeachers" class="flex container justify-start mt-5 ml-10 text-4xl items-start h-screen">
     <div class="w-full max-w-6xl mx-4">
         <h2 class="text-4xl font-bold mb-6  left-2text-center">All Are Waiting For You To Accept Them</h2>
         <div class="bg-white shadow-md rounded my-6 overflow-x-auto">
@@ -85,7 +85,7 @@ const hideCards = (title)=>{
 
 </div>
     <!-- Cards the waiting students -->
-<div v-if="showStudents" class="flex flex-col text-4xl m-10 rounded-lg">
+<div v-if="showStudents" class="flex container flex-col text-3xl m-10 rounded-lg">
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
       <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
         <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
@@ -137,3 +137,10 @@ const hideCards = (title)=>{
   </div>
 
 </template>
+<style scoped>
+.container {
+   max-width: 70%;
+    margin: 1rem auto;
+    padding: 2rem;
+}
+</style>

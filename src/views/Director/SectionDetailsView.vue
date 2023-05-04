@@ -64,11 +64,10 @@ onMounted(()=>{
 
 <style scoped>
 .container {
-    background-color: rgb(166, 212, 243);
-    height: 100vh;
-    min-width: 100%;
-    padding: 1px 1px 20px;
-    margin-bottom: 0;
+    /* background-color: rgb(166, 212, 243); */
+    max-width: 90%;
+    margin: 0 auto;
+    padding: 2rem;
 }
 .container .btns-heaer {
     /* background-color: blue; */

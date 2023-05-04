@@ -161,7 +161,7 @@ export const storeDataStudents = new createStore({
           console.log(response.data.data);
         })
         .catch((error) => {
-          console.log(error.response.data.errors);
+          console.log(error.response);
         });
     },
     //fetch students of one section

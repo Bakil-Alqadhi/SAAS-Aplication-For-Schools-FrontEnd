@@ -19,14 +19,14 @@ const specializations = computed(() => storeDataSchools.getters.specializations)
 onMounted(() => {
     mapActions['fetchSchools']
     storeDataSchools.dispatch("fetchSchools");
-    storeDataSchools.dispatch("fetchSpecializations");
+    //storeDataSchools.dispatch("fetchSpecializations");
 })
 
 const form = ref({
     first_name: '',
     last_name: '',
     school_id: '',
-    specialization: '',
+    // specialization: '',
     phone: '',
     email: '',
     image: '',
@@ -88,7 +88,7 @@ function submit() {
                     <option v-for="school in schoolsData" :key="school.id" :value="school.id">{{ school.school_name }}</option>
                 </select>
             </div>
-            <div class="mb-4">
+            <!-- <div class="mb-4">
                 <label class="block text-gray-700 font-bold mb-2" for="school">
                     Choose Specialization
                 </label>
@@ -96,7 +96,7 @@ function submit() {
                     <option value="">All Specializations</option>
                     <option v-for="specialization in specializations" :key="specialization.id" :value="specialization.id">{{ specialization.name }}</option>
                 </select>
-            </div>
+            </div> -->
             <div class="mb-4">
                 <label class="block text-gray-700 font-bold mb-2" for="image">
                     Image
