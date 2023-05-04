@@ -1,7 +1,25 @@
 <script setup>
 import {storeDataSchools} from '@/store/storeDataSchools'
-import { computed } from 'vue'
-const message = computed(()=> storeDataSchools.getters.gradeMessage)
+import { storeDataTeachers } from '../store/storeDataTeachers';
+import { storeDataStudents } from '../store/storeDataStudents';
+import { computed, ref, watch } from 'vue'
+const message1 = computed(()=> storeDataSchools.getters.gradeMessage)
+const message2 = computed(()=> storeDataTeachers.getters.message)
+const message3 = computed(()=> storeDataStudents.getters.message)
+const message = ref('')
+
+watch(message1, newValue => {
+    message.value = newValue
+})
+
+watch(message2, newValue => {
+    message.value = newValue
+})
+
+watch(message3, newValue => {
+    message.value = newValue
+})
+
 </script>
 
 <template>

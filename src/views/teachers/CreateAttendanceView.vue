@@ -29,6 +29,14 @@ const check = ()=>{
 }
 
 const save = ()=>{
+
+
+  storeDataStudents.dispatch('handleStoreAttendance', {
+    'section_id': props.id,
+    'attendance': attendance.value,
+    // 'date': todayDate.value
+  })
+  console.log(todayDate.value)
     console.log(attendance.value)
 }
 </script>
@@ -64,22 +72,44 @@ const save = ()=>{
         <tr v-for="(student, index) in students" :key="index">
           <td>{{ index + 1 }}</td>
           <td>{{ student.student_last_name + ' '+ student.student_first_name}}</td>
-          <td>Male</td>
-          <td>{{ student.grad_name  }}</td>
+          <td>{{ student.gender }}</td>
+          <td>{{ student.grade_name  }}</td>
           <td>{{ student.classroom_name }}</td>
           <td>{{ student.section_name }}</td>
-          <td>
-                <!-- <router-link class="btn-show" :to="{name: 'ShowClassroom', params:{id: promotion.id}}">
-                    <i class="far fa-eye hover:text-blue-500 hover:cursor-pointer"></i>
-                </router-link> -->
-            <div  class="presence hover:text-green-600">
-                <label for="presence">Presence</label>
-                <input type="radio" v-model="attendance[student.id]" :value="1" id="presence">
+          <td v-if="student.attendances.length">
+            <div v-for="(att, index) in student.attendances" :key="index">
+                <div v-if="att.attendance_date == todayDate">
+                    <div  class="presence">
+                        <label for="presence">Presence</label>
+                        <input type="radio" v-model="attendance[student.id]" :checked="att.attendance_status == 1 ? true: false" :value="1" id="presence">
+                    </div>
+                    <div  class="absence">
+                        <label for="absence">Absence</label>
+                        <input type="radio" @click="check" v-model="attendance[student.id]"  :checked="att.attendance_status == 0 ? true: false " :value="0" id="absence">
+                    </div>
+                </div>
+
+                <div v-else-if="index == student.attendances.length - 1">
+                    <div  class="presence">
+                    <label for="presence">Presence</label>
+                    <input type="radio" v-model="attendance[student.id]" :value="1" id="presence">
+                    </div>
+                    <div  class="absence">
+                          <label for="absence">Absence</label>
+                          <input type="radio" @click="check" v-model="attendance[student.id]" :value="0" id="absence">
+                    </div>
+                </div>
             </div>
-            <div  class="absence">
-                <label for="absence">Absence</label>
-                <input type="radio" @click="check" v-model="attendance[student.id]" :value="0" id="absence">
-            </div>
+          </td>
+          <td v-else-if="!student.attendances.length">
+                <div  class="presence">
+                  <label for="presence">Presence</label>
+                  <input type="radio" v-model="attendance[student.id]" :value="1" id="presence">
+                </div>
+                <div  class="absence">
+                      <label for="absence">Absence</label>
+                      <input type="radio" @click="check" v-model="attendance[student.id]" :value="0" id="absence">
+                </div>
           </td>
         </tr>
         <!-- Add more rows here -->
@@ -143,6 +173,7 @@ const save = ()=>{
 
   .presence,
   .absence {
+    background-color: white;
     padding: 0.6rem .9rem;
     border-radius: 4px;
     font-size: 1.4rem;
@@ -171,10 +202,14 @@ const save = ()=>{
   }
 
 @media (max-width:768px){
-     .btn-delete {
+  .absence {
         /* display: block; */
         margin-top: 8px;
     }
+    .presence input,
+  .absence input {
+    margin-left: .5rem;
+  }
     
     .grade-table-container {
     max-width: 600px;

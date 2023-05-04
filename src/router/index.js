@@ -334,6 +334,15 @@ const router = createRouter({
       },
     },
     {
+      path: "",
+      name: "TeacherDashboard",
+      component: () => import("../views/teachers/DashboardView.vue"),
+      meta: {
+        requiresAuth: true,
+        requiresRole: "teacher",
+      },
+    },
+    {
       path: "/teacher/section/:id/attendance",
       name: "CreateAttendanceView",
       component: () => import("../views/teachers/CreateAttendanceView.vue"),

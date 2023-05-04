@@ -7,6 +7,7 @@ import { storeAuthUser } from '../store/storeAuthUser'
 import { mapActions } from "vuex";
 // import router from "../router";
 import { useRouter } from "vue-router";
+import AlerMessage from "./AlerMessage.vue";
 
 let profile = ref('')
 let sideBar= ref('')
@@ -62,6 +63,7 @@ const showEdit = (id)=> {
 <template>
 <body class="body" v-if="authUser">
   <header class="header">
+   <AlerMessage />
       <section class="flex">
 
         <a href="home.html" class="logo">{{ school_name }}</a>

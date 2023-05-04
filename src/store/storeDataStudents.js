@@ -7,6 +7,7 @@ export const storeDataStudents = new createStore({
   router,
   state: {
     students: [],
+    message: "",
     student: [],
     errors: {},
   },
@@ -14,8 +15,13 @@ export const storeDataStudents = new createStore({
     students: (state) => state.students,
     student: (state) => state.student,
     errors: (state) => state.errors,
+    message: (state) => state.message,
   },
   mutations: {
+    //set message
+    setMessage: (state, data) => {
+      state.message = data;
+    },
     //set schools data
     setStudents: (state, data) => {
       state.students = data;
@@ -164,7 +170,7 @@ export const storeDataStudents = new createStore({
         .get("api/sections/" + id + "/students")
         .then((response) => {
           context.commit("setStudents", response.data.data);
-          console.log(response);
+          console.log(response.data);
         })
         .catch((error) => console.log(error));
     },
@@ -230,10 +236,29 @@ export const storeDataStudents = new createStore({
           console.log(error.response.data.errors);
         });
     },
-    //show details school
-    // showSchool: async (context, id) => {
-    //   await context.dispatch("getToken");
-    //   //   await
-    // },
+    //Start work with attendances
+    handleStoreAttendance: async (context, payload) => {
+      await context.dispatch("getToken");
+      await axios
+        .post("/api/sections/" + payload.section_id + "/students/attendance", {
+          attendance: payload.attendance,
+          section_id: payload.section_id,
+        })
+        .then((response) => {
+          context.dispatch("setMessage", response.data.message);
+          router.push("/");
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error.response.data.errors);
+        });
+    },
+    //End work with attendances
+    setMessage: (context, message) => {
+      context.commit("setMessage", message);
+      setTimeout(() => {
+        context.commit("setMessage", null);
+      }, 4000);
+    },
   },
 });
