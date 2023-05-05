@@ -315,6 +315,68 @@ const router = createRouter({
         requiresRole: "director",
       },
     },
+    //Start Subjects routes
+    {
+      path: "/subjects/index",
+      name: "IndexSubject",
+      component: () =>
+        import("../views/Director/Subjects/IndexSubjectsView.vue"),
+      meta: {
+        requiresAuth: true,
+        requiresRole: "director",
+      },
+    },
+    {
+      path: "/subjects/create",
+      name: "CreateSubject",
+      component: () =>
+        import("../views/Director/Subjects/CreateSubjectView.vue"),
+      meta: {
+        requiresAuth: true,
+        requiresRole: "director",
+      },
+    },
+    {
+      path: "/subjects/:id",
+      name: "EditSubject",
+      component: () => import("../views/Director/Subjects/EditSubjectView.vue"),
+      meta: {
+        requiresAuth: true,
+        requiresRole: "director",
+      },
+      props: true,
+    },
+    //End  Subjects routes
+    //Start Exam's routes
+    {
+      path: "/exams/index",
+      name: "IndexExam",
+      component: () => import("../views/Director/Exams/IndexExamsView.vue"),
+      meta: {
+        requiresAuth: true,
+        requiresRole: "director",
+      },
+    },
+    {
+      path: "/exams/create",
+      name: "CreateExam",
+      component: () => import("../views/Director/Exams/CreateExamView.vue"),
+      meta: {
+        requiresAuth: true,
+        requiresRole: "director",
+      },
+    },
+    {
+      path: "/exams/:id/edit",
+      name: "EditExam",
+      component: () => import("../views/Director/Exams/EditExamView.vue"),
+      meta: {
+        requiresAuth: true,
+        requiresRole: "director",
+      },
+      props: true,
+    },
+    //End Exam's routes
     {
       path: "/graduated/create",
       name: "CreateGraduated",
@@ -334,7 +396,7 @@ const router = createRouter({
       },
     },
     {
-      path: "",
+      path: "/",
       name: "TeacherDashboard",
       component: () => import("../views/teachers/DashboardView.vue"),
       meta: {

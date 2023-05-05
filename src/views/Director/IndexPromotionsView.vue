@@ -102,9 +102,13 @@ const deletePromotion = (type, id)=> {
     font-size: 1.2rem;
 }
 .grade-table-container {
-    min-width: 100%;
+    /* min-width: 100%;
     margin: 0 100px 0;
-    padding: 3rem 2rem 2rem;
+    padding: 3rem 2rem 2rem; */
+    max-width: 90%;
+    margin: 0 120px;
+    padding:2rem;
+
   }
 
   .grade-table {
@@ -176,7 +180,7 @@ const deletePromotion = (type, id)=> {
     }
     
     .grade-table-container {
-    max-width: 600px;
+    /* max-width: 600px; */
     margin: 0 auto;
   }
 }

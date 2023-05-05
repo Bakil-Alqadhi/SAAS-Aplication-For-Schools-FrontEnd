@@ -9,12 +9,14 @@ export const storeDataTeachers = new createStore({
     teacher: {},
     errors: {},
     message: null,
+    deleteMessage: null,
   },
   getters: {
     teachers: (state) => state.teachers,
     teacher: (state) => state.teacher,
     errors: (state) => state.errors,
     message: (state) => state.message,
+    deleteMessage: (state) => state.deleteMessage,
   },
   mutations: {
     //set schools data
@@ -35,6 +37,9 @@ export const storeDataTeachers = new createStore({
     //setting message
     setMessage: (state, message) => {
       state.message = message;
+    },
+    setDeleteMessage: (state, message) => {
+      state.deleteMessage = message;
     },
   },
   actions: {
@@ -129,7 +134,7 @@ export const storeDataTeachers = new createStore({
         .get("api/teachers")
         .then((response) => {
           context.commit("setTeachers", response.data.data);
-          console.log(response);
+          // console.log(response);
         })
         .catch((error) => console.log(error));
     },
@@ -138,7 +143,7 @@ export const storeDataTeachers = new createStore({
       await axios
         .get("api/teachers/" + id)
         .then((response) => {
-          console.log(response.data.data);
+          // console.log(response.data.data);
           context.commit("setOneTeacher", response.data.data);
         })
         .catch((error) => console.log(error));

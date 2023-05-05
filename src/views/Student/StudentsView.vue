@@ -89,7 +89,7 @@ const graduate = (id, name)=>{
     /* max-width: 600px;
     margin: 0 auto; */
     max-width: 90%;
-    margin: 0 100px;
+    margin: 0 120px;
     padding: 2rem;
   }
 td,th {

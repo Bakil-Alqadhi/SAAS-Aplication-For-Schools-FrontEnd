@@ -3,10 +3,15 @@ import {storeDataSchools} from '@/store/storeDataSchools'
 import { storeDataTeachers } from '../store/storeDataTeachers';
 import { storeDataStudents } from '../store/storeDataStudents';
 import { computed, ref, watch } from 'vue'
-const message1 = computed(()=> storeDataSchools.getters.gradeMessage)
+const message1 = computed(()=> storeDataSchools.getters.message)
 const message2 = computed(()=> storeDataTeachers.getters.message)
 const message3 = computed(()=> storeDataStudents.getters.message)
 const message = ref('')
+
+const deleteMessage1 = computed(()=> storeDataSchools.getters.deleteMessage)
+const deleteMessage2 = computed(()=> storeDataTeachers.getters.deleteMessage)
+const deleteMessage3 = computed(()=> storeDataStudents.getters.deleteMessage)
+const deleteMessage = ref('')
 
 watch(message1, newValue => {
     message.value = newValue
@@ -18,6 +23,18 @@ watch(message2, newValue => {
 
 watch(message3, newValue => {
     message.value = newValue
+})
+
+watch(deleteMessage1, newValue => {
+    deleteMessage.value = newValue
+})
+
+watch(deleteMessage2, newValue => {
+    deleteMessage.value = newValue
+})
+
+watch(deleteMessage3, newValue => {
+    deleteMessage.value = newValue
 })
 
 </script>
@@ -41,6 +58,12 @@ watch(message3, newValue => {
             <p>Data Updated Successfully</p>
         </div> -->
     </div>
+    <div class="alert-message" v-if="deleteMessage">
+        <div class="delete-message success">
+            <i class="fa-regular fa-circle-check"></i>
+            <p>{{ deleteMessage }}</p>
+        </div>
+    </div>
 </template>
 
 
@@ -54,8 +77,7 @@ watch(message3, newValue => {
     z-index: 20;
     text-align: center;
 }
-.alert-message .message {
-    background-color: rgb(57, 199, 57);
+.alert-message .message, .delete-message {
     width: 100%;
     height: 100%;
     font-size: large;
@@ -64,13 +86,19 @@ watch(message3, newValue => {
     justify-content: space-around;
     color: white;
 }
-.alert-message .message i {
+.message {
+    background-color: rgb(57, 199, 57);
+}
+.delete-message {
+    background-color: rgb(198, 47, 21);
+}
+.alert-message  i {
     color: rgb(248, 244, 244);
     /* width: 20px;
     height: 20px; */
     font-size: 40px;
 }
-.alert-message .message p {
+.alert-message  p {
     margin-top: 5px;
 }
 </style>

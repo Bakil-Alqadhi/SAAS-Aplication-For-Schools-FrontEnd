@@ -14,7 +14,8 @@ export const storeDataSchools = new createStore({
     countNotifications: 0,
     grades: {},
     grade: {},
-    gradeMessage: null,
+    message: null,
+    deleteMessage: null,
     classrooms: {},
     classroom: {},
     sections: {},
@@ -22,6 +23,10 @@ export const storeDataSchools = new createStore({
     specializations: {},
     promotions: {},
     graduates: {},
+    subjects: {},
+    subject: {},
+    exams: {},
+    exam: {},
   },
   getters: {
     schools: (state) => state.schools,
@@ -32,7 +37,8 @@ export const storeDataSchools = new createStore({
     countNotifications: (state) => state.countNotifications,
     grades: (state) => state.grades,
     grade: (state) => state.grade,
-    gradeMessage: (state) => state.gradeMessage,
+    message: (state) => state.message,
+    deleteMessage: (state) => state.deleteMessage,
     classrooms: (state) => state.classrooms,
     classroom: (state) => state.classroom,
     sections: (state) => state.sections,
@@ -40,8 +46,28 @@ export const storeDataSchools = new createStore({
     specializations: (state) => state.specializations,
     promotions: (state) => state.promotions,
     graduates: (state) => state.graduates,
+    subjects: (state) => state.subjects,
+    subject: (state) => state.subject,
+    exams: (state) => state.exams,
+    exam: (state) => state.exam,
   },
   mutations: {
+    //set all subjects
+    setExams: (state, data) => {
+      state.exams = data;
+    },
+    //set one subject
+    setExam: (state, data) => {
+      state.exam = data;
+    },
+    //set all subjects
+    setSubjects: (state, data) => {
+      state.subjects = data;
+    },
+    //set one subject
+    setSubject: (state, data) => {
+      state.subject = data;
+    },
     //set all graduates
     setGraduates: (state, data) => {
       state.graduates = data;
@@ -78,8 +104,11 @@ export const storeDataSchools = new createStore({
     setGrade: (state, data) => {
       state.grade = data;
     },
-    setGradeMessage: (state, data) => {
-      state.gradeMessage = data;
+    setMessage: (state, data) => {
+      state.message = data;
+    },
+    setDeleteMessage: (state, data) => {
+      state.deleteMessage = data;
     },
     //endGrades
     //start classrooms
@@ -263,7 +292,8 @@ export const storeDataSchools = new createStore({
         .get("/api/grades/data")
         .then((response) => {
           context.commit("setGrades", response.data);
-          console.log(response.data);
+          // console.log("grades data");
+          // console.log(response.data);
         })
         .catch((error) => {
           console.log(error.response.data.errors);
@@ -288,10 +318,7 @@ export const storeDataSchools = new createStore({
           number: payload.number,
         })
         .then((response) => {
-          context.commit("setGradeMessage", response.data.message);
-          setTimeout(() => {
-            context.commit("setGradeMessage", null);
-          }, 4000);
+          context.dispatch("setMessage", response.data.message);
           router.push("/grades");
           // console.log(response.data.message);
         })
@@ -310,10 +337,7 @@ export const storeDataSchools = new createStore({
           number: payload.number,
         })
         .then((response) => {
-          context.commit("setGradeMessage", response.data.message);
-          setTimeout(() => {
-            context.commit("setGradeMessage", null);
-          }, 4000);
+          context.dispatch("setMessage", response.data.message);
           router.push("/grades");
           // console.log(response.data.message);
         })
@@ -329,10 +353,7 @@ export const storeDataSchools = new createStore({
       await axios
         .delete("/api/grades/" + id)
         .then((response) => {
-          context.commit("setGradeMessage", response.data.message);
-          setTimeout(() => {
-            context.commit("setGradeMessage", null);
-          }, 4000);
+          context.dispatch("setDeleteMessage", response.data.message);
           context.dispatch("fetchGrades");
         })
         .catch((error) => {
@@ -394,10 +415,7 @@ export const storeDataSchools = new createStore({
           grade: payload.grade,
         })
         .then((response) => {
-          context.commit("setGradeMessage", response.data.message);
-          setTimeout(() => {
-            context.commit("setGradeMessage", null);
-          }, 4000);
+          context.dispatch("setMessage", response.data.message);
           router.push("/classrooms/index");
           // console.log(response.data);
         })
@@ -414,10 +432,7 @@ export const storeDataSchools = new createStore({
         .delete("/api/classrooms/" + id)
         .then((response) => {
           context.dispatch("fetchClassrooms");
-          context.commit("setGradeMessage", response.data.data.message);
-          setTimeout(() => {
-            context.commit("setGradeMessage", null);
-          }, 2000);
+          context.dispatch("setDeleteMessage", response.data.message);
         })
         .catch((error) => {
           console.log(error.response.data.data.errors);
@@ -436,10 +451,7 @@ export const storeDataSchools = new createStore({
           teachers: payload.teachers,
         })
         .then((response) => {
-          context.commit("setGradeMessage", response.data.message);
-          setTimeout(() => {
-            context.commit("setGradeMessage", null);
-          }, 4000);
+          context.dispatch("setMessage", response.data.message);
           router.push("/classrooms/index");
         })
         .catch((error) => {
@@ -455,7 +467,7 @@ export const storeDataSchools = new createStore({
         .get("/api/sections")
         .then((response) => {
           context.commit("setSections", response.data);
-          console.log(response.data);
+          // console.log(response.data);
         })
         .catch((error) => {
           console.log(error.response.data.errors);
@@ -553,7 +565,8 @@ export const storeDataSchools = new createStore({
           },
         })
         .then((response) => {
-          console.log(response.data);
+          context.dispatch("setDeleteMessage", response.data.message);
+          // console.log(response.data);
         })
         .catch((error) => {
           console.log(error.response.data.errors);
@@ -570,9 +583,10 @@ export const storeDataSchools = new createStore({
           },
         })
         .then((response) => {
-          console.log("===============");
-          console.log(response.data);
-          console.log("===============");
+          context.dispatch("setDeleteMessage", response.data.message);
+          // console.log("===============");
+          // console.log(response.data);
+          // console.log("===============");
         })
         .catch((error) => {
           console.log(error.response.data.errors);
@@ -640,7 +654,7 @@ export const storeDataSchools = new createStore({
       await axios
         .delete("/api/graduate/" + id)
         .then((response) => {
-          context.dispatch("setMessage", response.data.message);
+          context.dispatch("setDeleteMessage", response.data.message);
           context.dispatch("fetchGraduated");
         })
         .catch((error) => {
@@ -674,7 +688,7 @@ export const storeDataSchools = new createStore({
       await axios
         .delete("/api/sections/" + id)
         .then((response) => {
-          context.dispatch("setMessage", response.data.message);
+          context.dispatch("setDeleteMessage", response.data.message);
           context.dispatch("fetchSections");
         })
         .catch((error) => {
@@ -683,11 +697,179 @@ export const storeDataSchools = new createStore({
     },
     //End Sections
 
+    //Start Subjects
+    //fetching all subjects
+    fetchSubjects: async (context) => {
+      await axios
+        .get("/api/subjects")
+        .then((response) => {
+          context.commit("setSubjects", response.data.data);
+          // console.log(response.data.data);
+        })
+        .catch((error) => {
+          console.log(error.response.data);
+        });
+    },
+    //fetch one subject
+    fetchOneSubject: async (context, id) => {
+      await axios
+        .get("/api/subjects/" + id)
+        .then((response) => {
+          context.commit("setSubject", response.data.data);
+          // console.log(response.data.data);
+        })
+        .catch((error) => {
+          console.log(error.response.data);
+        });
+    },
+    //create Subject
+    handleCreateSubject: async (context, payload) => {
+      await context.dispatch("getToken");
+      axios
+        .post("/api/subjects", {
+          name: payload.name,
+          grade: payload.grade,
+          classroom: payload.classroom,
+          teacher: payload.teacher,
+        })
+        .then((response) => {
+          context.dispatch("setMessage", response.data.message);
+          router.push("/subjects/index");
+        })
+        .catch((error) => {
+          if (error.response.status === 422) {
+            context.commit("setErrors", error.response.data.errors);
+          }
+          console.log(error.response.data);
+        });
+    },
+    //update subject
+    handleUpdateSubject: async (context, payload) => {
+      await context.dispatch("getToken");
+      await axios
+        .put("/api/subjects/" + payload.id, {
+          name: payload.name,
+          grade: payload.grade,
+          classroom: payload.classroom,
+          teacher: payload.teacher,
+        })
+        .then((response) => {
+          context.dispatch("setMessage", response.data.message);
+          router.push("/subjects/index");
+          // console.log(response.data.message);
+        })
+        .catch((error) => {
+          if (error.response.status === 422) {
+            context.commit("setErrors", error.response.data.errors);
+          }
+          console.log(error.response.data.errors);
+        });
+    },
+    //delete Subject
+    handleDeleteSubject: async (context, id) => {
+      // await context.dispatch("getToken");
+      await axios
+        .delete("/api/subjects/" + id)
+        .then((response) => {
+          context.dispatch("setDeleteMessage", response.data.message);
+          context.dispatch("fetchSubjects");
+        })
+        .catch((error) => {
+          console.log(error.response.data.errors);
+        });
+    },
+    //End Subjects
+    //Start Exam
+    //fetching all exams
+    fetchExams: async (context) => {
+      await axios
+        .get("/api/exams")
+        .then((response) => {
+          context.commit("setExams", response.data.data);
+          // console.log(response.data.data);
+        })
+        .catch((error) => {
+          console.log(error.response.data);
+        });
+    },
+    //fetching one exams
+    fetchOneExam: async (context, id) => {
+      await axios
+        .get("/api/exams/" + id)
+        .then((response) => {
+          context.commit("setExam", response.data.data);
+          // console.log(response.data.data);
+        })
+        .catch((error) => {
+          console.log(error.response.data);
+        });
+    },
+    handleCreateExam: async (context, payload) => {
+      await context.dispatch("getToken");
+      axios
+        .post("/api/exams", {
+          name: payload.name,
+          term: payload.term,
+          academic_year: payload.academic_year,
+        })
+        .then((response) => {
+          context.dispatch("setMessage", response.data.message);
+          router.push("/exams/index");
+        })
+        .catch((error) => {
+          if (error.response.status === 422) {
+            context.commit("setErrors", error.response.data.errors);
+          }
+          console.log(error.response.data);
+        });
+    },
+    //update Exam
+    handleUpdateExam: async (context, payload) => {
+      await context.dispatch("getToken");
+      await axios
+        .put("/api/exams/" + payload.id, {
+          name: payload.name,
+          term: payload.term,
+          academic_year: payload.academic_year,
+        })
+        .then((response) => {
+          context.dispatch("setMessage", response.data.message);
+          router.push("/exams/index");
+          // console.log(response.data.message);
+        })
+        .catch((error) => {
+          if (error.response.status === 422) {
+            context.commit("setErrors", error.response.data.errors);
+          }
+          console.log(error.response.data.errors);
+        });
+    },
+    //delete Subject
+    handleDeleteExam: async (context, id) => {
+      // await context.dispatch("getToken");
+      await axios
+        .delete("/api/exams/" + id)
+        .then((response) => {
+          context.dispatch("setDeleteMessage", response.data.message);
+          context.dispatch("fetchExams");
+        })
+        .catch((error) => {
+          console.log(error.response.data.errors);
+        });
+    },
+    //End Exam
+
     //set message
     setMessage: (context, message) => {
-      context.commit("setGradeMessage", message);
+      context.commit("setMessage", message);
       setTimeout(() => {
-        context.commit("setGradeMessage", null);
+        context.commit("setMessage", null);
+      }, 4000);
+    },
+    setDeleteMessage: (context, message) => {
+      context.commit("setDeleteMessage", message);
+      setTimeout(() => {
+        context.commit("setDeleteMessage", null);
       }, 4000);
     },
   },
