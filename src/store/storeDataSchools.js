@@ -781,9 +781,9 @@ export const storeDataSchools = new createStore({
     //End Subjects
     //Start Exam
     //fetching all exams
-    fetchExams: async (context) => {
+    fetchQuizzes: async (context) => {
       await axios
-        .get("/api/exams")
+        .get("/api/quizzes")
         .then((response) => {
           context.commit("setExams", response.data.data);
           // console.log(response.data.data);
@@ -793,9 +793,9 @@ export const storeDataSchools = new createStore({
         });
     },
     //fetching one exams
-    fetchOneExam: async (context, id) => {
+    fetchOneQuiz: async (context, id) => {
       await axios
-        .get("/api/exams/" + id)
+        .get("/api/quizzes/" + id)
         .then((response) => {
           context.commit("setExam", response.data.data);
           // console.log(response.data.data);
@@ -804,17 +804,21 @@ export const storeDataSchools = new createStore({
           console.log(error.response.data);
         });
     },
-    handleCreateExam: async (context, payload) => {
+    handleCreateQuiz: async (context, payload) => {
       await context.dispatch("getToken");
       axios
-        .post("/api/exams", {
+        .post("/api/quizzes", {
           name: payload.name,
-          term: payload.term,
-          academic_year: payload.academic_year,
+          subject: payload.subject_id,
+          teacher: payload.teacher_id,
+          grade: payload.grade_id,
+          classroom: payload.classroom_id,
+          section: payload.section_id,
+
         })
         .then((response) => {
           context.dispatch("setMessage", response.data.message);
-          router.push("/exams/index");
+          router.push("/quizzes/index");
         })
         .catch((error) => {
           if (error.response.status === 422) {
@@ -824,17 +828,20 @@ export const storeDataSchools = new createStore({
         });
     },
     //update Exam
-    handleUpdateExam: async (context, payload) => {
+    handleUpdateQuiz: async (context, payload) => {
       await context.dispatch("getToken");
       await axios
-        .put("/api/exams/" + payload.id, {
+        .put("/api/quizzes/" + payload.id, {
           name: payload.name,
-          term: payload.term,
-          academic_year: payload.academic_year,
+          subject: payload.subject_id,
+          teacher: payload.teacher_id,
+          grade: payload.grade_id,
+          classroom: payload.classroom_id,
+          section: payload.section_id,
         })
         .then((response) => {
           context.dispatch("setMessage", response.data.message);
-          router.push("/exams/index");
+          router.push("/quizzes/index");
           // console.log(response.data.message);
         })
         .catch((error) => {
@@ -845,13 +852,13 @@ export const storeDataSchools = new createStore({
         });
     },
     //delete Subject
-    handleDeleteExam: async (context, id) => {
+    handleDeleteQuiz: async (context, id) => {
       // await context.dispatch("getToken");
       await axios
-        .delete("/api/exams/" + id)
+        .delete("/api/quizzes/" + id)
         .then((response) => {
           context.dispatch("setDeleteMessage", response.data.message);
-          context.dispatch("fetchExams");
+          context.dispatch("fetchQuizzes");
         })
         .catch((error) => {
           console.log(error.response.data.errors);

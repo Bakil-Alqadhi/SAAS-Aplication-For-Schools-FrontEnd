@@ -58,10 +58,10 @@ watch(deleteMessage3, newValue => {
             <p>Data Updated Successfully</p>
         </div> -->
     </div>
-    <div class="alert-message" v-if="deleteMessage">
+    <div class="alert-message" v-if="deleteMessage" >
         <div class="delete-message success">
-            <i class="fa-regular fa-circle-check"></i>
-            <p>{{ deleteMessage }}</p>
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <p class="pt-2">{{ deleteMessage }}</p>
         </div>
     </div>
 </template>

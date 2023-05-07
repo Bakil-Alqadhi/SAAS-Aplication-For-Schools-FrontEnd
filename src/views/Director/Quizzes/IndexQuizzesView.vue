@@ -3,32 +3,32 @@ import { computed, onMounted, ref, watch } from "vue";
 import { mapActions } from "vuex";
 import { storeDataSchools } from "../../../store/storeDataSchools";
 
-const exams = computed( ()=> storeDataSchools.getters.exams)
+const quizzes = computed( ()=> storeDataSchools.getters.exams)
 
 onMounted(async()=>{
-    await mapActions['fetchExams']
-    await storeDataSchools.dispatch('fetchExams');
+    await mapActions['fetchQuizzes']
+    await storeDataSchools.dispatch('fetchQuizzes');
 })
 
 
-const deleteExam =async (id)=> {
+const deleteQuiz =async (id)=> {
   if(confirm("Are you sure?")){
-    storeDataSchools.dispatch('handleDeleteExam', id)
+    storeDataSchools.dispatch('handleDeleteQuiz', id)
   }
 }
 
 </script>
 <template>
   
-<div v-if="exams" class="grade-table-container">   
+<div v-if="quizzes" class="grade-table-container">   
      <!-- bg-green-500  -->
     <div class="flex justify-between">
 
       <!-- bg-gray-800 -->
-        <router-link to="/exams/create"  class="relative create-grade inline-flex items-center justify-center px-10 py-4 mb-5 overflow-hidden font-bold tracking-tighter  text-white bg-green-600 rounded-lg group"> 
+        <router-link to="/quizzes/create"  class="relative create-grade inline-flex items-center justify-center px-10 py-4 mb-5 overflow-hidden font-bold tracking-tighter  text-white bg-green-600 rounded-lg group"> 
             <span class="absolute w-0 h-0 transition-all duration-500 ease-out bg-blue-500 rounded-full group-hover:w-60 group-hover:h-56"></span>
             <span class="absolute inset-0 w-full h-full -mt-1 rounded-lg opacity-30 bg-gradient-to-b from-transparent via-transparent to-gray-700"></span>
-            <span class="relative">New Exam</span>
+            <span class="relative">New Quiz</span>
         </router-link>
     </div>
     <table class="grade-table">
@@ -36,25 +36,31 @@ const deleteExam =async (id)=> {
         <tr>
           <th>Id</th>
           <th>Name</th>
-          <th>Term</th>
-          <th>Academic Year</th>
+          <th>Subject</th>
+          <th>Teacher</th>
+          <th>Grade</th>
+          <th>Classroom</th>
+          <th>Section</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(exam, index) in exams" :key="index">
+        <tr v-for="(quiz, index) in quizzes" :key="index">
           <td>{{ index + 1 }}</td>
-          <td>{{ exam.name }}</td>
-          <td>{{ exam.term }}</td>
-          <td>{{ exam.academic_year }}</td>
+          <td>{{ quiz.name }}</td>
+          <td>{{ quiz.subject_name }}</td>
+          <td>{{ quiz.teacher_last_name +' '+ quiz.teacher_first_name}}</td>
+          <td>{{ quiz.grade_name }}</td>
+          <td>{{ quiz.classroom_name }}</td>
+          <td>{{ quiz.section_name }}</td>
           <td>
             <!-- <router-link class="btn-show" :to="{name: 'ShowClassroom', params:{id: subject.id}}">
                 <i class="far fa-eye hover:text-blue-500 hover:cursor-pointer"></i>
             </router-link> -->
-            <router-link :to="{name: 'EditExam', params:{id: exam.id}}"  class="btn-update hover:text-green-600">
+            <router-link :to="{name: 'EditQuiz', params:{id: quiz.id}}"  class="btn-update hover:text-green-600">
               <i class="fas fa-edit"></i>
             </router-link>
-            <button  @click="deleteExam(exam.id)" class="btn-delete">
+            <button  @click="deleteQuiz(quiz.id)" class="btn-delete">
               <i class="fa fa-trash" aria-hidden="true"></i>
             </button>
           </td>

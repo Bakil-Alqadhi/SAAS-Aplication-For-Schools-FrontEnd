@@ -349,27 +349,27 @@ const router = createRouter({
     //End  Subjects routes
     //Start Exam's routes
     {
-      path: "/exams/index",
-      name: "IndexExam",
-      component: () => import("../views/Director/Exams/IndexExamsView.vue"),
+      path: "/quizzes/index",
+      name: "IndexQuiz",
+      component: () => import("../views/Director/Quizzes/IndexQuizzesView.vue"),
       meta: {
         requiresAuth: true,
         requiresRole: "director",
       },
     },
     {
-      path: "/exams/create",
-      name: "CreateExam",
-      component: () => import("../views/Director/Exams/CreateExamView.vue"),
+      path: "/quizzes/create",
+      name: "CreateQuiz",
+      component: () => import("../views/Director/Quizzes/CreateQuizView.vue"),
       meta: {
         requiresAuth: true,
         requiresRole: "director",
       },
     },
     {
-      path: "/exams/:id/edit",
-      name: "EditExam",
-      component: () => import("../views/Director/Exams/EditExamView.vue"),
+      path: "/quizzes/:id/edit",
+      name: "EditQuiz",
+      component: () => import("../views/Director/Quizzes/EditQuizView.vue"),
       meta: {
         requiresAuth: true,
         requiresRole: "director",
