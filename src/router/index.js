@@ -397,7 +397,7 @@ const router = createRouter({
     },
     {
       path: "/",
-      name: "TeacherDashboard",
+      name: "TeacherHome",
       component: () => import("../views/teachers/DashboardView.vue"),
       meta: {
         requiresAuth: true,
@@ -418,6 +418,34 @@ const router = createRouter({
       path: "/teacher/sections/index",
       name: "IndexTeacherSectionsView",
       component: () => import("../views/teachers/IndexTeacherSectionsView.vue"),
+      meta: {
+        requiresAuth: true,
+        requiresRole: "teacher",
+      },
+      props: true,
+    },
+    {
+      path: "/teacher/quizzes/index",
+      name: "IndexQuizTeacher",
+      component: () => import("../views/teachers/Quizzes/IndexQuizzesView.vue"),
+      meta: {
+        requiresAuth: true,
+        requiresRole: "teacher",
+      },
+    },
+    {
+      path: "/teacher/quizzes/create",
+      name: "CreateQuiz",
+      component: () => import("../views/teachers/Quizzes/CreateQuizView.vue"),
+      meta: {
+        requiresAuth: true,
+        requiresRole: "teacher",
+      },
+    },
+    {
+      path: "/teacher/quizzes/:id/edit",
+      name: "EditQuizTeacher",
+      component: () => import("../views/teachers/Quizzes/EditQuizView.vue"),
       meta: {
         requiresAuth: true,
         requiresRole: "teacher",

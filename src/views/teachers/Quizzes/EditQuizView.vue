@@ -3,82 +3,112 @@ import { computed, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { storeDataSchools } from "../../../store/storeDataSchools";
 import { storeDataTeachers } from "../../../store/storeDataTeachers";
-
+const props = defineProps({
+    id: String
+})
+const quiz = computed(()=> storeDataSchools.getters.exam)
 const grades = computed(()=> storeDataSchools.getters.grades)
-// const teachers = computed(()=>storeDataTeachers.getters.teachers)
-const teachers = ref('')
 const subjects = computed(()=> storeDataSchools.getters.subjects)
+const teachers = computed(()=> storeDataTeachers.getters.teachers)
 const errors = computed(()=> storeDataSchools.getters.errors)
-const router = useRouter()
 
 const classrooms = ref('')
 const sections = ref('')
 const selectedGrade = ref('')
 const selectedClassroom = ref('')
 const selectedSection = ref('')
+// const form = ref ([{
+//         name: '',
+//         term: '',
+//         academic_year: '',
+//     }])
 
-const form = ref({
-    name: '',
-    subject_id: '',
-    grade_id: '',
-    classroom_id: '',
-    section_id:'',
-    teacher_id: ''
-})
-onMounted(()=>{
-    // mapActions['fetchGradesData']
-    storeDataSchools.dispatch('fetchGradesData');
-    storeDataSchools.dispatch('fetchSubjects');
-    storeDataTeachers.dispatch('fetchTeachers')
+const router = useRouter()
+
+onMounted(async()=>{
+    await storeDataSchools.dispatch('fetchGradesData')
+    await storeDataSchools.dispatch('fetchSubjects')
+    await storeDataTeachers.dispatch('fetchTeachers')
+    await storeDataSchools.dispatch('fetchOneQuiz', props.id)
+    grades.value.forEach(function(element, index){
+        if(element.id == quiz.value.grade_id){
+            selectedGrade.value = index;
+            classrooms.value = grades.value[index].classrooms
+            // selectedClassroom.value = quiz.value.classroom_id
+            classrooms.value.forEach(function(el2, ind2){
+                if(el2.id == quiz.value.classroom_id){
+                    selectedClassroom.value = ind2
+                    sections.value = grades.value[selectedGrade.value].sectionsClassroom[selectedClassroom.value].sections;
+                    selectedSection.value = quiz.value.section_id
+                }
+            })
+
+
+            
+        }
+    });
+   
 })
 
 const selected = ()=> {
     classrooms.value = grades.value[selectedGrade.value].classrooms;
-    selectedSection.value = ''
-    teachers.value= ''
 }
 
 const selected2 = ()=> {
-    selectedSection.value = ''
-    teachers.value= ''
     sections.value = grades.value[selectedGrade.value].sectionsClassroom[selectedClassroom.value].sections;
-}
-const selected3 = ()=> {
-        teachers.value = sections.value[selectedSection.value].teachers;
+    // console.log(grades.value[form.value.grade].classrooms)
 }
 
 const back = ()=>{
   router.go(-1);
 }
 
-const store = ()=>{
+const update = ()=>{
     if(!selectedGrade.value){
         errors.value.grade=  ['The grade field is required'];
         // console.log(errors.value.grade)
     }
-    form.value.grade_id = grades.value[selectedGrade.value].id;
-    form.value.classroom_id = grades.value[selectedGrade.value].sectionsClassroom[selectedClassroom.value].id;
-    form.value.section_id = sections.value[selectedSection.value].id
+    quiz.value.grade_id = grades.value[selectedGrade.value].id;
+    quiz.value.classroom_id = grades.value[selectedGrade.value].sectionsClassroom[selectedClassroom.value].id;
+    quiz.value.section_id = selectedSection.value
     // console.log('=============')
-    //     console.log(form.value)
+    //     // console.log(exam.value)
     //     console.log('=============') 
-    storeDataSchools.dispatch('handleCreateQuiz', form.value)
+    storeDataSchools.dispatch('handleUpdateQuiz', quiz.value)
 }
 </script>
 
 <template>
-<div class="container"> 
-    <form class="main-form" @submit.prevent="store">
+<div class="container" v-if="quiz"> 
+    <form class="main-form" @submit.prevent="update">
         <p  @click="back">X</p>
-        <h1>Create New Quiz</h1>
+        <h1>Update Quiz Data</h1>
+        <!-- <div class="parent" >
+            <label for="section_name">Exam's Name:</label>
+            <input class="field" v-model="exam.name" type="text" id="section_name"  placeholder="Exam's Name" />
+            <span v-if="errors.name">{{ errors.name[0] }}</span>
+        </div>
+        <div class="parent" >
+            <label for="section_name">Exam's Term:</label>
+            <input class="field" v-model="exam.term" type="number" min="1" max="2" id="section_name"  placeholder="Exam's Term" />
+            <span v-if="errors.term">{{ errors.term[0] }}</span>
+        </div>
+        <div class="parent" >
+            <label for="section_name">Academic Year:</label>
+            <select class="field" v-model="exam.academic_year" id="academic_year_new">
+                    <option value="" selected>Select Year</option>
+                    <option v-for="(year, index) in years" :key="index" :value="year">{{ year }}</option>
+            </select>
+            <span v-if="errors.academic_year">{{ errors.academic_year[0] }}</span>
+        </div> -->
         <div class="parent" >
             <label for="name">Quiz's Name:</label>
-            <input class="field" v-model="form.name" type="text" id="name"  placeholder="Quiz Name" />
+            <input class="field" v-model="quiz.name" type="text" id="name"  placeholder="Quiz Name" />
             <span v-if="errors.name">{{ errors.name[0] }}</span>
         </div>
         <div class="parent">
             <label for="subject">Select Subject:</label>
-            <select class="field" v-model="form.subject_id" id="subject" >
+            <select class="field" v-model="quiz.subject_id" id="subject" >
                 <option value="" selected>Select Subject</option>
                 <option v-for="subject in subjects" :key="subject.id" :value="subject.id">{{ subject.name }}</option>
             </select>
@@ -102,22 +132,22 @@ const store = ()=>{
         </div>
         <div class="parent" >
             <label for="section">Select Section:</label>
-            <select class="field" v-model="selectedSection"  @change="selected3" id="section">
+            <select class="field" v-model="selectedSection"  id="section">
                 <option value="">Select Section</option>
-                <option v-for="(section, index) in sections" :key="section.id" :value="index">{{ section.section_name }}</option>
+                <option v-for="section in sections" :key="section.id" :value="section.id">{{ section.name }}</option>
             </select>
             <span v-if="errors.section">{{ errors.section[0] }}</span>
         </div>
         <div class="parent" >
             <label for="section">Select Teacher:</label>
-            <select class="field" v-model="form.teacher_id"  id="section">
+            <select class="field" v-model="quiz.teacher_id"  id="section">
                 <option value="">Select Teacher</option>
                 <option v-for="teacher in teachers" :key="teacher.id" :value="teacher.id">{{ teacher.last_name +' '+ teacher.first_name }}</option>
             </select>
             <span v-if="errors.teacher">{{ errors.teacher[0] }}</span>
         </div>
         <div class="buttons mt-10">
-            <button type="submit" class="create field">Create</button>
+            <button type="submit" class="create field">Update</button>
         </div>
 
     </form>
@@ -199,7 +229,7 @@ const store = ()=>{
     background-color: blue;
 }
 .parent {
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     text-align: start;
 }
 .container {
@@ -213,17 +243,14 @@ const store = ()=>{
     display: flex;
     align-items: center;
     justify-content: center;
-
 }
 .container form{
     background-color:white ;
     padding: 10px;
-    /* padding-top: 40px; */
     width: 450px;
     height: auto;
     border-radius: 10px;
     position: relative;
-    /* overflow: visible; */
     /* visibility: hidden; */
 }
 @media (max-width:768px){ 

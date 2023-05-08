@@ -292,7 +292,6 @@ export const storeDataSchools = new createStore({
         .get("/api/grades/data")
         .then((response) => {
           context.commit("setGrades", response.data);
-          // console.log("grades data");
           // console.log(response.data);
         })
         .catch((error) => {
@@ -814,7 +813,6 @@ export const storeDataSchools = new createStore({
           grade: payload.grade_id,
           classroom: payload.classroom_id,
           section: payload.section_id,
-
         })
         .then((response) => {
           context.dispatch("setMessage", response.data.message);

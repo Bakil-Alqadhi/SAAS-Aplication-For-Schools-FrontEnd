@@ -9,7 +9,7 @@
         <span >All Schools</span>
     </router-link>
 
-    <router-link to="/teachers">
+    <router-link to="/teacher/quizzes/index">
         <i class="fas fa-clipboard-check"></i>
         <span>Exams</span>
     </router-link>
