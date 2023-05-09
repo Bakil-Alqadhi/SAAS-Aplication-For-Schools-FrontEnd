@@ -26,10 +26,11 @@ onMounted(async()=>{
     <div class=" w-16 h-16  border-4 border-blue-700 bg-blue-700 border-dashed rounded-full animate-ping dark:border-violet-400"></div>
   </div>
  <div v-if="!authUser">
-    <Nav />
-    <main class="m-10">
+    <Nav >
+    <!-- <main class="m-10"> -->
       <RouterView />
-    </main>
+    </Nav>
+    <!-- </main> -->
   </div>
   <div v-else>
       <!-- <SpinnerLoading /> -->

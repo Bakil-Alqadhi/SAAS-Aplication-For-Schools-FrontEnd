@@ -29,7 +29,7 @@ const next = ()=>{
 </script>
 
 <template>
-  <div class="container mx-auto">
+  <div class="container mt-10 mx-auto">
     <form action="">
       <div class="w-full form px-6 py-12 md:w-1/2 mx-auto">
       <div class="mb-6">

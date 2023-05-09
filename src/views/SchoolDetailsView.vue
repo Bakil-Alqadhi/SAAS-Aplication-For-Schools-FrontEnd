@@ -23,26 +23,38 @@ onMounted(() => {
 </script>
 
 <template>
-<div v-if="school">
+<div v-if="school" >
      <!-- School Details Section -->
 <section class="text-gray-600 body-font overflow-hidden bg-white">
-  <div class="container px-5 py-24 mx-auto">
+  <div class="container px-5  mx-auto">
     <div class="lg:w-4/5 mx-auto flex flex-wrap">
       <img alt="school logo" class="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded" :src="school.school_image">
       <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
-        <h2 class="text-sm title-font text-gray-500 tracking-widest uppercase">hi {{ school.school_name }}</h2>
-        <h1 class="text-gray-900 text-3xl title-font font-medium mb-4">School Details</h1>
+        <h2 class="text-sm title-font text-gray-500 tracking-widest uppercase">{{ school.school_name }}</h2>
+        <h1 class="text-gray-900 text-3xl text-start title-font font-medium mb-4">School Details</h1>
         <div class="flex mb-4">
           <div class="h-1 w-20 bg-indigo-500 rounded"></div>
         </div>
         <p class="leading-relaxed mb-4">{{ school.about_school }}</p>
         <div class="flex border-t border-gray-200 py-2">
-          <span class="text-gray-500">Address:</span>
+          <span class="text-gray-500">Title:</span>
+          <span class="ml-auto text-gray-900">{{ school.school_name }}</span>
+        </div>
+        <div class="flex border-t border-gray-200 py-2">
+          <span class="text-gray-500"><i class="fa fa-map-marker mr-2"></i>Address:</span>
           <span class="ml-auto text-gray-900">{{ school.address }}</span>
         </div>
         <div class="flex border-t border-gray-200 py-2">
-          <span class="text-gray-500">Phone:</span>
-          <span class="ml-auto text-gray-900">{{ school.phone }}</span>
+          <span class="text-gray-500"><i class="far fa-envelope mr-2"></i>Email:</span>
+          <span class="ml-auto text-gray-900">
+            {{ school.email }}
+          </span>
+        </div>
+        <div class="flex border-t border-gray-200 py-2">
+          <span class="text-gray-500"><i class="fas fa-phone mr-2"></i>Phone:</span>
+          <span class="ml-auto text-gray-900">
+            {{ school.phone }}
+          </span>
         </div>
       </div>
     </div>
@@ -55,13 +67,13 @@ onMounted(() => {
     <div class="lg:w-4/5 mx-auto flex flex-wrap">
       <div class="lg:w-1/2 w-full lg:pr-10 lg:py-6 mt-6 lg:mt-0 order-last lg:order-first">
         <h2 class="text-sm title-font text-gray-500 tracking-widest uppercase">{{ school.director_name }}</h2>
-        <h1 class="text-gray-900 text-3xl title-font font-medium mb-4">About the Director</h1>
+        <h1 class="text-gray-900 text-3xl text-start title-font font-medium mb-4">About Director</h1>
         <div class="flex mb-4">
           <div class="h-1 w-20 bg-indigo-500 rounded"></div>
         </div>
-        <p class="leading-relaxed mb-4">{{ school.about_director }}</p>
+        <p class="leading-relaxed mb-4">{{school.director_name }} - {{ school.about_director }}</p>
       </div>
-      <img alt="director image" class="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded order-first lg:order-last" src="https://via.placeholder.com/800x600">
+      <img alt="director image" :src="school.school_image" class="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded order-first lg:order-last" >
     </div>
   </div>
 </section>
@@ -83,11 +95,11 @@ onMounted(() => {
     </div>
     
 </div> -->
-<div  class="flex flex-wrap items-center justify-around">
-  <div v-for="(teacher, index) in teachers" :key="index"  class="bg-white shadow-md rounded-lg overflow-hidden w-full max-w-lg">
+<div  class="teachers mx-20">
+  <div v-for="(teacher, index) in teachers" :key="index"  class="bg-white teacher shadow-md rounded-lg  max-w-lg">
     <!-- Teacher's image -->
     <div class="bg-gray-300 h-64 w-full flex items-center justify-center">
-      <img class="h-56 w-56 object-cover rounded-full" :src="teacher.image_path" alt="Teacher's image">
+      <img class="h-56 w-56 object-cover rounded-full" :src="teacher.image" alt="Teacher's image">
     </div>
 
     <!-- Teacher's full name -->
@@ -124,6 +136,25 @@ onMounted(() => {
 </template>
 
 <style>
+.teachers {
+  max-width: 70%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  /* background-color: red; */
+  margin:0  auto;
+
+}
+.teachers .teacher {
+  min-width: 30%;
+  margin-bottom: 1rem;
+  min-width: 30rem;
+  min-height: 30rem;
+
+  max-width: 30rem;
+  max-height: 30rem;
+}
 .section-1 {
   animation: fade-in 1s ease-out;
 }

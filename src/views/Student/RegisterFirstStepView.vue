@@ -48,7 +48,7 @@ function submitted(){
 </script>
 
 <template>
-  <div class="container top-10 mx-auto">
+  <div class="container mt-10 top-10 mx-auto">
     <div class="w-ful form px-6 py-12 md:w-1/2 mx-auto">
       <div class="mb-6">
         <h2 class="text-2xl font-bold mb-2">Step 1: Student Information</h2>

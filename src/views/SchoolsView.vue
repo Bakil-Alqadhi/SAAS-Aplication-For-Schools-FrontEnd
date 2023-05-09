@@ -15,7 +15,7 @@ onMounted(() => {
 })
 </script>
 <template>
-<div class="flex justify-center flex-wrap" v-if="schoolsData">
+<div class="flex justify-center flex-wrap py-10" v-if="schoolsData">
     <div  v-for="(school, index) in schoolsData" :key="index" class="max-w-sm w-full mx-4 my-4 bg-white shadow-lg rounded-lg overflow-hidden">
         <div class="relative">
             <img class="w-full h-64 object-cover" :src="school.school_image" alt="School">

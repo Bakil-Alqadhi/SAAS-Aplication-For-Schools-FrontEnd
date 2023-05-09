@@ -63,7 +63,7 @@ function submit() {
 </script>
 
 <template>
-<div class="container top-10 mx-auto">
+<div class="container mt-10 top-10 mx-auto">
     <form @submit.prevent="submit" class="w-full shadow-md bg-white px-6 py-12 md:w-1/2 mx-auto">
         <h2 class="text-2xl font-bold mb-2">Teacher Information</h2>
         <div class="bg-white  grid lg:grid-cols-2 md:grid-cols-1 gap-x-10 rounded px-8 pt-6 pb-8 mb-4">

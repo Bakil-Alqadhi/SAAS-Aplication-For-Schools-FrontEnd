@@ -107,7 +107,7 @@ onMounted(()=>{
 </script>
 <template>
 <!-- component -->
-<div  class="flex w-full m-auto lg:w-1/2 justify-center text-5xl items-center p-4 space-y-8">
+<div  class="flex w-full m-auto lg:w-1/2 justify-center text-5xl items-center py-10 p-4 space-y-8">
     <div class="w-full px-8 md:px-32 lg:px-24">
         <div v-if="moreOne" class="bg-red-100 border error border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
             <strong class="font-bold">Wrong!</strong>
