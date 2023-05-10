@@ -1,5 +1,6 @@
 <script setup>
 import SchoolsView from '../SchoolsView.vue';
+import AboutView from './AboutView.vue';
 </script>
 
 <template>
@@ -34,6 +35,19 @@ import SchoolsView from '../SchoolsView.vue';
         <SchoolsView />
         <SchoolsView />
       </div>
+      <div class="section-about">
+        <div class="part">
+        <h1>About Us</h1>
+      </div>
+        <AboutView />
+      </div>
+
+      <!-- <div class="section-contact">
+        <div class="part mb-10">
+        <h1>Contact Us</h1>
+      </div>
+        <AboutView />
+      </div> -->
     </div>
   </div>
 </template>
@@ -121,8 +135,16 @@ import SchoolsView from '../SchoolsView.vue';
   .parent .home{
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
 }
+
+.parent .schools .part h1{
+  font-size: 4rem;
+}
+.parent .home .image  img {
+  display: none;
+
+} 
 }
 </style>

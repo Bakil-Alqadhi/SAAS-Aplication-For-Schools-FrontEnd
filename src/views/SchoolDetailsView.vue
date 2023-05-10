@@ -95,6 +95,12 @@ onMounted(() => {
     </div>
     
 </div> -->
+<div class="mx-20 pl-24">
+  <h1 class="text-gray-900 ml-24 pl-24 text-3xl text-start title-font font-medium mb-4">Teachers</h1>
+        <div class="flex ml-24 pl-24 mb-10">
+          <div class="h-1 w-20 bg-indigo-500 rounded"></div>
+        </div>
+</div>
 <div  class="teachers mx-20">
   <div v-for="(teacher, index) in teachers" :key="index"  class="bg-white teacher shadow-md rounded-lg  max-w-lg">
     <!-- Teacher's image -->

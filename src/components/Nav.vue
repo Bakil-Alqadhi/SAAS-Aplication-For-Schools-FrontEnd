@@ -32,9 +32,9 @@ const showLinks = ()=>{
         </div>
         <div class="menu">
           <router-link class="link" to="/"  >Home</router-link>
-        <router-link class="link" to="/footer"  >About</router-link>
+        <router-link class="link" to="/about"  >About</router-link>
         <router-link class="link" to="/schools"  >Our Schools</router-link>
-        <router-link  class="link" to="/"  >Content</router-link>
+        <!-- <router-link  class="link" to="/"  >Content</router-link> -->
         <router-link  class="link" to="/login" >Login</router-link>
         <button class="register">Register</button>
         <div class="choose">

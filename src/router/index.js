@@ -13,6 +13,12 @@ const router = createRouter({
       meta: { requiresGuest: true },
     },
     {
+      path: "/about",
+      name: "AboutView",
+      component: () => import("../views/Frontend/AboutView.vue"),
+      meta: { requiresGuest: true },
+    },
+    {
       path: "/footer",
       name: "Footer",
       component: () => import("../views/Frontend/FooterView.vue"),
