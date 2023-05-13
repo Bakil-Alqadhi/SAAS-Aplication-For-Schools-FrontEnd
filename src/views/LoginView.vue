@@ -176,11 +176,11 @@ onMounted(()=>{
             </div>
                 </div>
                 <button type="submit" class="block w-full bg-indigo-600 mt-5 py-5 pb-5 rounded-2xl hover:bg-indigo-700 hover:-translate-y-1 transition-all duration-500 text-white font-semibold mb-2">Login</button>
-                <div class="flex justify-between pb-6 mt-4">
-                <RouterLink to="/forgot-password" class="text-sm ml-2 link hover:text-blue-500 cursor-pointer hover:-translate-y-1 duration-500 transition-all">Forgot Password ?</RouterLink>
+                <!-- <div class="flex justify-between pb-6 mt-4">
+                    <RouterLink to="/forgot-password" class="text-sm ml-2 link hover:text-blue-500 cursor-pointer hover:-translate-y-1 duration-500 transition-all">Forgot Password ?</RouterLink>
 
-                <RouterLink :to="{ name: 'Register'}" class="text-sm ml-2 link hover:text-blue-500 cursor-pointer hover:-translate-y-1 duration-500 transition-all">Don't have an account yet?</RouterLink>
-            </div>
+                    <RouterLink :to="{ name: 'Register'}" class="text-sm ml-2 link hover:text-blue-500 cursor-pointer hover:-translate-y-1 duration-500 transition-all">Don't have an account yet?</RouterLink>
+                </div> -->
            </div>
         </form>
     </div>

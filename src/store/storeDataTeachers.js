@@ -10,6 +10,8 @@ export const storeDataTeachers = new createStore({
     errors: {},
     message: null,
     deleteMessage: null,
+    questions: {}, 
+    question: {}
   },
   getters: {
     teachers: (state) => state.teachers,
@@ -17,8 +19,19 @@ export const storeDataTeachers = new createStore({
     errors: (state) => state.errors,
     message: (state) => state.message,
     deleteMessage: (state) => state.deleteMessage,
+    questions: (state) => state.questions,
+    question: (state) => state.question,
   },
   mutations: {
+    //set  all questions
+    setQuestions: (state, data) => {
+      state.questions = data;
+    },
+    //set  one question
+    setQuestion: (state, data) => {
+      state.question = data;
+    },
+
     //set schools data
     setTeachers: (state, data) => {
       state.teachers = data;
@@ -175,5 +188,19 @@ export const storeDataTeachers = new createStore({
           console.log(error.response.data.errors);
         });
     },
+    //Start Questions
+    //fetching all exams
+    fetchQuestions: async (context) => {
+      await axios
+        .get("/api/questions")
+        .then((response) => {
+          context.commit("setQuestions", response.data.data);
+          // console.log(response.data.data);
+        })
+        .catch((error) => {
+          console.log(error.response.data);
+        });
+    },
+    //End Questions
   },
 });

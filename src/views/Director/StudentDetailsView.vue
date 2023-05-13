@@ -81,7 +81,7 @@ const back = ()=> {
     </div>
     <div class="text-center mt-5" v-if="!student.isJoined">
       <button @click="handleAccept" class="bg-blue-600  hover:bg-blue-700 font-bold rounded-lg  text-white">Accept</button>
-      <button @click="handleRejection" class="bg-red-600 hover:bg-red-700 font-bold rounded-lg  text-white">Reject</button>
+      <!-- <button @click="handleRejection" class="bg-red-600 hover:bg-red-700 font-bold rounded-lg  text-white">Reject</button> -->
   </div> 
  </div>
 </template>

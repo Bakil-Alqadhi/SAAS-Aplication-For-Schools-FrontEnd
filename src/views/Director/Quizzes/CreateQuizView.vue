@@ -67,7 +67,7 @@ const store = ()=>{
 </script>
 
 <template>
-<div class="container"> 
+<div v-if="grades" class="container"> 
     <form class="main-form" @submit.prevent="store">
         <p  @click="back">X</p>
         <h1>Create New Quiz</h1>

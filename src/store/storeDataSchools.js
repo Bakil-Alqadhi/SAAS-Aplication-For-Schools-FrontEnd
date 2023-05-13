@@ -791,6 +791,17 @@ export const storeDataSchools = new createStore({
           console.log(error.response.data);
         });
     },
+    fetchTeacherQuizzes: async (context) => {
+      await axios
+        .get("/api/teacher/quizzes")
+        .then((response) => {
+          context.commit("setExams", response.data.data);
+          // console.log(response.data.data);
+        })
+        .catch((error) => {
+          console.log(error.response.data);
+        });
+    },
     //fetching one exams
     fetchOneQuiz: async (context, id) => {
       await axios

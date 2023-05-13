@@ -4,12 +4,12 @@
         <i class="fa-solid fa-school"></i> 
         <span>Dashboard</span>
     </router-link>
-    <router-link to="/schools">
+    <router-link to="/teacher/sections/index">
         <i class="fas fa-chalkboard-teacher"></i>
-        <span >All Schools</span>
+        <span >Your Sections</span>
     </router-link>
 
-    <router-link to="/teacher/quizzes/index">
+    <router-link to="/questions/index">
         <i class="fas fa-clipboard-check"></i>
         <span>Exams</span>
     </router-link>

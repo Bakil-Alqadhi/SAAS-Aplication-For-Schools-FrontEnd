@@ -300,6 +300,36 @@ const router = createRouter({
         requiresRole: "director",
       },
     },
+    //Start Exam's routes
+    {
+      path: "/quizzes/index",
+      name: "IndexQuiz",
+      component: () => import("../views/Director/Quizzes/IndexQuizzesView.vue"),
+      meta: {
+        requiresAuth: true,
+        requiresRole: "director",
+      },
+    },
+    {
+      path: "/quizzes/create",
+      name: "CreateQuiz",
+      component: () => import("../views/Director/Quizzes/CreateQuizView.vue"),
+      meta: {
+        requiresAuth: true,
+        requiresRole: "director",
+      },
+    },
+    {
+      path: "/quizzes/:id/edit",
+      name: "EditQuiz",
+      component: () => import("../views/Director/Quizzes/EditQuizView.vue"),
+      meta: {
+        requiresAuth: true,
+        requiresRole: "director",
+      },
+      props: true,
+    },
+    //End Exam's routes
     {
       path: "/promotions/index",
       name: "IndexPromotions",
@@ -359,36 +389,6 @@ const router = createRouter({
       props: true,
     },
     //End  Subjects routes
-    //Start Exam's routes
-    {
-      path: "/quizzes/index",
-      name: "IndexQuiz",
-      component: () => import("../views/Director/Quizzes/IndexQuizzesView.vue"),
-      meta: {
-        requiresAuth: true,
-        requiresRole: "director",
-      },
-    },
-    {
-      path: "/quizzes/create",
-      name: "CreateQuiz",
-      component: () => import("../views/Director/Quizzes/CreateQuizView.vue"),
-      meta: {
-        requiresAuth: true,
-        requiresRole: "director",
-      },
-    },
-    {
-      path: "/quizzes/:id/edit",
-      name: "EditQuiz",
-      component: () => import("../views/Director/Quizzes/EditQuizView.vue"),
-      meta: {
-        requiresAuth: true,
-        requiresRole: "director",
-      },
-      props: true,
-    },
-    //End Exam's routes
     {
       path: "/graduated/create",
       name: "CreateGraduated",
@@ -437,27 +437,39 @@ const router = createRouter({
       props: true,
     },
     {
-      path: "/teacher/quizzes/index",
-      name: "IndexQuizTeacher",
-      component: () => import("../views/teachers/Quizzes/IndexQuizzesView.vue"),
+      path: "/teacher/quizzes",
+      name: "TeacherQuizzes",
+      component: () => import("../views/teachers/Questions/IndexQuizzesView.vue"),
       meta: {
         requiresAuth: true,
         requiresRole: "teacher",
       },
     },
     {
-      path: "/teacher/quizzes/create",
-      name: "CreateQuiz",
-      component: () => import("../views/teachers/Quizzes/CreateQuizView.vue"),
+      path: "/questions/index",
+      name: "IndexQuestionsTeacher",
+      component: () =>
+        import("../views/teachers/Questions/IndexQuestionsView.vue"),
       meta: {
         requiresAuth: true,
         requiresRole: "teacher",
       },
     },
     {
-      path: "/teacher/quizzes/:id/edit",
-      name: "EditQuizTeacher",
-      component: () => import("../views/teachers/Quizzes/EditQuizView.vue"),
+      path: "/questions/create",
+      name: "CreateQuestion",
+      component: () =>
+        import("../views/teachers/Questions/CreateQuestionView.vue"),
+      meta: {
+        requiresAuth: true,
+        requiresRole: "teacher",
+      },
+    },
+    {
+      path: "/questions/:id/edit",
+      name: "EditQuestionTeacher",
+      component: () =>
+        import("../views/teachers/Questions/EditQuestionView.vue"),
       meta: {
         requiresAuth: true,
         requiresRole: "teacher",

@@ -39,11 +39,12 @@ function register() {
 
 <template>
 <!-- component -->
-<div class="m-auto p-10 space-y-8">
+<div class="mx-20 p-24 container-reg text-center space-y-8">
     <h1 class="font-bold text-lg text-center rounded-lg bg-blue-700 shadow-md text-white p-3">Registration New School</h1>
-    <form @submit.prevent="register" class=" rounded-lg w-full bg-blue-700  p-5 grid gap-x-10 mb-6 md:grid-cols-2">
+    <form @submit.prevent="register" class=" rounded-lg w-full   mx-20 p-5 grid gap-x-10 mb-6 md:grid-cols-2">
 
-        <div class="">
+        <div class="parent">
+            <div class="child">
             <div class="mb-6">
                 <label for="first_name" class="block mb-2 text-m font-medium text-white">School Name</label>
                 <input type="text" v-model="form.school_name" id="first_name" class="block bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 focus:outline-blue-700  w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="School" >
@@ -94,7 +95,7 @@ function register() {
 
         </div>
         <!-- grid gap-6 mb-6 md:grid-cols-3 -->
-        <div class="">
+        <div class="child">
             <div class="mb-6">
                 <label for="director_name" class="block mb-2 text-m font-medium text-white">Director's Full Name</label>
                 <input type="text" v-model="form.name" id="director_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:outline-blue-700 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="John John" >
@@ -136,8 +137,113 @@ function register() {
                     {{ errors.password[0] }}
                 </span>
         </div>
+        </div>
+        <div class="btn-reg text-lg">
+            <button type="submit" class="text-white p-10  ml-auto bg-blue-400 hover:bg-blue-800 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg  w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Register New School</button>
 
-    <button type="submit" class="text-blue-700 ml-auto bg-white hover:bg-gray-800 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+        </div>
 </form>
 </div>
 </template>
+
+<style scoped> 
+
+
+h1 {
+    font-size: large;
+    max-width: 80%;
+    border: 1px solid blue;
+    margin: auto;
+    background-color: rgb(220, 212, 212);
+    color: blue;
+    
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    font-size: large;
+    max-width: 80%;
+    border: 1px solid blue;
+    margin: auto;
+
+}
+form .parent{
+
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+}
+form .parent label {
+    text-align: start;
+    background-color: red;
+    padding: .5rem;
+    border-radius: 5px;
+    color: blue;
+   background-color: rgb(220, 212, 212);
+   border: 1px solid blue;
+}
+
+form .parent  input, textarea {
+    font-size: large;
+}
+
+textarea {
+    border: 1px solid rgb(206, 206, 212);
+
+}
+.child {
+    min-width: 45rem;
+    margin: 3rem;
+}
+
+.btn-reg {
+    font-size: large;
+}
+
+@media (max-width:768px),
+    (max-width:1200px){
+
+    form {
+
+        align-items: center;
+    }
+    form .parent{
+        flex-direction: column;
+
+        max-width: 80%;
+        /* background-color: red; */
+}
+
+.child {
+    min-width: 25rem;
+    margin: 0 3rem;
+} 
+
+}
+
+@media (max-width:500px){
+
+    form {
+        font-size: medium;
+        min-width: 100%;
+    }
+    form .parent{
+        flex-direction: column;
+
+        max-width: 100%;
+        /* background-color: red; */
+}
+
+.child {
+    min-width: 100%;
+    margin: 0;
+} 
+
+.container-reg {
+    min-width: 80%;
+    padding: .5rem;
+}
+}
+</style>

@@ -15,7 +15,7 @@
             <img src="../../../public/images/gril.jpg" alt="">
         </div>
         <div class="info ml-6">
-            <h1>Shkola Platform what is it?</h1>
+            <h1>Who can use Shkola?</h1>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam, consectetur. Distinctio veniam illum ex molestias exercitationem hic provident porro quis. Adipisci, nemo quis quia magni totam earum sit voluptatum consequuntur!</p>
         </div>
     </div>

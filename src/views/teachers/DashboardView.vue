@@ -17,14 +17,14 @@ onMounted( async()=>{
 </script>
 <template>
     <div class="container"  v-if="authUser">
-        <router-link to="" class="card bg-red-400 hover:bg-red-600 hover:shadow-xl transition duration-300 transform hover:-translate-y-1 hover:scale-105">
+        <router-link to="/teacher/sections/index" class="card bg-red-400 hover:bg-red-600 hover:shadow-xl transition duration-300 transform hover:-translate-y-1 hover:scale-105">
             <p>Attendance For Today</p>
         </router-link>
         <router-link to="/teacher/sections/index" class="card bg-green-400 hover:bg-green-600 hover:shadow-xl transition duration-300 transform hover:-translate-y-1 hover:scale-105">
             <p>All Of Yours Classes</p>
         </router-link>
-        <router-link to="" class="card bg-blue-400 hover:bg-blue-600  hover:shadow-xl transition duration-300 transform hover:-translate-y-1 hover:scale-105">
-            <p>Attendance For Today</p>
+        <router-link to="/teacher/quizzes" class="card bg-blue-400 hover:bg-blue-600  hover:shadow-xl transition duration-300 transform hover:-translate-y-1 hover:scale-105">
+            <p>Create Questions for quiz</p>
         </router-link>
         <router-link to="" class="card bg-teal-400 hover:bg-teal-600 hover:shadow-xl transition duration-300 transform hover:-translate-y-1 hover:scale-105">
             <p>Attendance For Today</p>

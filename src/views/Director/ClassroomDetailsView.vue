@@ -59,7 +59,7 @@ function showCount(){
         <h1>The total jointed Teachers to this classroom is </h1>
         <h1 >The Sections: 
             <ul v-for="section in classroom.sections" :key="section.id">
-                <li ><router-link class="link" :to="{name:'ShowSection', params: { id: section.id }}">{{ section.name }}</router-link></li>
+                <li ><router-link class="link" :to="{name:'ShowSection', params: { id: section.id }}">{{ section.section_name }}</router-link></li>
             </ul>
         </h1>
     </div>

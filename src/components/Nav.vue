@@ -77,7 +77,7 @@ const showLinks = ()=>{
   justify-content: space-around;
   align-items: center;
   font-size: large;
-  position: relative;
+  position: fixed;
 }
 
 .container .header #menu-btn {
@@ -94,13 +94,13 @@ const showLinks = ()=>{
     display: block;
     background-color: rgb(189, 189, 200);
     border-radius: 5px;
-    min-width: 300px;
-    min-height: 400px;
-    max-width: 300px;
-    max-height: 400px;
+    min-width: 200px;
+    min-height: 330px;
+    max-width: 200px;
+    max-height: 330px;
     position: absolute;
-    right: 2rem;
-    top: 10rem;
+    right: 15rem;
+    top: 7rem;
     display: flex;
     flex-wrap: wrap;
     color: white;
@@ -118,7 +118,7 @@ const showLinks = ()=>{
 .container .content {
   min-width: 100%;
   min-height: 100vh;
-  padding-top: 0;
+  padding-top: 10rem;
   padding-bottom: 1rem;
 }
 .register {
@@ -158,8 +158,25 @@ const showLinks = ()=>{
 
 }
 
+
+
+
 @media (max-width:768px),
-(max-width:1200px){ 
+(max-width:1100px){ 
+  .container .header .active {
+    right: 20rem;
+
+  }
+}
+
+@media (max-width:700px){
+
+.container .header .active {
+  right: 7rem;
+}
+}
+@media (max-width:768px),
+(max-width:1100px){ 
   .container .header {
     justify-content: space-around;
   }
@@ -190,7 +207,6 @@ const showLinks = ()=>{
   }
 ;
   
-
 }
 </style>
 

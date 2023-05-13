@@ -134,7 +134,7 @@ const update = ()=>{
             <label for="section">Select Section:</label>
             <select class="field" v-model="selectedSection"  id="section">
                 <option value="">Select Section</option>
-                <option v-for="section in sections" :key="section.id" :value="section.id">{{ section.name }}</option>
+                <option v-for="section in sections" :key="section.id" :value="section.id">{{ section.section_name }}</option>
             </select>
             <span v-if="errors.section">{{ errors.section[0] }}</span>
         </div>
