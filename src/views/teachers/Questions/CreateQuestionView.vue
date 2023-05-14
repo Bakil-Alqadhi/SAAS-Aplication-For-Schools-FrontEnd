@@ -1,10 +1,15 @@
 <script setup>
 import { computed, onMounted, ref } from "vue";
 import { storeDataSchools } from "../../../store/storeDataSchools";
+import { storeDataTeachers } from "../../../store/storeDataTeachers";
 
+const errors = computed(()=> storeDataTeachers.getters.errors)
 
-const errors = computed(()=> storeDataSchools.getters.errors)
+const props = defineProps({
+    id: String
+})
 const questions = ref([{
+    quiz: '',
     title: '',
     answers: '',
     right_answer: '',
@@ -12,19 +17,12 @@ const questions = ref([{
     } 
 ])
 
-const form = ref({
-    title: '',
-    answers: '',
-    right_answer: '',
-    score: ''
-
-})
-
 const removeQuestion = (index) =>{
     questions.value.splice(index, 1);
 }
 const addQuestion = ()=>{
     questions.value.push({
+        quiz: '',
         title: '',
         answers: '',
         right_answer: '',
@@ -32,12 +30,13 @@ const addQuestion = ()=>{
     })
 }
 
-const store = ()=>{
+const store =async ()=>{
    
     // console.log('=============')
-    //     console.log(form.value)
-    //     console.log('=============') 
-    storeDataSchools.dispatch('handleCreateQuiz', form.value)
+    // console.log(questions.value)
+    // console.log('=============') 
+    questions.value.quiz = props.id
+    await storeDataTeachers.dispatch('handleCreateQuestion', questions.value)
 }
 </script>
 

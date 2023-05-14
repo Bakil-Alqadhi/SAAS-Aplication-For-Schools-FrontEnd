@@ -149,7 +149,7 @@ const back = ()=> {
     justify-content: space-between;
     align-items: center;
     font-size: 16px;
-    width: 5%;
+    width: 6%;
     padding: 5px;
     color: white;
     background-color: rgb(202, 65, 34);
@@ -161,6 +161,7 @@ const back = ()=> {
     background-color: red;
 }
  .back i {
+    padding-left: 5px;
     margin-right: 5px;
 }
 

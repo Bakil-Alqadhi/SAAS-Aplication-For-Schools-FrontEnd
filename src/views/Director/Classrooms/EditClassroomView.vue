@@ -1,7 +1,7 @@
 <script setup>
 import { computed, onMounted, ref, watch } from "vue";
 import { mapActions } from "vuex";
-import { storeDataSchools } from "../../store/storeDataSchools";
+import { storeDataSchools } from "../../../store/storeDataSchools";
 import { useRouter } from "vue-router";
 // const form = ref ([{
 //         name: '',

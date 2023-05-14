@@ -10,8 +10,8 @@ export const storeDataTeachers = new createStore({
     errors: {},
     message: null,
     deleteMessage: null,
-    questions: {}, 
-    question: {}
+    questions: {},
+    question: {},
   },
   getters: {
     teachers: (state) => state.teachers,
@@ -190,15 +190,75 @@ export const storeDataTeachers = new createStore({
     },
     //Start Questions
     //fetching all exams
-    fetchQuestions: async (context) => {
+    fetchQuestions: async (context, id) => {
       await axios
-        .get("/api/questions")
+        .get("/teacher/quizzes/"+ id +"/questions")
         .then((response) => {
           context.commit("setQuestions", response.data.data);
           // console.log(response.data.data);
         })
         .catch((error) => {
           console.log(error.response.data);
+        });
+    },
+    //getting one question's data
+    fetchOneQuestion: async (context, payload) => {
+      await axios
+        .get("/teacher/quizzes/"+ payload.quiz +"/questions/"+ payload.question)
+        .then((response) => {
+          context.commit("setQuestion", response.data.data);
+          // console.log(response.data.data);
+        })
+        .catch((error) => {
+          console.log(error.response.data);
+        });
+    },
+    //handle Create Questions
+    handleCreateQuestion: async (context, payload) => {
+      await context.dispatch("getToken");
+      axios
+        .post("/teacher/quizzes/"+ payload.quiz +"/questions", payload)
+        .then((response) => {
+          console.log(response.data);
+          context.dispatch("setMessage", response.data.message);
+          router.push({ name: 'IndexQuestionsTeacher', params: { id: payload.quiz}});
+        })
+        .catch((error) => {
+          if (error.response.status === 422) {
+            context.commit("setErrors", error.response.data.errors);
+          }
+          console.log(error.response.data);
+        });
+    },
+    //handle update Question
+    handleUpdateQuestion: async (context, payload) => {
+      await context.dispatch("getToken");
+      axios
+        .put("/teacher/quizzes/"+ payload.quiz_id +"/questions/"+ payload.id, payload)
+        .then((response) => {
+          // console.log(response.data);
+          context.dispatch("setMessage", response.data.message);
+          router.push({ name: 'IndexQuestionsTeacher', params: { id: payload.quiz_id}});
+        })
+        .catch((error) => {
+          if (error.response.status === 422) {
+            context.commit("setErrors", error.response.data.errors);
+          }
+          console.log(error.response.data);
+        });
+    },
+
+    //delete Question
+    handleDeleteQuestion: async (context, payload) => {
+      // await context.dispatch("getToken");
+      await axios
+        .delete("/teacher/quizzes/"+ payload.quiz +"/questions/" + payload.id)
+        .then((response) => {
+          context.dispatch("setDeleteMessage", response.data.message);
+          context.dispatch("fetchQuestions", payload.quiz);
+        })
+        .catch((error) => {
+          console.log(error.response.data.errors);
         });
     },
     //End Questions

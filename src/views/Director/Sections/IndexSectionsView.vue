@@ -1,7 +1,7 @@
 <script setup>
 import { computed, onMounted, ref, watch } from "vue";
 import { mapActions } from "vuex";
-import { storeDataSchools } from "../../store/storeDataSchools";
+import { storeDataSchools } from "../../../store/storeDataSchools";
 
 const classrooms = computed( ()=> storeDataSchools.getters.classrooms)
 const message = computed( ()=> storeDataSchools.getters.gradeMessage)

@@ -1,6 +1,6 @@
 <script setup>
 import { computed, onMounted } from "vue"
-import { storeDataSchools } from "../../store/storeDataSchools"
+import { storeDataSchools } from "../../../store/storeDataSchools"
 
 const section = computed(()=>storeDataSchools.getters.section)
 const props = defineProps({

@@ -1,6 +1,6 @@
 <script setup>
 import { computed, onMounted } from "vue"
-import { storeDataSchools } from "../../store/storeDataSchools"
+import { storeDataSchools } from "../../../store/storeDataSchools"
 const classroom = computed(()=>storeDataSchools.getters.classroom)
 const props = defineProps({
     id: String

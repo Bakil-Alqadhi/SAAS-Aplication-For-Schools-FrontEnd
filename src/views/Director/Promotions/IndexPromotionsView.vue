@@ -1,7 +1,7 @@
 <script setup>
 import { computed, onMounted, ref, watch } from "vue";
 import { mapActions } from "vuex";
-import { storeDataSchools } from "../../store/storeDataSchools";
+import { storeDataSchools } from "../../../store/storeDataSchools";
 
 const promotions = computed( ()=> storeDataSchools.getters.promotions)
 

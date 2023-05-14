@@ -292,7 +292,7 @@ export const storeDataSchools = new createStore({
         .get("/api/grades/data")
         .then((response) => {
           context.commit("setGrades", response.data);
-          // console.log(response.data);
+          console.log(response.data);
         })
         .catch((error) => {
           console.log(error.response.data.errors);

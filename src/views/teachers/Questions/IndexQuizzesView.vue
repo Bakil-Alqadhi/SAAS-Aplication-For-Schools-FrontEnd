@@ -35,7 +35,7 @@ onMounted(async()=>{
           <td>{{ quiz.classroom_name }}</td>
           <td>{{ quiz.section_name }}</td>
           <td>
-            <router-link to="/questions/create"  class="btn-update border border-green-500 hover:text-green-600">
+            <router-link :to="{ name: 'IndexQuestionsTeacher', params: { id: quiz.id}}"   class="btn-update border border-green-500 hover:text-green-600">
               Questions
             </router-link>
           </td>
