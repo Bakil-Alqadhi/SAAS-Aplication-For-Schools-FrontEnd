@@ -419,16 +419,16 @@ const router = createRouter({
     {
       path: "/attendances",
       name: "AttendanceReportView",
-      component: () => import("../components/AttendanceViewReportView.vue"),
+      component: () => import("../views/teachers/Attendances/AttendanceViewReportView.vue"),
       meta: {
         requiresAuth: true,
-        requiresRole: "director",
+        requiresRole: "teacher",
       },
     },
     {
       path: "/teacher/section/:id/attendance",
       name: "CreateAttendanceView",
-      component: () => import("../views/teachers/CreateAttendanceView.vue"),
+      component: () => import("../views/teachers/Attendances/CreateAttendanceView.vue"),
       meta: {
         requiresAuth: true,
         requiresRole: "teacher",

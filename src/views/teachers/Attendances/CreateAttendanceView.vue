@@ -1,8 +1,8 @@
 <script setup>
 import { computed, onMounted, ref, watch } from "vue";
 import { mapActions } from "vuex";
-import { storeDataSchools } from "../../store/storeDataSchools";
-import { storeDataStudents } from "../../store/storeDataStudents";
+import { storeDataSchools } from "../../../store/storeDataSchools";
+import { storeDataStudents } from "../../../store/storeDataStudents";
 
 const students = computed( ()=> storeDataStudents.getters.students)
 const todayDate = ref('')

@@ -45,8 +45,9 @@ const create= async()=> {
     form.value.grade_id = grades.value[selectedGrade.value].id;
     form.value.classroom_id = grades.value[selectedGrade.value].sectionsClassroom[selectedClassroom.value].id;
     form.value.section_id = grades.value[selectedGrade.value].sectionsClassroom[selectedClassroom.value].sections[selectedSection.value].id
-    await mapActions['handleCreateGraduate', form.value]
-    await storeDataSchools.dispatch('handleCreateGraduate', form.value)
+    // await mapActions['handleCreateGraduate', form.value]
+    // await storeDataSchools.dispatch('handleCreateGraduate', form.value)
+    console.log(form.value)
 }
 </script>
 
@@ -82,7 +83,7 @@ const create= async()=> {
                 <div class="fields">
                     <!-- <label for="section">Select Section:</label> -->
                     <select class="field" v-model="selectedStudent"  id="section">
-                        <option value="">Select Student</option>
+                        <option value="-1">All Students</option>
                         <option v-for="student in students" :key="student.id" :value="student.id">{{ student.last_name + ' '+ student.first_name}}</option>
                     </select>
                     <span v-if="errors.student_id">{{ errors.student_id[0] }}</span>
@@ -103,6 +104,9 @@ const create= async()=> {
                 <button type="submit" class="create field">Get Report</button>
             </div>
       </form>
+      <div class="table">
+
+      </div>
     </div>
     </template>
     
@@ -188,9 +192,9 @@ const create= async()=> {
     border: 1px solid blue;
     min-width: 15%;
     max-width: 25%;
-    margin: 1rem .5rem;
+    margin: 1rem .5rem 0;
     height: auto;
-    padding: 7px 7px;
+    padding: 3px 7px;
     font-size: medium;
     border-radius: 5px;
 }

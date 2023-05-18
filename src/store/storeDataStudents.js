@@ -10,14 +10,19 @@ export const storeDataStudents = new createStore({
     message: "",
     student: [],
     errors: {},
+    attendances: {},
   },
   getters: {
     students: (state) => state.students,
     student: (state) => state.student,
     errors: (state) => state.errors,
     message: (state) => state.message,
+    attendances: (state) => state.attendances,
   },
   mutations: {
+    setAttendanceReport: (state, data) => {
+      state.attendances = data;
+    },
     //set message
     setMessage: (state, data) => {
       state.message = data;
@@ -253,6 +258,21 @@ export const storeDataStudents = new createStore({
           console.log(error.response.data.errors);
         });
     },
+    //Getting AttendanceReport
+    handleAttendanceReport: async (context, payload) => {
+      await context.dispatch("getToken");
+      await axios
+        .post("/api/attendance/report", payload)
+        .then((response) => {
+          context.commit("setAttendanceReport", response.data.data);
+          // router.push("/");
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error.response.data);
+        });
+    },
+
     //End work with attendances
     setMessage: (context, message) => {
       context.commit("setMessage", message);
