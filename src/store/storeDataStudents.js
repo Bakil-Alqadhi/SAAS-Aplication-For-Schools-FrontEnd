@@ -9,7 +9,7 @@ export const storeDataStudents = new createStore({
     students: [],
     message: "",
     student: [],
-    errors: {},
+    errors: null,
     attendances: {},
   },
   getters: {
@@ -265,10 +265,14 @@ export const storeDataStudents = new createStore({
         .post("/api/attendance/report", payload)
         .then((response) => {
           context.commit("setAttendanceReport", response.data.data);
+          context.commit("setErrors", null);
           // router.push("/");
           console.log(response.data);
         })
         .catch((error) => {
+          if (error.response.status === 422) {
+            context.commit("setErrors", error.response.data.errors);
+          }
           console.log(error.response.data);
         });
     },

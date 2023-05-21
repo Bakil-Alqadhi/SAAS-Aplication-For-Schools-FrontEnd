@@ -5,11 +5,11 @@ import { storeDataSchools } from "../../../store/storeDataSchools";
 import { storeDataStudents } from "../../../store/storeDataStudents";
 const attendances = computed(()=> storeDataStudents.getters.attendances)
 const gradesData= computed(() => storeDataSchools.getters.sections)
-const errors = computed(()=> storeDataSchools.getters.errors)
+const errors = computed(()=> storeDataStudents.getters.errors)
 
 
-const selectedSection = ref('')
-const selectedStudent = ref('')
+const selectedSection = ref(-1)
+const selectedStudent = ref(-1)
 const sections = ref([])
 const students = ref('')
 
@@ -55,7 +55,10 @@ const create= async()=> {
 </script>
 
 <template>
-    <div class="container " v-if="sections"> 
+    <div class="container" v-if="sections"> 
+        <div class="errors" v-if="errors">
+            <p v-for="(error, index) in errors" :key="index">{{ error[0] }}</p>
+        </div>
       <form @submit.prevent="create"  class="parent">
         <div class="from">
             <div class="data">
@@ -65,7 +68,6 @@ const create= async()=> {
                         <option :value="-1">Select Section</option>
                         <option v-for="(section, index) in sections" :key="index" :value="index">{{ section.section_name }}</option>
                     </select>
-                    <span v-if="errors.section_id">{{ errors.section_id[0] }}</span>
                 </div>
                 <div class="fields">
                     <!-- <label for="section">Select Section:</label> -->
@@ -73,17 +75,14 @@ const create= async()=> {
                         <option :value="-1" selected>All Students</option>
                         <option v-for="student in students" :key="student.id" :value="student.id">{{ student.last_name + ' '+ student.first_name}}</option>
                     </select>
-                    <span v-if="errors.student_id">{{ errors.student_id[0] }}</span>
                 </div>
                 <div class="fields-date">
                     <label for="from" >From</label>
                     <input type="date" name="from" v-model="form.from" class="field" id="from">
-                    <span v-if="errors.from">{{ errors.from[0] }}</span>
                 </div>
                 <div class="fields-date">
                     <label for="to">To</label>
                     <input type="date" name="to" v-model="form.to" class="field" id="to">
-                    <span v-if="errors.to">{{ errors.to[0] }}</span>
                 </div>
             </div>
         </div>
@@ -126,7 +125,19 @@ const create= async()=> {
         margin: 0 0 0 7rem;
         padding: 0;
     }
-    
+    .container .errors {
+        margin: auto;
+        width: 70%;
+        background-color: #f75044;
+        color: white;
+        font-size: medium;
+        text-align: start;
+        padding: 1rem;
+        border-radius: 5px;
+    }
+    .container .errors p{
+        text-align: start;
+    }
     .container .parent {
         height: auto;
         width: auto;

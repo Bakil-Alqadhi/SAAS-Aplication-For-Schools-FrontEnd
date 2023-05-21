@@ -26,15 +26,15 @@ onMounted( async()=>{
         <router-link to="/teacher/quizzes" class="card bg-blue-400 hover:bg-blue-600  hover:shadow-xl transition duration-300 transform hover:-translate-y-1 hover:scale-105">
             <p>Create Questions for quiz</p>
         </router-link>
-        <router-link to="" class="card bg-teal-400 hover:bg-teal-600 hover:shadow-xl transition duration-300 transform hover:-translate-y-1 hover:scale-105">
-            <p>Attendance For Today</p>
+        <router-link to="/attendances" class="card bg-teal-400 hover:bg-teal-600 hover:shadow-xl transition duration-300 transform hover:-translate-y-1 hover:scale-105">
+            <p>Attendance's Reports</p>
         </router-link>
-        <router-link to="" class="card bg-orange-400 hover:bg-orange-600 hover:shadow-xl transition duration-300 transform hover:-translate-y-1 hover:scale-105">
+        <!-- <router-link to="" class="card bg-orange-400 hover:bg-orange-600 hover:shadow-xl transition duration-300 transform hover:-translate-y-1 hover:scale-105">
             <p>Attendance For Today</p>
         </router-link>
         <router-link to="" class="card bg-blue-400 hover:bg-blue-600  hover:shadow-xl transition duration-300 transform hover:-translate-y-1 hover:scale-105">
             <p>Attendance For Today</p>
-        </router-link>
+        </router-link> -->
     </div>
 </template>
 

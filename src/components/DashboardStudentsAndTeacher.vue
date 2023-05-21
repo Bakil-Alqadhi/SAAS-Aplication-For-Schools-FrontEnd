@@ -107,11 +107,11 @@ const showEdit = (id)=> {
    <nav class="navbar">
       <TeacherSidebarLinks v-if="authUser.userType == 'teacher'"/>
       <!-- <StudentSidebarLinks v-else-if="authUser.userType == 'student'"/> -->
-      <a href="home.html"><i class="fas fa-home"></i><span>home</span></a>
+      <!-- <a href="home.html"><i class="fas fa-home"></i><span>home</span></a>
       <a href="about.html"><i class="fas fa-question"></i><span>about</span></a>
       <a href="courses.html"><i class="fas fa-graduation-cap"></i><span>courses</span></a>
       <a href="teachers.html"><i class="fas fa-chalkboard-user"></i><span>teachers</span></a>
-      <a href="contact.html"><i class="fas fa-headset"></i><span>contact us</span></a>
+      <a href="contact.html"><i class="fas fa-headset"></i><span>contact us</span></a> -->
    </nav>
 </div>
 
@@ -207,7 +207,8 @@ section{
 
 .btn,
 .inline-btn{
-   background-color: #8e44ad;
+   /* background-color: #8e44ad; */
+   background-color: #4450ad;
 }
 
 .option-btn,
@@ -436,7 +437,8 @@ section{
 
 .side-bar .navbar a i{
    margin-right: 1.5rem;
-   color:#8e44ad;
+   /* color:#8e44ad; */
+   color:#4450ad;
    transition: .2s linear;
 }
 
