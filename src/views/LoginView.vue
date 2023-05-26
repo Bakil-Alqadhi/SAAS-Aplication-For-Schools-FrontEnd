@@ -156,11 +156,11 @@ onMounted(()=>{
                 </svg>
                 <input id="email" v-model="form.email" class=" pl-2 w-full outline-none border-none" type="email"  placeholder="Email Address" />
             </div>
-            <div v-if="errors1 || errors2 || errors3">
+            <!-- <div v-if="errors1 || errors2 || errors3">
                 <span v-if="errors1.email" class="text-sm ml-3 text-red-600"> {{ errors1.email[0] }}</span>
                 <span v-else-if="errors2.email" class="text-sm ml-3 text-red-600"> {{ errors2.email[0] }}</span>
                 <span v-else-if="errors3.email" class="text-sm ml-3 text-red-600"> {{ errors3.email[0] }}</span>
-            </div>
+            </div> -->
             </div>
                 <div class="mb-8 input rounded-2xl">
                     <div class="flex items-center border-2 py-2 px-3 rounded-2xl ">
@@ -169,11 +169,11 @@ onMounted(()=>{
                     </svg>
                     <input v-model="form.password" class="pl-2 w-full outline-none border-none" type="password" name="password" id="password" placeholder="Password" />
                 </div>
-            <div v-if="errors1 || errors2 || errors3">
+            <!-- <div v-if="errors1 || errors2 || errors3">
                     <span v-if="errors1.password" class="text-sm ml-3 text-red-600"> {{ errors1.password[0] }}</span>
                     <span v-else-if="errors2.password" class="text-sm ml-3 text-red-600"> {{ errors2.password[0] }}</span>
                     <span v-else-if="errors3.password" class="text-sm ml-3 text-red-600"> {{ errors3.password[0] }}</span>
-            </div>
+            </div> -->
                 </div>
                 <button type="submit" class="block w-full bg-indigo-600 mt-5 py-5 pb-5 rounded-2xl hover:bg-indigo-700 hover:-translate-y-1 transition-all duration-500 text-white font-semibold mb-2">Login</button>
                 <!-- <div class="flex justify-between pb-6 mt-4">

@@ -80,7 +80,7 @@ const showEdit = (id)=> {
         <div class="profile">
             <img :src=authUser.image class="image" alt="">
             <h3 v-if="authUser.userType === 'teacher'" class="name">T.{{ authUser.last_name +' ' +  authUser.first_name }}</h3>
-            <h3 v-if="authUser.userType === 'student'" class="name">Dear. {{ authUser.student_last_name + ' '+ authUser.student_first_name }}</h3>
+            <h3 v-if="authUser.userType === 'student'" class="name">D. {{ authUser.student_last_name + ' '+ authUser.student_first_name }}</h3>
             <p class="role">{{ authUser.userType }}</p>
             <button @click="showEdit(authUser.id)" class="btn">view profile</button>
             <!-- <router-link :to="{name: 'EditTeacher', params:{ id: authUser.id}}" v-if="authUser.userType === 'teacher'"  class="btn">view profile</router-link> -->
@@ -99,14 +99,14 @@ const showEdit = (id)=> {
    <div class="profile">
       <img :src="authUser.image" class="image" alt="">
       <h3 v-if="authUser.userType === 'teacher'" class="name">T.{{ authUser.last_name +' ' +  authUser.first_name }}</h3>
-      <h3 v-if="authUser.userType === 'student'" class="name">Dear. {{ authUser.student_last_name + ' '+ authUser.student_first_name }}</h3>
+      <h3 v-if="authUser.userType === 'student'" class="name">S. {{ authUser.student_last_name + ' '+ authUser.student_first_name }}</h3>
       <p class="role">{{ authUser.userType }}</p>
       <!-- <a href="profile.html" class="btn">view profile</a> -->
    </div>
 
    <nav class="navbar">
       <TeacherSidebarLinks v-if="authUser.userType == 'teacher'"/>
-      <!-- <StudentSidebarLinks v-else-if="authUser.userType == 'student'"/> -->
+      <StudentSidebarLinks v-else-if="authUser.userType == 'student'"/>
       <!-- <a href="home.html"><i class="fas fa-home"></i><span>home</span></a>
       <a href="about.html"><i class="fas fa-question"></i><span>about</span></a>
       <a href="courses.html"><i class="fas fa-graduation-cap"></i><span>courses</span></a>

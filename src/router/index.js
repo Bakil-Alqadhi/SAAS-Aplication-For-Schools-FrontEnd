@@ -216,7 +216,8 @@ const router = createRouter({
     {
       path: "/classrooms/create",
       name: "CreateClassroom",
-      component: () => import("../views/Director/Classrooms/CreateClassroomView.vue"),
+      component: () =>
+        import("../views/Director/Classrooms/CreateClassroomView.vue"),
       meta: {
         requiresAuth: true,
         requiresRole: "director",
@@ -225,7 +226,8 @@ const router = createRouter({
     {
       path: "/classrooms/index",
       name: "Classrooms",
-      component: () => import("../views/Director/Classrooms/IndexClassroomsView.vue"),
+      component: () =>
+        import("../views/Director/Classrooms/IndexClassroomsView.vue"),
       meta: {
         requiresAuth: true,
         requiresRole: "director",
@@ -234,7 +236,8 @@ const router = createRouter({
     {
       path: "/classrooms/:id",
       name: "EditClassroom",
-      component: () => import("../views/Director/Classrooms/EditClassroomView.vue"),
+      component: () =>
+        import("../views/Director/Classrooms/EditClassroomView.vue"),
       meta: {
         requiresAuth: true,
         requiresRole: "director",
@@ -244,7 +247,8 @@ const router = createRouter({
     {
       path: "/classrooms/:id/index",
       name: "ShowClassroom",
-      component: () => import("../views/Director/Classrooms/ClassroomDetailsView.vue"),
+      component: () =>
+        import("../views/Director/Classrooms/ClassroomDetailsView.vue"),
       meta: {
         requiresAuth: true,
         requiresRole: "director",
@@ -254,7 +258,8 @@ const router = createRouter({
     {
       path: "/sections/index",
       name: "Sections",
-      component: () => import("../views/Director/Sections/IndexSectionsView.vue"),
+      component: () =>
+        import("../views/Director/Sections/IndexSectionsView.vue"),
       meta: {
         requiresAuth: true,
         requiresRole: "director",
@@ -263,7 +268,8 @@ const router = createRouter({
     {
       path: "/sections/:id",
       name: "EditSection",
-      component: () => import("../views/Director/Sections/EditSectionsView.vue"),
+      component: () =>
+        import("../views/Director/Sections/EditSectionsView.vue"),
       meta: {
         requiresAuth: true,
         requiresRole: "director",
@@ -284,7 +290,8 @@ const router = createRouter({
     {
       path: "/sections/:id/index",
       name: "ShowSection",
-      component: () => import("../views/Director/Sections/SectionDetailsView.vue"),
+      component: () =>
+        import("../views/Director/Sections/SectionDetailsView.vue"),
       meta: {
         requiresAuth: true,
         requiresRole: "director",
@@ -294,7 +301,8 @@ const router = createRouter({
     {
       path: "/sections/create",
       name: "CreateSections",
-      component: () => import("../views/Director/Sections/CreateSectionsView.vue"),
+      component: () =>
+        import("../views/Director/Sections/CreateSectionsView.vue"),
       meta: {
         requiresAuth: true,
         requiresRole: "director",
@@ -333,7 +341,8 @@ const router = createRouter({
     {
       path: "/promotions/index",
       name: "IndexPromotions",
-      component: () => import("../views/Director/Promotions/IndexPromotionsView.vue"),
+      component: () =>
+        import("../views/Director/Promotions/IndexPromotionsView.vue"),
       meta: {
         requiresAuth: true,
         requiresRole: "director",
@@ -342,7 +351,8 @@ const router = createRouter({
     {
       path: "/promotions/create",
       name: "CreatePromotions",
-      component: () => import("../views/Director/Promotions/CreatePromotionView.vue"),
+      component: () =>
+        import("../views/Director/Promotions/CreatePromotionView.vue"),
       meta: {
         requiresAuth: true,
         requiresRole: "director",
@@ -351,7 +361,8 @@ const router = createRouter({
     {
       path: "/graduated/index",
       name: "IndexGraduated",
-      component: () => import("../views/Director/Graduates/IndexGraduateView.vue"),
+      component: () =>
+        import("../views/Director/Graduates/IndexGraduateView.vue"),
       meta: {
         requiresAuth: true,
         requiresRole: "director",
@@ -392,7 +403,8 @@ const router = createRouter({
     {
       path: "/graduated/create",
       name: "CreateGraduated",
-      component: () => import("../views/Director/Graduates/CreateGraduatedView.vue"),
+      component: () =>
+        import("../views/Director/Graduates/CreateGraduatedView.vue"),
       meta: {
         requiresAuth: true,
         requiresRole: "director",
@@ -419,7 +431,8 @@ const router = createRouter({
     {
       path: "/attendances",
       name: "AttendanceReportView",
-      component: () => import("../views/teachers/Attendances/AttendanceViewReportView.vue"),
+      component: () =>
+        import("../views/teachers/Attendances/AttendanceViewReportView.vue"),
       meta: {
         requiresAuth: true,
         requiresRole: "teacher",
@@ -428,7 +441,8 @@ const router = createRouter({
     {
       path: "/teacher/section/:id/attendance",
       name: "CreateAttendanceView",
-      component: () => import("../views/teachers/Attendances/CreateAttendanceView.vue"),
+      component: () =>
+        import("../views/teachers/Attendances/CreateAttendanceView.vue"),
       meta: {
         requiresAuth: true,
         requiresRole: "teacher",
@@ -448,7 +462,8 @@ const router = createRouter({
     {
       path: "/teacher/quizzes",
       name: "TeacherQuizzes",
-      component: () => import("../views/teachers/Questions/IndexQuizzesView.vue"),
+      component: () =>
+        import("../views/teachers/Questions/IndexQuizzesView.vue"),
       meta: {
         requiresAuth: true,
         requiresRole: "teacher",
@@ -463,7 +478,7 @@ const router = createRouter({
         requiresAuth: true,
         requiresRole: "teacher",
       },
-      props: true
+      props: true,
     },
     {
       path: "/quizzes/:id/questions/create",
@@ -474,7 +489,7 @@ const router = createRouter({
         requiresAuth: true,
         requiresRole: "teacher",
       },
-      props: true
+      props: true,
     },
     {
       path: "/quizzes/:quiz/questions/:question/edit",
@@ -484,6 +499,25 @@ const router = createRouter({
       meta: {
         requiresAuth: true,
         requiresRole: "teacher",
+      },
+      props: true,
+    },
+    {
+      path: "/exams",
+      name: "IndexExams",
+      component: () => import("../views/Student/Exams/IndexExamsView.vue"),
+      meta: {
+        requiresAuth: true,
+        requiresRole: "student",
+      },
+    },
+    {
+      path: "/exams/:exam",
+      name: "ShowExam",
+      component: () => import("../views/Student/Exams/ShowExamView.vue"),
+      meta: {
+        requiresAuth: true,
+        requiresRole: "student",
       },
       props: true,
     },
