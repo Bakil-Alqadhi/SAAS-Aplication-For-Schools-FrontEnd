@@ -5,7 +5,7 @@ onMounted(() => {
     var x = document.getElementById("spinner")
    setTimeout(async()=>{       
     x.style.display = 'none';
-    }, 1000);
+    }, 5000);
 })
 </script>
 

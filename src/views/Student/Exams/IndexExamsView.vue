@@ -10,7 +10,7 @@ onMounted(()=>{
 })
 
 const handlePassExam = (id)=>{
-  if(confirm('You have an hour for this exam, are your sure you want to continue?')){
+  if(confirm("You have an hour for this exam, Please don't reload the page, or close it, the exam will be canceled!, are your sure you want to continue?")){
     router.push({name: 'ShowExam', params:{exam: id}})
   }
 }
@@ -25,7 +25,7 @@ const handlePassExam = (id)=>{
               <th>Id</th>
               <th>Subject's Name</th>
               <th>Exam's Name</th>
-              <th>Pass</th>
+              <th>Pass / total</th>
             </tr>
           </thead>
           <tbody>
@@ -37,9 +37,11 @@ const handlePassExam = (id)=>{
                 <!-- <router-link :to="{name: 'ShowExam', params:{exam: exam.id}}"  class="btn-update hover:text-green-500">
                     <i class="fa-solid fa-file-pen"></i>
                 </router-link> -->
-                <button @click="handlePassExam(exam.id)"  class="btn-update hover:text-green-500">
+                <button v-if="exam.totalScore == -1 && exam.questions" @click="handlePassExam(exam.id)"  class="btn hover:text-green-500">
                     <i class="fa-solid fa-file-pen"></i>
                 </button>
+                <p   v-else-if="exam.totalScore != -1">{{ exam.totalScore }}</p>
+                <p v-else>Not available yet</p>
               </td>
             </tr>
           </tbody>
@@ -47,7 +49,7 @@ const handlePassExam = (id)=>{
       </div>
     </template>
     
-    <style>
+    <style scoped>
     .grade-table-container {
         /* min-width: 100%;
         margin: 20px 117px;
@@ -80,13 +82,15 @@ const handlePassExam = (id)=>{
     
       .grade-table td {
         padding: 0.8rem;
+        text-align: center;
       }
     
       .grade-table tr:nth-child(even) {
         background-color: #f2f2f2;
       }
     
-      .btn-update {
+      .btn{
+        background-color: white;
         color: #7ccf7e;
         padding: 0.6rem .9rem;
         border: none;
@@ -98,12 +102,12 @@ const handlePassExam = (id)=>{
         transition: transform 0.3s ease-in-out;
       }
     
-      .btn-update:hover {
+      .btn:hover {
         transform: translateY(-3px);
       }
     
     @media (max-width:768px){
-      .btn-update{
+      .btn{
             display: block;
             margin-top: 8px;
         }

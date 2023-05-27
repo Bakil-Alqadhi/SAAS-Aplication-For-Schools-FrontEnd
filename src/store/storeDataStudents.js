@@ -12,7 +12,7 @@ export const storeDataStudents = new createStore({
     errors: null,
     attendances: {},
     exams: {},
-    examQuestions: {},
+    examQuestions: [],
   },
   getters: {
     students: (state) => state.students,
@@ -298,7 +298,7 @@ export const storeDataStudents = new createStore({
         })
         .catch((error) => console.log(error));
     },
-    //fetch questions exam
+    //fetch questions exam 
     fetchOneExam: async (context, id) => {
       await axios
         .get("api/exams/" + id)
@@ -306,7 +306,27 @@ export const storeDataStudents = new createStore({
           context.commit("setExamQuestions", response.data.data);
           // console.log(response.data.data);
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+          router.push('/exams');
+          console.log(error);
+        })
+    },
+    //handle Store Answers 
+    handleStoreAnswers: async (context, payload) => {
+      await context.dispatch("getToken");
+      axios
+        .post("api/exams", payload)
+        .then((response) => {
+          console.log(response.data);
+          context.dispatch("setMessage", response.data.message);
+          router.push('/exams');
+        })
+        .catch((error) => {
+          if (error.response.status === 422) {
+            context.commit("setErrors", error.response.data.errors);
+          }
+          console.log(error.response.data);
+        });
     },
 
     //End work with attendances
