@@ -90,7 +90,7 @@ const create= async()=> {
                 <button type="submit" class="create field">Get Report</button>
             </div>
       </form>
-      <div class="table" v-if="attendances">
+      <div class="table" v-if="attendances.length">
         <table class="grade-table">
       <thead>
         <tr>
@@ -178,6 +178,7 @@ const create= async()=> {
         min-width: 10%;
         color: white;
         margin-right: 1px;
+        margin-left: 40%;
     }
     .container  .create:hover {
         background-color: blue;
@@ -289,31 +290,7 @@ const create= async()=> {
     border: 1px solid #f44336;
   }
 /* //////////////////////////////////////////////// */
-    /* @media (max-width:1200px){ 
-        
-            .container .parent .data {
-            display:flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        .container .data .fields  { 
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 5px;
-        }
-    .container   .button {
-            text-align: center;
-            min-width: 90%;
-            margin: 0 auto;
-        } 
-
-    .fields-date {
-        min-width: 70%;
-        margin: auto;
-    }
-    } */
-    
-    @media (max-width:768px){ 
+@media (max-width:768px){ 
         .container .table .grade-table {
             /* min-width: 20%;*/
             min-width: 90%;

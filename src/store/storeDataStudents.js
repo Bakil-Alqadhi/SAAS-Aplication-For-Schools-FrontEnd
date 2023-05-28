@@ -223,12 +223,8 @@ export const storeDataStudents = new createStore({
           parent_email: payload.parent_email,
         })
         .then((response) => {
-          // context.commit("setGradeMessage", response.data.message);
-          // setTimeout(() => {
-          //   context.commit("setGradeMessage", null);
-          // }, 4000);
-          // router.push("/sections/index");
-          console.log(response.data);
+          context.commit("setMessage", response.data.message);
+          router.push("/student/dashboard");
         })
         .catch((error) => {
           if (error.response.status === 422) {
@@ -298,7 +294,7 @@ export const storeDataStudents = new createStore({
         })
         .catch((error) => console.log(error));
     },
-    //fetch questions exam 
+    //fetch questions exam
     fetchOneExam: async (context, id) => {
       await axios
         .get("api/exams/" + id)
@@ -307,11 +303,11 @@ export const storeDataStudents = new createStore({
           // console.log(response.data.data);
         })
         .catch((error) => {
-          router.push('/exams');
+          router.push("/exams");
           console.log(error);
-        })
+        });
     },
-    //handle Store Answers 
+    //handle Store Answers
     handleStoreAnswers: async (context, payload) => {
       await context.dispatch("getToken");
       axios
@@ -319,7 +315,7 @@ export const storeDataStudents = new createStore({
         .then((response) => {
           console.log(response.data);
           context.dispatch("setMessage", response.data.message);
-          router.push('/exams');
+          router.push("/exams");
         })
         .catch((error) => {
           if (error.response.status === 422) {
@@ -329,6 +325,18 @@ export const storeDataStudents = new createStore({
         });
     },
 
+    //get group's students
+    fetchGroupStudents: async (context) => {
+      await axios
+        .get("api/students/group")
+        .then((response) => {
+          console.log(response.data.data);
+          context.commit("setStudents", response.data.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     //End work with attendances
     setMessage: (context, message) => {
       context.commit("setMessage", message);

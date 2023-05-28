@@ -16,7 +16,7 @@ onMounted(async()=>{
 
 const handleUpdate = async()=>{
   storeDataStudents.dispatch('handleUpdateStudent', student.value)
-    console.log(student.value)
+    // console.log(student.value)
 }
 const handleDeleteAccount = async()=> {
   if(confirm("Are you sure?")){
@@ -126,7 +126,7 @@ button {
   /* top: 0; */
 }
 .container .main {
-  background-color: rgb(47, 138, 242);
+  background-color: rgb(151, 194, 243);
   padding: 5px;
   border-radius: 5px;
   margin: 20px;

@@ -390,7 +390,7 @@ export const storeDataSchools = new createStore({
           context.commit("setClassrooms", response.data.data);
         })
         .catch((error) => {
-          console.log(error.response.data.errors);
+          console.log(error.response.data);
         });
     },
     //fetching one grade

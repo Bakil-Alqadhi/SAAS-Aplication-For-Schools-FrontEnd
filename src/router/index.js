@@ -531,6 +531,15 @@ const router = createRouter({
       },
     },
     {
+      path: "/student/group",
+      name: "StudentGroupView",
+      component: () => import("../views/Student/GroupView.vue"),
+      meta: {
+        requiresAuth: true,
+        requiresRole: "student",
+      },
+    },
+    {
       path: "/student/parents",
       name: "ParentsDashboard",
       component: () => import("../views/Student/ParentsView.vue"),

@@ -26,7 +26,7 @@ export const storeAuthUser = new createStore({
         .then((response) => {
           state.authUser = response.data.user;
           localStorage.setItem("school_name", response.data.school_name);
-          console.log(response.data);
+          // console.log(response.data);
         })
         .catch((error) => console.log(error));
     },
