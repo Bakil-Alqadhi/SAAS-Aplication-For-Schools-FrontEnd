@@ -83,12 +83,14 @@ body {
     display: none;
     background-color: rgb(245, 101, 101);
     color: white;
-    width: 100%;
+    max-width: 100%;
     /* height: 50px; */
     border-radius: 10px;
     /* margin-bottom: 5px; */
     /* margin-top: 20px; */
     padding: 3px 15px;
+    margin: 1rem 15px;
+
 }
 
 .errors span {
@@ -146,14 +148,14 @@ body {
 .container form {
   position: relative;
   background-color: white;
-    border: 1px solid #ccc;
-    padding: 20px 20px 10px;
-    border-radius: 10px;
-    -webkit-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
-    -moz-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
-    /* box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2); */
-    box-shadow: 0 5px 30px 0 rgba(0,0,0,0.2);
-      transition: linear .4s ;
+  border: 1px solid #ccc;
+  padding: 20px 20px 10px;
+  border-radius: 10px;
+  -webkit-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+  /* box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2); */
+  box-shadow: 0 5px 30px 0 rgba(0,0,0,0.2);
+  transition: linear .4s ;
 
 }
 
@@ -212,23 +214,23 @@ body {
     font-size: small;
 }
 .repeater button {
-  /* position: absolute; */
   right: 10px;
   bottom: 10px;
-  border-radius: 5px;
+  /* border-radius: 5px;
   border: none;
-  /* background-color: #ccc; */
   color: #fff;
-  padding: 5px 10px;
-  /* ease */
+  padding: 5px 10px; */
 }
 
 .buttons {
     text-align: center;
     display: flex;
     justify-content: space-between;
+    max-width: 90;
+    margin: 0 15px;
 }
 button {
+  font-size: medium;
   border-radius: 5px;
   border: none;
   color: #fff;
@@ -237,6 +239,7 @@ button {
 }
 
 .repeater  .remove {
+  padding: 5px 5px;
     background-color: rgb(210, 53, 18) ;
 }
 
@@ -260,8 +263,17 @@ button {
 }
 
 @media (max-width:768px){
+  .repeater select {
+    margin-right:10px ;
+}
+  button {
+  font-size: small;
+  /* transition:  0.3s linear; */
+}
     .container form {
     padding: 5px;
+    min-width: 100%;
+    
 }
     .repeater {
         padding: 7px;

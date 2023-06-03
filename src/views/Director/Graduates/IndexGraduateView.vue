@@ -36,11 +36,6 @@ const deleteStudent = ( id)=> {
             <span class="absolute inset-0 w-full h-full -mt-1 rounded-lg opacity-30 bg-gradient-to-b from-transparent via-transparent to-gray-700"></span>
             <span class="relative">New Graduate</span>
         </router-link>
-        <!-- <button @click="deletePromotion('all', null)"  class="relative ml-10 create-grade inline-flex items-center justify-center px-10 py-4 mb-5 overflow-hidden font-bold tracking-tighter  text-white bg-red-600 rounded-lg group"> 
-            <span class="absolute w-0 h-0 transition-all duration-500 ease-out bg-red-500 rounded-full group-hover:w-60 group-hover:h-56"></span>
-            <span class="absolute inset-0 w-full h-full -mt-1 rounded-lg opacity-30 bg-gradient-to-b from-transparent via-transparent to-gray-700"></span>
-            <span class="relative">Rollback All</span>
-        </button> -->
     </div>
     <table class="grade-table">
       <thead>
@@ -63,9 +58,6 @@ const deleteStudent = ( id)=> {
           <td>{{ graduate.section_name }}</td>
           <td>{{ graduate.academic_year }}</td>
           <td>
-                <!-- <router-link class="btn-show" :to="{name: 'ShowClassroom', params:{id: promotion.id}}">
-                    <i class="far fa-eye hover:text-blue-500 hover:cursor-pointer"></i>
-                </router-link> -->
             <button @click="restore(graduate.id)" class="btn-update hover:text-green-600">
               Return Back
             </button>
@@ -74,7 +66,6 @@ const deleteStudent = ( id)=> {
             </button>
           </td>
         </tr>
-        <!-- Add more rows here -->
       </tbody>
     </table>
   </div>
@@ -85,9 +76,9 @@ const deleteStudent = ( id)=> {
     font-size: 1.2rem;
 }
 .grade-table-container {
-    min-width: 100%;
-    margin: 0 100px 0;
-    padding: 3rem 2rem 2rem;
+  max-width: 100%;
+    margin: auto;
+    padding: 2rem;
   }
 
   .grade-table {
@@ -160,8 +151,7 @@ const deleteStudent = ( id)=> {
     }
     
     .grade-table-container {
-    max-width: 600px;
-    margin: 0 auto;
+    padding-left: 13rem;
   }
 }
 </style>

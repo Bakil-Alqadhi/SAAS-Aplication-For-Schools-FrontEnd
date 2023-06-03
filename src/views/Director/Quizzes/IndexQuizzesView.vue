@@ -70,13 +70,8 @@ const deleteQuiz =async (id)=> {
     font-size: 1.2rem;
 }
 .grade-table-container {
-    /* min-width: 100%;
-    margin: 20px 117px;
-    padding: 2rem;
-    text-align: center; */
-
-    max-width: 90%;
-    margin: 0 120px;
+    max-width: 100%;
+    margin: auto;
     padding: 2rem;
   }
 
@@ -145,13 +140,11 @@ const deleteQuiz =async (id)=> {
     }
     
     .grade-table-container {
-     max-width: 60%;
-    margin: 0 ;
+    margin-left:  11rem;
   }
 
   .grade-table {
-
-    min-width: 70%;
+    min-width: 100%;
   }
 }
 @media (max-width:1200px){

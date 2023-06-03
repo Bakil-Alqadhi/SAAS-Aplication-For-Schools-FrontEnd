@@ -125,9 +125,44 @@ const store = ()=>{
 </template>
 
 <style scoped>
+
+.container {
+    background-color: rgba(230, 213, 213, 0.575);
+    min-width: 100%;
+    height: 100vh;
+    position: fixed;
+    padding: 80px 0 30px;
+    z-index: 1400;
+    left: 0; top: 0; right: 0; bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+.container form{
+    background-color:white ;
+    padding: 10px;
+    width: 450px;
+    height: auto;
+    border-radius: 10px;
+    position: relative;
+
+}
+.container form  .create {
+    background-color: rgb(76, 76, 217);
+    text-align: center;
+    color: white;
+    margin: 5px 0;
+}
+.container form  .create:hover {
+    background-color: blue;
+}
+.parent {
+    margin-bottom: 10px;
+    text-align: start;
+}
 .container form span {
     color: red;
-    /* top: ; */
     text-align: start;
     margin-bottom: 10px;
     font-size: 13px;
@@ -140,7 +175,6 @@ const store = ()=>{
     font-weight: bold;
     width: 30px;
     top: 5px;
-    /* left: 5px; */
     margin-bottom: 3px;
     text-align: center;
     border-radius: 3px;
@@ -152,7 +186,6 @@ const store = ()=>{
 }
 .container form h1 {
     width: 100%;
-    /* background-color: blue ; */
     border: 1px solid blue;
     padding: 4px;
     color: blue ;
@@ -172,60 +205,19 @@ const store = ()=>{
     padding: 4px 7px;
     font-size: medium;
     border-radius: 5px;
-    /* margin-top: 20px; */
-    /* margin-bottom: 20px; */
 }
 .container form .field {
     background-color: white;
     border: 2px solid rgb(76, 76, 217);
-    /* color: white; */
     width: 100%;
     text-align: start;
     padding: 4px 7px;
     font-size: medium;
     border-radius: 5px;
     margin-top: 10px;
-    /* margin-bottom: 10px; */
 }
 
 
-.container form  .create {
-    background-color: rgb(76, 76, 217);
-    text-align: center;
-    color: white;
-    margin: 5px 0;
-}
-.container form  .create:hover {
-    background-color: blue;
-}
-.parent {
-    margin-bottom: 10px;
-    text-align: start;
-}
-.container {
-    background-color: rgba(230, 213, 213, 0.575);
-    min-width: 100%;
-    height: 100vh;
-    position: fixed;
-    padding: 80px 0 30px;
-    z-index: 1400;
-    left: 0; top: 0; right: 0; bottom: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-}
-.container form{
-    background-color:white ;
-    padding: 10px;
-    /* padding-top: 40px; */
-    width: 450px;
-    height: auto;
-    border-radius: 10px;
-    position: relative;
-    /* overflow: visible; */
-    /* visibility: hidden; */
-}
 @media (max-width:768px){ 
     .container form {
         width: 300px;

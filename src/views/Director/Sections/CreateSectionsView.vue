@@ -178,14 +178,10 @@ const saveSelectedTeachers = ()=> {
     margin-top: 0;
     min-width: 100vw;
     height: 100%;
-    /* background-color: rgba(129, 129, 137, 0.411); */
     visibility: hidden;
     transition: 1sm linear;
-    /* z-index: 1000; */
 }
 .teachers .table {
-    /* background-color: rgb(93, 83, 83); */
-    /* border: 1px solid rgb(86, 83, 83); */
     border-radius: 5px;
     min-width: 50%;
     height: auto;
@@ -245,18 +241,7 @@ table tr:nth-child(even) {
     margin-left: 2rem;
     cursor: pointer;
   }
-  /* .container .btn-close {
-    background-color: rgb(210, 53, 18);
-    color: white;
-    font-size: large;
-    font-weight: bold;
-    width: 30px;
-    margin-bottom: 10px;
-    text-align: center;
-    border-radius: 3px;
-    cursor: pointer;
 
-} */
 .parent {
     margin-bottom: 20px;
 }
@@ -321,7 +306,7 @@ table tr:nth-child(even) {
     font-size: large;
     font-weight: bold;
 }
-.container form label {
+.container form .parent  label {
     background-color: rgb(221, 221, 232);
     color: blue ;
     border: 1px solid blue;
@@ -338,13 +323,12 @@ table tr:nth-child(even) {
     background-color: #ccc;
     border: 2px solid rgb(76, 76, 217);
     /* color: white; */
-    width: 100%;
+    min-width: 100%;
     text-align: start;
     padding: 4px 7px;
     font-size: medium;
     border-radius: 5px;
     margin-top: 10px;
-    /* margin-bottom: 10px; */
 }
 
 .container form .field {

@@ -83,24 +83,6 @@ const update = ()=>{
     <form class="main-form" @submit.prevent="update">
         <p  @click="back">X</p>
         <h1>Update Quiz Data</h1>
-        <!-- <div class="parent" >
-            <label for="section_name">Exam's Name:</label>
-            <input class="field" v-model="exam.name" type="text" id="section_name"  placeholder="Exam's Name" />
-            <span v-if="errors.name">{{ errors.name[0] }}</span>
-        </div>
-        <div class="parent" >
-            <label for="section_name">Exam's Term:</label>
-            <input class="field" v-model="exam.term" type="number" min="1" max="2" id="section_name"  placeholder="Exam's Term" />
-            <span v-if="errors.term">{{ errors.term[0] }}</span>
-        </div>
-        <div class="parent" >
-            <label for="section_name">Academic Year:</label>
-            <select class="field" v-model="exam.academic_year" id="academic_year_new">
-                    <option value="" selected>Select Year</option>
-                    <option v-for="(year, index) in years" :key="index" :value="year">{{ year }}</option>
-            </select>
-            <span v-if="errors.academic_year">{{ errors.academic_year[0] }}</span>
-        </div> -->
         <div class="parent" >
             <label for="name">Quiz's Name:</label>
             <input class="field" v-model="quiz.name" type="text" id="name"  placeholder="Quiz Name" />
@@ -157,7 +139,6 @@ const update = ()=>{
 <style scoped>
 .container form span {
     color: red;
-    /* top: ; */
     text-align: start;
     margin-bottom: 10px;
     font-size: 13px;
@@ -170,7 +151,6 @@ const update = ()=>{
     font-weight: bold;
     width: 30px;
     top: 5px;
-    /* left: 5px; */
     margin-bottom: 3px;
     text-align: center;
     border-radius: 3px;
@@ -197,25 +177,20 @@ const update = ()=>{
     color: blue ;
     border: 1px solid blue;
     width: 100%;
-    /* color: white; */
     text-align: start;
     padding: 4px 7px;
     font-size: medium;
     border-radius: 5px;
-    /* margin-top: 20px; */
-    /* margin-bottom: 20px; */
 }
 .container form .field {
     background-color: white;
     border: 2px solid rgb(76, 76, 217);
-    /* color: white; */
     width: 100%;
     text-align: start;
     padding: 4px 7px;
     font-size: medium;
     border-radius: 5px;
     margin-top: 10px;
-    /* margin-bottom: 10px; */
 }
 
 
@@ -229,7 +204,7 @@ const update = ()=>{
     background-color: blue;
 }
 .parent {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     text-align: start;
 }
 .container {
@@ -251,7 +226,6 @@ const update = ()=>{
     height: auto;
     border-radius: 10px;
     position: relative;
-    /* visibility: hidden; */
 }
 @media (max-width:768px){ 
     .container form {

@@ -337,7 +337,7 @@ export const storeDataSchools = new createStore({
         })
         .then((response) => {
           context.dispatch("setMessage", response.data.message);
-          router.push("/grades");
+          router.push("/grades/index");
           // console.log(response.data.message);
         })
         .catch((error) => {

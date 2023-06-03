@@ -158,6 +158,11 @@ button {
 }
 
 @media (max-width:540px){
+  .container {
+    max-width: 90%;
+    margin-left:11rem;
+    margin-bottom:11rem;
+  }
   .container .main .about .item label {
   display: block;
   max-width: 70%;

@@ -12,6 +12,7 @@ import {
 import {
     computed,
     onMounted,
+    onUnmounted,
     ref,
     watch
 } from 'vue';
@@ -22,14 +23,26 @@ const router = useRouter()
 const sideBar = ref('')
 const user = ref('')
 const authUser = computed(() => storeAuthUser.getters.user);
+const goBack = ref('')
+const url =  ref('')
 
 onMounted( () => {
     sideBar.value = window.document.querySelector('.sidebar');
     user.value = window.document.querySelector('.user');
-//     mapActions['getUser']
-//    await storeAuthUser.dispatch('getUser')
+    goBack.value = document.querySelector('.btn-back')
+    url.value = window.location.href
+
+    
+
 })
 
+watch(url, newValue=>{
+    if(newValue == 'http://127.0.0.1:3000/dashboard'){
+        goBack.value.style.display = 'none';
+    } else {
+        goBack.value.style.display = 'block';
+    }
+})
 watch(authUser, newValue =>{
     storeDataSchools.dispatch('getWaitingRequests', newValue.school_id)
 })
@@ -41,13 +54,22 @@ const logout = async()=>{
 
 const handleSideBar = ()=>{
     sideBar.value.classList.toggle('active');
-    // user.value.style.display = 'block'
 
 }
 
 const back = ()=> {
     router.go(-1);
 }
+
+// const checkUrl = ()=>{
+//     // url.value = window.location.href
+//     // if(url.value == 'http://127.0.0.1:3000/dashboard'){
+//     //     goBack.value.style.display = 'none';
+//     // } else {
+//     //     goBack.value.style.display = 'block';
+//     // }
+//     console.log('slot changed');
+// }
 </script>
 <template>
 <!-- <SpinnerLoading /> -->
@@ -80,12 +102,12 @@ const back = ()=> {
                         <div class="block w-px h-6 mx-3 bg-gray-400 dark:bg-gray-700"></div>
                     </li>
                     <li>
-                        <a @click="logout" class="flex items-center text-100 p-10 cursor-pointer mr-4 hover:text-blue-100">
+                        <a @click="logout" class="flex items-center text-100 p-10 cursor-pointer mr-4 sm:mr-2 hover:text-blue-100">
                             <span class="inline-flex  mr-1">
                                 <!-- <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
                                 </svg> -->
-                                <i class="fa fa-sign-out mr-3"></i>
+                                <i class="fa fa-sign-out mr-3 sm:mr-2"></i>
                             </span>
                             Logout
                         </a>
@@ -129,7 +151,7 @@ const back = ()=> {
                     <p>back</p>
                 </button>
             </div>
-            <slot></slot>
+            <slot class="slot"></slot>
         </div>
     </div>
 </div>
@@ -139,14 +161,15 @@ const back = ()=> {
 .btn-back {
     /* background-color: blue; */
     margin-top: 2rem;
-    padding-left: 10% ;
+    /* min-width: 60%; */
+    padding-left: 1% ;
     /* margin-bottom: 0; */
     /* display: flex;
     justify-content: space-between; */
 }
 .back {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
     font-size: 16px;
     width: 6%;
@@ -154,7 +177,7 @@ const back = ()=> {
     color: white;
     background-color: rgb(202, 65, 34);
     border-radius: 10px;
-    margin-right: 100px;
+    margin-right: 110px;
 }
 
 .back:hover {
@@ -162,7 +185,7 @@ const back = ()=> {
 }
  .back i {
     padding-left: 5px;
-    margin-right: 5px;
+    /* margin-right: 5px; */
 }
 
 
@@ -182,8 +205,12 @@ const back = ()=> {
 .content {
     height: 100vh;
     padding-top:5rem;
-    /* background-color: rgb(166, 212, 243); */
-    margin-left: 15rem;
+    /* background-color: #ccc; */
+    min-width: 100%;
+    padding:5rem 6rem 5rem 25rem;
+    margin-left: 0;
+    text-align: center;
+    /* margin-left: 11rem; */
     z-index: 1;
 }
 .user {
@@ -236,17 +263,23 @@ div .sidebar {
         display: flex;
     }
     .back{
-        width: 10%;
-        padding:5px 2rem;
+        min-width: 10%;
+        justify-content: space-evenly;
+        /* padding:5px 2rem; */
     }
     .content {
         margin-left: 1rem;
+        text-align: center;
+    }
+
+    .btn-back { 
+        padding-left: 2%;
     }
 }
 
 @media (max-width:900px) {
     .back{
-        justify-content: space-around;
+        justify-content: space-evenly;
         width: 12%;
         padding:5px 2rem;
 }
@@ -261,6 +294,7 @@ div .sidebar {
     .back {
         padding:5px 2rem;
         width: 20%;
+        margin-left: 12rem;
 }
     .header {
         padding-left: 0;
@@ -272,7 +306,9 @@ div .sidebar {
         top: 5rem;
     }
     .content {
-    margin-left: 0;
+    margin-left: -10rem;
+    padding: 10% 2%;
+    min-width: 100%;
 }
     .profile {
 

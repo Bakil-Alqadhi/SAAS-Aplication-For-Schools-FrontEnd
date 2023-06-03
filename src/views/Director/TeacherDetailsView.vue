@@ -63,18 +63,19 @@ const handleAccept = async()=>{
 </div>
 </template>
 <style scoped>
-
 @media (max-width:768px){ 
   #parent {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  max-width: 90%;
+  margin-left:11rem;
 }
   #image {
     display: block;
     margin-bottom: 30px;
-    background-color: red ;
+    /* background-color: red ; */
     width: 100%;
   }
   #info {

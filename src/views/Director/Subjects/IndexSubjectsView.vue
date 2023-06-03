@@ -72,19 +72,14 @@ const deleteSubject =async (id)=> {
     font-size: 1.2rem;
 }
 .grade-table-container {
-    /* min-width: 100%;
-    margin: 20px 117px;
-    padding: 2rem;
-    text-align: center; */
-
-    max-width: 90%;
-    margin: 0 120px;
+    max-width: 100%;
+    margin: auto;
     padding: 2rem;
   }
 
   .grade-table {
     border-collapse: collapse;
-    min-width: 90%;
+    min-width: 100%;
     font-size: 1.5rem;
     text-align: center;
     overflow: hidden;
@@ -109,8 +104,7 @@ const deleteSubject =async (id)=> {
     background-color: #f2f2f2;
   }
 
-  .btn-update,
-  .btn-show,
+  .btn-update
   .btn-delete {
     padding: 0.6rem .9rem;
     border: none;
@@ -122,45 +116,38 @@ const deleteSubject =async (id)=> {
   }
 
   .btn-update:hover,
-  .btn-delete:hover,
-  .btn-show:hover {
+  .btn-delete:hover {
     transform: translateY(-3px);
   }
-
-
   .btn-update {
-    /* background-color: #4caf50; */
     color: #4caf50;
   }
 
   .btn-delete {
-    /* background-color: #f44336; */
     color: #f44336;
   }
 
 
 @media (max-width:768px){
-  .btn-update,
-  .btn-show{
+  .btn-update{
         display: block;
         margin-top: 8px;
     }
     
     .grade-table-container {
-     max-width: 60%;
-    margin: 0 ;
+      padding-left: 13rem;
   }
 
   .grade-table {
-
-    min-width: 70%;
+    /* min-width: 70%; */
+    margin-right: 2rem;
   }
 }
 @media (max-width:1200px){
 
-  .grade-table {
-
-    min-width: 80%;
+  .grade-table-container {
+    min-width: 90%;
+    margin:0;
   }
 }
 </style>

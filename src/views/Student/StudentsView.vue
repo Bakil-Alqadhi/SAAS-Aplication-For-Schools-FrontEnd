@@ -28,16 +28,6 @@ const graduate = (id, name)=>{
 </script>
 <template>
     <div  v-if="allTheStudents" class="grade-table-container">   
-     <!-- bg-green-500  -->
-    <div class="flex justify-between">
-
-      <!-- bg-gray-800 -->
-        <router-link to="/classrooms/create"  class="relative create-grade inline-flex items-center justify-center px-10 py-4 mb-5 overflow-hidden font-bold tracking-tighter  text-white bg-green-600 rounded-lg group"> 
-            <span class="absolute w-0 h-0 transition-all duration-500 ease-out bg-blue-500 rounded-full group-hover:w-60 group-hover:h-56"></span>
-            <span class="absolute inset-0 w-full h-full -mt-1 rounded-lg opacity-30 bg-gradient-to-b from-transparent via-transparent to-gray-700"></span>
-            <span class="relative">New Classroom</span>
-        </router-link>
-    </div>
     <table class="grade-table">
       <thead>
         <tr>
@@ -86,10 +76,8 @@ const graduate = (id, name)=>{
     font-size: 1.2rem;
 }
 .grade-table-container {
-    /* max-width: 600px;
-    margin: 0 auto; */
-    max-width: 90%;
-    margin: 0 120px;
+    max-width: 100%;
+    margin: auto;
     padding: 2rem;
   }
 td,th {
@@ -166,17 +154,14 @@ td,th {
         margin-top: 8px;
     }
     
-    .grade-table-container {
+    /* .grade-table-container {
     max-width: 600px;
     margin: 0 auto;
+  } */
+
+  .grade-table-container {
+    min-width: 90%;
+    margin:0  11rem;
   }
-}
-
-@media (max-width:768px){
-
-    .grade-table-container {
-        margin: 0 auto;
-    }
-
 }
 </style>

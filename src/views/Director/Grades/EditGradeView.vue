@@ -31,7 +31,7 @@ const updateGrade =  ()=> {
 
 </script>
 <template>
-  <div v-if="grade" class="p-40 mt-20 text-lg">
+  <div v-if="grade" class="px-40 py-5 text-lg grade-table-container">
     <form @submit.prevent="updateGrade" class="max-w-sm mx-auto mt-8 bg-blue-100 rounded-lg p-10 ">
         <h1 class="block text-gray-800 text-center font-bold mb-8">Update New Grade</h1>
         <div class="mb-4">
@@ -48,7 +48,7 @@ const updateGrade =  ()=> {
         </div>
         <div class="mb-4">
             <label class="block text-gray-700 font-bold mb-2" for="grade">
-            Grade
+            Grade's Number
             </label>
             <input
             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -76,6 +76,43 @@ const updateGrade =  ()=> {
 
 </template>
 
-<style>
+<style scoped>
+.grade-table-container form{
+    min-width: 50%;
+}
+h1 {
+    font-size: large;
+    background-color: white;
+    border: 1px solid blue;
+    color: blue;
+    padding: 1rem;
+    min-width: 100%;
+    border-radius: 5px;
+    margin-bottom: 2rem;
+}
 
+.grade-table-container form label {
+    min-width: 100%;
+    background-color: rgba(230, 213, 213, 0.575);
+    padding: 1rem;
+    text-align: start;
+    font-size: medium;
+    border: 1px solid blue;
+    color: blue;
+}
+.grade-table-container form input {
+    font-size: medium;
+}
+@media (max-width:768px){
+
+.grade-table-container {
+  margin-left:  11rem;
+}
+h1 {
+    font-size: medium;
+}
+.grade-table-container form{
+    min-width: 100%;
+}
+}
 </style>

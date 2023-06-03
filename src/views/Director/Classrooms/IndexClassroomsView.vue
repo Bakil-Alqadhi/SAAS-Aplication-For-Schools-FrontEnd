@@ -76,9 +76,8 @@ const deleteClassroom =async (id)=> {
     padding: 2rem;
     text-align: center; */
 
-    max-width: 90%;
-    /* margin: 0 auto; */
-    margin: 0 120px;
+    max-width: 100%;
+    margin: auto;
     padding: 2rem;
   }
 
@@ -147,8 +146,10 @@ const deleteClassroom =async (id)=> {
     }
     
     .grade-table-container {
-    max-width: 600px;
-    margin: 0 auto;
+      /* min-width: 100%; */
+      /* max-width: 100%; */
+    margin-left:  11rem;
+    /* padding: 2rem ; */
   }
 
   .grade-table {
