@@ -1,6 +1,7 @@
 import { createStore } from "vuex";
 import axios from "axios";
 import router from "../router/index";
+import { data } from "autoprefixer";
 
 export const storeDataTeachers = new createStore({
   router,
@@ -12,6 +13,7 @@ export const storeDataTeachers = new createStore({
     deleteMessage: null,
     questions: {},
     question: {},
+    degrees: {},
   },
   getters: {
     teachers: (state) => state.teachers,
@@ -21,8 +23,13 @@ export const storeDataTeachers = new createStore({
     deleteMessage: (state) => state.deleteMessage,
     questions: (state) => state.questions,
     question: (state) => state.question,
+    degrees: (state) => state.degrees,
   },
   mutations: {
+    //set all degrees
+    setDegrees: (state, data) => {
+      state.degrees = data;
+    },
     //set  all questions
     setQuestions: (state, data) => {
       state.questions = data;
@@ -192,7 +199,7 @@ export const storeDataTeachers = new createStore({
     //fetching all exams
     fetchQuestions: async (context, id) => {
       await axios
-        .get("/teacher/quizzes/"+ id +"/questions")
+        .get("/teacher/quizzes/" + id + "/questions")
         .then((response) => {
           context.commit("setQuestions", response.data.data);
           // console.log(response.data.data);
@@ -204,7 +211,9 @@ export const storeDataTeachers = new createStore({
     //getting one question's data
     fetchOneQuestion: async (context, payload) => {
       await axios
-        .get("/teacher/quizzes/"+ payload.quiz +"/questions/"+ payload.question)
+        .get(
+          "/teacher/quizzes/" + payload.quiz + "/questions/" + payload.question
+        )
         .then((response) => {
           context.commit("setQuestion", response.data.data);
           // console.log(response.data.data);
@@ -217,11 +226,14 @@ export const storeDataTeachers = new createStore({
     handleCreateQuestion: async (context, payload) => {
       await context.dispatch("getToken");
       axios
-        .post("/teacher/quizzes/"+ payload.quiz +"/questions", payload)
+        .post("/teacher/quizzes/" + payload.quiz + "/questions", payload)
         .then((response) => {
           console.log(response.data);
           context.dispatch("setMessage", response.data.message);
-          router.push({ name: 'IndexQuestionsTeacher', params: { id: payload.quiz}});
+          router.push({
+            name: "IndexQuestionsTeacher",
+            params: { id: payload.quiz },
+          });
         })
         .catch((error) => {
           if (error.response.status === 422) {
@@ -234,11 +246,17 @@ export const storeDataTeachers = new createStore({
     handleUpdateQuestion: async (context, payload) => {
       await context.dispatch("getToken");
       axios
-        .put("/teacher/quizzes/"+ payload.quiz_id +"/questions/"+ payload.id, payload)
+        .put(
+          "/teacher/quizzes/" + payload.quiz_id + "/questions/" + payload.id,
+          payload
+        )
         .then((response) => {
           // console.log(response.data);
           context.dispatch("setMessage", response.data.message);
-          router.push({ name: 'IndexQuestionsTeacher', params: { id: payload.quiz_id}});
+          router.push({
+            name: "IndexQuestionsTeacher",
+            params: { id: payload.quiz_id },
+          });
         })
         .catch((error) => {
           if (error.response.status === 422) {
@@ -252,7 +270,7 @@ export const storeDataTeachers = new createStore({
     handleDeleteQuestion: async (context, payload) => {
       // await context.dispatch("getToken");
       await axios
-        .delete("/teacher/quizzes/"+ payload.quiz +"/questions/" + payload.id)
+        .delete("/teacher/quizzes/" + payload.quiz + "/questions/" + payload.id)
         .then((response) => {
           context.dispatch("setDeleteMessage", response.data.message);
           context.dispatch("fetchQuestions", payload.quiz);
@@ -262,5 +280,17 @@ export const storeDataTeachers = new createStore({
         });
     },
     //End Questions
+    //getting degrees of students one section
+    fetchQuizDegrees: async (context, id) => {
+      await axios
+        .get("/teacher/quizzes/" + id + "/degrees")
+        .then((response) => {
+          context.commit("setDegrees", response.data.data);
+          // console.log(response.data.data);
+        })
+        .catch((error) => {
+          console.log(error.response.data);
+        });
+    },
   },
 });

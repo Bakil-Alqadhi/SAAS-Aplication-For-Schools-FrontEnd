@@ -37,11 +37,12 @@ const handlePassExam = (id)=>{
                 <!-- <router-link :to="{name: 'ShowExam', params:{exam: exam.id}}"  class="btn-update hover:text-green-500">
                     <i class="fa-solid fa-file-pen"></i>
                 </router-link> -->
-                <button v-if="exam.totalScore == -1 && exam.questions" @click="handlePassExam(exam.id)"  class="btn hover:text-green-500">
+                <button v-if="!exam.totalScore && exam.questions" @click="handlePassExam(exam.id)"  class="btn hover:text-green-500">
                     <i class="fa-solid fa-file-pen"></i>
                 </button>
-                <p   v-else-if="exam.totalScore != -1">{{ exam.totalScore }}</p>
-                <p v-else>Not available yet</p>
+                <p v-else>{{ exam.totalScore? exam.totalScore: 'Not available yet' }}</p>
+                <!-- <p   v-else-if="exam.totalScore != -1">{{ exam.totalScore }}</p> -->
+                <!-- <p v-else>Not available yet</p> -->
               </td>
             </tr>
           </tbody>

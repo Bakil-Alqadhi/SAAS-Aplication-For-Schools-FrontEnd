@@ -1,47 +1,35 @@
 <script setup>
 import { computed, onMounted, ref, watch } from "vue";
-import { storeDataSchools } from "../../../store/storeDataSchools";
+import { storeDataTeachers } from "../../../store/storeDataTeachers";
 
-const quizzes = computed( ()=> storeDataSchools.getters.exams)
+const degrees = computed( ()=> storeDataTeachers.getters.degrees)
+const props = defineProps({
+    id: String
+})
 
 onMounted(async()=>{
-    await storeDataSchools.dispatch('fetchTeacherQuizzes');
+    await storeDataTeachers.dispatch('fetchQuizDegrees', props.id);
 })
 
 </script>
 <template>
   
 <div  class="grade-table-container">   
-    <table v-if="quizzes" class="grade-table">
+    <table v-if="degrees" class="grade-table">
       <thead>
         <tr>
           <th>Id</th>
           <th>Name</th>
-          <th>Subject</th>
-          <!-- <th>Teacher</th> -->
-          <!-- <th>Grade</th> -->
-          <!-- <th>Classroom</th> -->
-          <th>Section</th>
-          <th>Actions</th>
+          <th>Date</th>
+          <th>Score</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(quiz, index) in quizzes" :key="index">
+        <tr v-for="(degree, index) in degrees" :key="index">
           <td>{{ index + 1 }}</td>
-          <td>{{ quiz.name }}</td>
-          <td>{{ quiz.subject_name }}</td>
-          <!-- <td>{{ quiz.teacher_last_name +' '+ quiz.teacher_first_name}}</td>  -->
-          <!-- <td>{{ quiz.grade_name }}</td> -->
-          <!-- <td>{{ quiz.classroom_name }}</td> -->
-          <td>{{ quiz.section_name }}</td>
-          <td>
-            <router-link :to="{ name: 'IndexQuestionsTeacher', params: { id: quiz.id}}"   class="btn-update border border-green-500 hover:text-green-600">
-              Questions
-            </router-link>
-            <router-link :to="{ name: 'IndexDegrees', params: { id: quiz.id}}"   class="btn-update border border-green-500 hover:text-green-600">
-              Marks
-            </router-link>
-          </td>
+          <td>{{ degree.student_last_name + ' '+ degree.student_first_name }}</td>
+          <td>{{ degree.date ? degree.date: '-' }}</td>
+          <td>{{ degree.totalScore ?  degree.totalScore:'-'}}</td>
         </tr>
       </tbody>
     </table>
@@ -53,12 +41,14 @@ onMounted(async()=>{
     font-size: 1.2rem;
 }
 .grade-table-container {
+    /* min-width: 100%;
+    margin: 20px 117px;
+    padding: 2rem;
+    text-align: center; */
 
-    text-align: center;
-
-    max-width: 100%;
-    margin: auto;
-    padding: 2rem 2rem 2rem 9rem;
+    max-width: 90%;
+    margin: 0 120px;
+    padding: 2rem;
   }
 
   .grade-table {
@@ -119,16 +109,13 @@ onMounted(async()=>{
     }
     
     .grade-table-container {
-      max-width: 100%;
-      margin: 0 ;
-      padding: 3rem;
-      font-size: small;
+     min-width: 100%;
+    margin-left: 3rem ;
   }
 
   .grade-table {
-    max-width: 70%;
-    margin: 0   0 -1rem;
-    /* background-color: green; */
+
+    min-width: 70%;
   }
 }
 @media (max-width:1200px){

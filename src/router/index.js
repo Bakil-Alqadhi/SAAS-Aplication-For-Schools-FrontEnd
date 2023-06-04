@@ -470,6 +470,17 @@ const router = createRouter({
       },
     },
     {
+      path: "/teacher/quizzes/:id/degrees",
+      name: "IndexDegrees",
+      component: () =>
+        import("../views/teachers/Questions/IndexDegreesView.vue"),
+      meta: {
+        requiresAuth: true,
+        requiresRole: "teacher",
+      },
+      props: true
+    },
+    {
       path: "/quizzes/:id/questions/index",
       name: "IndexQuestionsTeacher",
       component: () =>
